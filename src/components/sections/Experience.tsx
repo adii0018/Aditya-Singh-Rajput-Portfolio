@@ -22,24 +22,113 @@ const typeColor = {
 
 export default function Experience() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       if (isReducedMotion()) return;
 
-      // Header reveal
-      gsap.from(".exp-header", {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
-        },
-        y: 30,
-        opacity: 0,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: "power3.out",
+      const mm = gsap.matchMedia();
+
+      // Desktop & Tablet entrance timeline: dynamic slide-in from bottom-left
+      mm.add("(min-width: 768px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+            toggleActions: "play reverse play reverse",
+          },
+        });
+
+        tl.fromTo(
+          cardRef.current,
+          {
+            x: -150,
+            y: 90,
+            rotate: -2.5,
+            scale: 0.97,
+            opacity: 0.15,
+            transformOrigin: "bottom left",
+          },
+          {
+            x: 0,
+            y: 0,
+            rotate: 0,
+            scale: 1,
+            opacity: 1,
+            duration: 1.05,
+            ease: "power3.out",
+          }
+        )
+        .fromTo(
+          ".exp-badge",
+          { x: -35, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+          "-=0.75"
+        )
+        .fromTo(
+          ".exp-loader",
+          { scale: 0.2, rotate: -180, opacity: 0 },
+          { scale: 1, rotate: 0, opacity: 1, duration: 0.85, ease: "back.out(1.8)" },
+          "-=0.65"
+        )
+        .fromTo(
+          ".exp-heading",
+          { x: -50, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+          "-=0.6"
+        );
+      });
+
+      // Mobile entrance timeline
+      mm.add("(max-width: 767px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 88%",
+            toggleActions: "play reverse play reverse",
+          },
+        });
+
+        tl.fromTo(
+          cardRef.current,
+          {
+            x: -50,
+            y: 40,
+            rotate: -1,
+            scale: 0.98,
+            opacity: 0.2,
+            transformOrigin: "bottom left",
+          },
+          {
+            x: 0,
+            y: 0,
+            rotate: 0,
+            scale: 1,
+            opacity: 1,
+            duration: 0.85,
+            ease: "power3.out",
+          }
+        )
+        .fromTo(
+          ".exp-badge",
+          { x: -20, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+          "-=0.65"
+        )
+        .fromTo(
+          ".exp-loader",
+          { scale: 0.3, rotate: -180, opacity: 0 },
+          { scale: 1, rotate: 0, opacity: 1, duration: 0.75, ease: "back.out(1.8)" },
+          "-=0.55"
+        )
+        .fromTo(
+          ".exp-heading",
+          { x: -30, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+          "-=0.5"
+        );
       });
 
       // Animate vertical timeline progress line with scroll scrub
@@ -62,8 +151,6 @@ export default function Experience() {
       }
 
       // Staggered reveal for timeline entries alternating from left & right
-      const mm = gsap.matchMedia();
-
       mm.add("(min-width: 768px)", () => {
         gsap.utils.toArray<HTMLElement>(".timeline-entry-left").forEach((entry) => {
           gsap.from(entry, {
@@ -156,27 +243,36 @@ export default function Experience() {
   );
 
   return (
-    <section id="experience" ref={sectionRef} className="section-padding bg-[#ebeff5] border-t border-[#24242215] relative z-10">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Header */}
-        <div className="mb-16">
-          <div className="exp-header inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
-            ✦ Experience & Achievements
-          </div>
-          <div className="flex items-center gap-5 sm:gap-7">
-            <div className="exp-header shrink-0 flex items-center justify-center">
-              <SharinganLoader />
+    <section
+      id="experience"
+      ref={sectionRef}
+      className="relative w-full overflow-x-clip bg-gradient-to-b from-[#dde4ee] via-[#e6ebf3] to-[#ebeff5] z-20 -mt-12 sm:-mt-16 pt-3"
+    >
+      <div
+        ref={cardRef}
+        style={{ willChange: "transform, opacity" }}
+        className="w-full bg-[#ebeff5] rounded-t-[36px] sm:rounded-t-[48px] border-t-2 border-l-2 border-white/90 shadow-[-28px_28px_70px_rgba(20,24,35,0.14),0_-20px_45px_rgba(20,24,35,0.06)] section-padding"
+      >
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Header */}
+          <div className="mb-16">
+            <div className="exp-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
+              ✦ Experience & Achievements
             </div>
-            <h2
-              className="exp-header font-black text-[#242426] leading-tight tracking-tight"
-              style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
-            >
-              Where I&apos;ve
-              <br />
-              <span className="italic text-[#4d4f57]">been</span>
-            </h2>
+            <div className="flex items-center gap-5 sm:gap-7">
+              <div className="exp-loader shrink-0 flex items-center justify-center">
+                <SharinganLoader />
+              </div>
+              <h2
+                className="exp-heading font-black text-[#242426] leading-tight tracking-tight"
+                style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
+              >
+                Where I&apos;ve
+                <br />
+                <span className="italic text-[#4d4f57]">been</span>
+              </h2>
+            </div>
           </div>
-        </div>
 
         {/* Timeline */}
         <div className="timeline-container relative max-w-5xl mx-auto pb-16">
@@ -273,6 +369,7 @@ export default function Experience() {
             <PokeballLoader />
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
