@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { skills, skillCategories } from "@/lib/data";
+import AbstergoLoader from "@/components/ui/AbstergoLoader";
 
 export default function Skills() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -31,11 +32,17 @@ export default function Skills() {
         opacity: 0,
         duration: 0.6,
       })
+      .from(".skills-loader", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.7,
+        ease: "back.out(1.7)",
+      }, "-=0.35")
       .from(".skills-heading", {
         y: 30,
         opacity: 0,
         duration: 0.75,
-      }, "-=0.35")
+      }, "-=0.5")
       .from(".skills-filter-btn", {
         y: 15,
         opacity: 0,
@@ -60,14 +67,19 @@ export default function Skills() {
             <div className="skills-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
               ✦ Tech Stack
             </div>
-            <h2
-              className="skills-heading font-black text-[#242426] leading-tight tracking-tight"
-              style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
-            >
-              Tools I work
-              <br />
-              <span className="italic text-[#4d4f57]">with</span>
-            </h2>
+            <div className="flex items-center gap-4 sm:gap-6">
+              <div className="skills-loader shrink-0 flex items-center justify-center">
+                <AbstergoLoader />
+              </div>
+              <h2
+                className="skills-heading font-black text-[#242426] leading-tight tracking-tight"
+                style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
+              >
+                Tools I work
+                <br />
+                <span className="italic text-[#4d4f57]">with</span>
+              </h2>
+            </div>
           </div>
 
           {/* Category filter */}
