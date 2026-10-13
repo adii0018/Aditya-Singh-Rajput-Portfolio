@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { experience } from "@/lib/data";
 import { Briefcase, Trophy, GraduationCap } from "lucide-react";
+import SharinganLoader from "@/components/ui/SharinganLoader";
 
 const typeIcon = {
   work: <Briefcase size={14} />,
@@ -85,14 +86,19 @@ export default function Experience() {
           <div className="exp-header inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
             ✦ Experience & Achievements
           </div>
-          <h2
-            className="exp-header font-black text-[#242426] leading-tight tracking-tight"
-            style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
-          >
-            Where I&apos;ve
-            <br />
-            <span className="italic text-[#4d4f57]">been</span>
-          </h2>
+          <div className="flex items-center gap-5 sm:gap-7">
+            <div className="exp-header shrink-0 flex items-center justify-center">
+              <SharinganLoader />
+            </div>
+            <h2
+              className="exp-header font-black text-[#242426] leading-tight tracking-tight"
+              style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
+            >
+              Where I&apos;ve
+              <br />
+              <span className="italic text-[#4d4f57]">been</span>
+            </h2>
+          </div>
         </div>
 
         {/* Timeline */}
