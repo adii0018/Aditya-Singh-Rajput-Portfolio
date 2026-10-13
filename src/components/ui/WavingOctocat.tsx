@@ -7,7 +7,7 @@ interface WavingOctocatProps {
   className?: string;
 }
 
-export default function WavingOctocat({ size = 70, className = "" }: WavingOctocatProps) {
+export default function WavingOctocat({ size = 72, className = "" }: WavingOctocatProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -19,27 +19,28 @@ export default function WavingOctocat({ size = 70, className = "" }: WavingOctoc
     >
       {/* Speech Bubble on Hover */}
       <div
-        className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-[#242426] text-white text-[11px] font-mono rounded-full border border-white/10 shadow-lg pointer-events-none transition-all duration-300 whitespace-nowrap flex items-center gap-1 z-20 ${
+        className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-[#0d1117] text-[#e6edf3] text-[11px] font-mono rounded-full border border-[#30363d] shadow-xl pointer-events-none transition-all duration-300 whitespace-nowrap flex items-center gap-1.5 z-30 ${
           isHovered ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-1 scale-90"
         }`}
       >
         <span>👋</span>
-        <span>Hi, visitor!</span>
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#242426] rotate-45 border-r border-b border-white/10" />
+        <span className="font-semibold text-white">Hi, dev!</span>
+        <span className="text-[#39d353] text-[10px]">●</span>
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#0d1117] rotate-45 border-r border-b border-[#30363d]" />
       </div>
 
-      {/* Card Container */}
-      <div className="relative p-2.5 sm:p-3 rounded-2xl bg-white border border-[#24242215] shadow-sm hover:shadow-md hover:border-[#40c46360] transition-all flex items-center justify-center overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#40c46308] to-transparent pointer-events-none" />
+      {/* Card Container (Dark GitHub Theme matching screenshot background) */}
+      <div className="relative p-2 rounded-2xl bg-[#0d1117] border border-[#30363d] shadow-lg shadow-black/25 hover:shadow-xl hover:border-[#39d35380] transition-all flex items-center justify-center overflow-hidden">
+        {/* Subtle green ambient glow on hover */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#39d35310] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
         {/* Pulsing online status indicator */}
-        <span className="absolute top-2 right-2 flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#40c463] opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#40c463]"></span>
+        <span className="absolute top-2 right-2 flex h-2 w-2 z-20">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#39d353] opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#39d353]"></span>
         </span>
 
-        {/* GitHub Octocat SVG */}
+        {/* Exact GitHub Invertocat Badge SVG */}
         <svg
           width={size}
           height={size}
@@ -49,40 +50,41 @@ export default function WavingOctocat({ size = 70, className = "" }: WavingOctoc
           className="relative z-10 overflow-visible transition-transform duration-300 group-hover:scale-105"
         >
           <style>{`
-            .octo-arm {
-              transform-origin: 66px 62px;
-              animation: octoWave 1.6s ease-in-out infinite;
+            .gh-octo-arm {
+              transform-origin: 59px 63px;
+              animation: ghOctoWave 1.6s ease-in-out infinite;
             }
-            .group:hover .octo-arm {
-              animation: octoWaveFast 0.8s ease-in-out infinite;
+            .group:hover .gh-octo-arm {
+              animation: ghOctoWaveFast 0.75s ease-in-out infinite;
             }
-            .octo-tail {
-              transform-origin: 68px 84px;
-              animation: octoTail 2.4s ease-in-out infinite;
+            .gh-octo-tail {
+              transform-origin: 41px 75px;
+              animation: ghOctoTail 2.4s ease-in-out infinite;
             }
-            .octo-eye {
-              animation: octoBlink 4s infinite;
+            .gh-octo-head {
+              transform-origin: 50px 56px;
+              animation: ghOctoHead 3.2s ease-in-out infinite;
             }
 
-            @keyframes octoWave {
+            @keyframes ghOctoWave {
               0%, 100% {
                 transform: rotate(0deg);
               }
               20% {
-                transform: rotate(-28deg);
+                transform: rotate(-26deg);
               }
               40% {
-                transform: rotate(16deg);
+                transform: rotate(14deg);
               }
               60% {
-                transform: rotate(-22deg);
+                transform: rotate(-20deg);
               }
               80% {
-                transform: rotate(10deg);
+                transform: rotate(8deg);
               }
             }
 
-            @keyframes octoWaveFast {
+            @keyframes ghOctoWaveFast {
               0%, 100% {
                 transform: rotate(0deg);
               }
@@ -97,116 +99,101 @@ export default function WavingOctocat({ size = 70, className = "" }: WavingOctoc
               }
             }
 
-            @keyframes octoTail {
+            @keyframes ghOctoTail {
               0%, 100% {
                 transform: rotate(0deg);
               }
               50% {
-                transform: rotate(-12deg);
+                transform: rotate(-9deg);
               }
             }
 
-            @keyframes octoBlink {
-              0%, 96%, 100% {
-                transform: scaleY(1);
+            @keyframes ghOctoHead {
+              0%, 100% {
+                transform: rotate(0deg);
               }
-              98% {
-                transform: scaleY(0.1);
+              30% {
+                transform: rotate(2deg);
+              }
+              70% {
+                transform: rotate(-2deg);
               }
             }
           `}</style>
 
-          {/* Tail (swaying) */}
-          <g className="octo-tail">
+          {/* Slate Disc (Matching the user screenshot circle #737b86) */}
+          <circle cx="50" cy="50" r="44" fill="#768390" />
+
+          {/* Mask to clip bottom of body neatly within circle */}
+          <defs>
+            <clipPath id="octoDiscClip">
+              <circle cx="50" cy="50" r="44" />
+            </clipPath>
+          </defs>
+
+          <g clipPath="url(#octoDiscClip)">
+            {/* Tail on Bottom-Left (Exact GitHub Cat Tail) */}
+            <g className="gh-octo-tail">
+              <path
+                d="M 42 74 C 32 76 25 73 21 67 C 19 64 21 62 23 64 C 27 69 32 71 42 69 Z"
+                fill="#0d1117"
+              />
+              <path
+                d="M 42 72 C 30 76 23 72 20 66 C 18 62 21 61 23 63 C 27 68 33 70 42 67 Z"
+                fill="#0d1117"
+              />
+            </g>
+
+            {/* Torso & Neck */}
             <path
-              d="M 68 82 C 78 82 88 76 86 64 C 85 58 78 60 79 65 C 80 70 74 76 66 78 Z"
-              fill="#242426"
+              d="M 42 56 C 41 68 39 80 38 95 L 62 95 C 61 80 59 68 58 56 Z"
+              fill="#0d1117"
             />
-          </g>
 
-          {/* Body */}
-          <path
-            d="M 33 66 C 29 82 32 93 50 93 C 68 93 71 82 67 66 Z"
-            fill="#242426"
-          />
+            {/* Cat Head (The iconic silhouette with pointy ears) */}
+            <g className="gh-octo-head">
+              {/* Outer Silhouette of Head + Ears */}
+              <path
+                d="
+                  M 33 34
+                  C 31 29 29 22 28 17
+                  C 28 16 30 16 31 17
+                  C 36 21 40 25 43 27
+                  C 45 28 47 28.5 50 28.5
+                  C 53 28.5 55 28 57 27
+                  C 60 25 64 21 69 17
+                  C 70 16 72 16 72 17
+                  C 71 22 69 29 67 34
+                  C 72 40 73 48 70 54
+                  C 67 59 62 62 50 62
+                  C 38 62 33 59 30 54
+                  C 27 48 28 40 33 34
+                  Z
+                "
+                fill="#0d1117"
+              />
+            </g>
 
-          {/* Belly Patch */}
-          <path
-            d="M 40 70 C 37 82 38 89 50 89 C 62 89 63 82 60 70 Z"
-            fill="#ebeff5"
-          />
-
-          {/* Left Paw (resting on chest) */}
-          <path
-            d="M 34 73 C 34 78 42 80 43 75 C 44 71 37 68 34 73 Z"
-            fill="#242426"
-          />
-          <circle cx="39" cy="74" r="1.5" fill="#f87171" opacity="0.4" />
-
-          {/* Head */}
-          <ellipse cx="50" cy="45" rx="25" ry="22" fill="#242426" />
-
-          {/* Ears */}
-          {/* Left Ear */}
-          <path d="M 28 34 L 18 10 L 41 24 Z" fill="#242426" />
-          <path d="M 29 30 L 22 15 L 37 24 Z" fill="#f87171" opacity="0.45" />
-
-          {/* Right Ear */}
-          <path d="M 72 34 L 82 10 L 59 24 Z" fill="#242426" />
-          <path d="M 71 30 L 78 15 L 63 24 Z" fill="#f87171" opacity="0.45" />
-
-          {/* Face Area (Mona Octocat subtle lighter mask) */}
-          <ellipse cx="50" cy="48" rx="19" ry="14" fill="#303136" />
-
-          {/* Eyes (with blink animation) */}
-          <g className="octo-eye" style={{ transformOrigin: "50% 46%" }}>
-            {/* Left Eye */}
-            <circle cx="42" cy="46" r="4" fill="#ffffff" />
-            <circle cx="43" cy="46" r="2.2" fill="#0d1117" />
-            <circle cx="44" cy="45" r="0.9" fill="#ffffff" />
-
-            {/* Right Eye */}
-            <circle cx="58" cy="46" r="4" fill="#ffffff" />
-            <circle cx="57" cy="46" r="2.2" fill="#0d1117" />
-            <circle cx="58" cy="45" r="0.9" fill="#ffffff" />
-          </g>
-
-          {/* Cute Nose */}
-          <path d="M 48.5 51.5 L 51.5 51.5 L 50 53.5 Z" fill="#f87171" />
-
-          {/* Cat Smile / Mouth */}
-          <path
-            d="M 46.5 53.5 Q 50 56.5 50 54 Q 50 56.5 53.5 53.5"
-            stroke="#ebeff5"
-            strokeWidth="1.2"
-            fill="none"
-            strokeLinecap="round"
-          />
-
-          {/* Whiskers */}
-          {/* Left Whiskers */}
-          <line x1="22" y1="48" x2="34" y2="49.5" stroke="#7d8590" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
-          <line x1="23" y1="53" x2="34" y2="52" stroke="#7d8590" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
-
-          {/* Right Whiskers */}
-          <line x1="78" y1="48" x2="66" y2="49.5" stroke="#7d8590" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
-          <line x1="77" y1="53" x2="66" y2="52" stroke="#7d8590" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
-
-          {/* Waving Arm & Paw (Foreground, smoothly animated) */}
-          <g className="octo-arm">
-            {/* Arm */}
-            <path
-              d="M 64 64 C 71 58 79 46 81 33 C 81 28 73 28 71 33 C 68 41 62 52 58 64 Z"
-              fill="#242426"
-            />
-            {/* Paw rounded top */}
-            <ellipse cx="76" cy="31" rx="5" ry="4.5" fill="#242426" />
-            {/* Cute Paw Pad (Pink) */}
-            <ellipse cx="76" cy="31" rx="3" ry="2.5" fill="#f87171" opacity="0.8" />
-            {/* Little finger pads */}
-            <circle cx="73" cy="28" r="1.1" fill="#f87171" opacity="0.8" />
-            <circle cx="76" cy="27" r="1.1" fill="#f87171" opacity="0.8" />
-            <circle cx="79" cy="28" r="1.1" fill="#f87171" opacity="0.8" />
+            {/* Waving Arm / Paw on the Right (Silhouette style matching the cat) */}
+            <g className="gh-octo-arm">
+              {/* Forearm extending out from shoulder */}
+              <path
+                d="
+                  M 58 61
+                  C 64 58 72 48 75 36
+                  C 76 32 79 32 80 34
+                  C 82 38 80 43 76 50
+                  C 71 58 64 64 59 67
+                  Z
+                "
+                fill="#0d1117"
+              />
+              {/* Waving Paw Top with cute silhouette fingers */}
+              <ellipse cx="78" cy="34" rx="4.5" ry="4" fill="#0d1117" />
+              <circle cx="75" cy="31" r="1.3" fill="#0d1117" />
+              <circle cx="78" cy="30" r="1.3" fill="#0d1117" />
+              <circle cx="81" cy="31" r="1.3" fill="#0d1117" />
+            </g>
           </g>
         </svg>
       </div>
