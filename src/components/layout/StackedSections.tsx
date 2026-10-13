@@ -40,12 +40,12 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#ffffff20]",
     overflowClass: "overflow-hidden",
   },
-  // 3: Projects (Featured Projects) - light #f5f7fc, slides over Skills
+  // 3: Projects (Featured Projects) - light #f5f7fc, slides in from the left over Smart Engine
   {
     bgColor: "#f5f7fc",
     roundedTop: true,
-    shadowClass: "shadow-[0_-15px_40px_rgba(0,0,0,0.08)]",
-    borderClass: "border-t border-[#24242215]",
+    shadowClass: "shadow-[25px_0_60px_rgba(0,0,0,0.18),0_-15px_40px_rgba(0,0,0,0.08)]",
+    borderClass: "border-t border-r border-[#24242215]",
     overflowClass: "overflow-hidden",
   },
   // 4: Experience (Experience & Achievements) - light #ebeff5, slides over Projects
@@ -112,9 +112,59 @@ export default function StackedSections({ children }: StackedSectionsProps) {
           triggers.push(st);
         }
 
+        // Slide Card 3 (Featured Projects) in from the left side on scroll over Smart Engine
+        const projectsCard = cards[3];
+        if (projectsCard) {
+          const slideTween = gsap.fromTo(
+            projectsCard,
+            {
+              xPercent: -100,
+            },
+            {
+              xPercent: 0,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: projectsCard,
+                start: "top 95%",
+                end: "top 25%",
+                scrub: 0.6,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+
+          if (slideTween.scrollTrigger) {
+            triggers.push(slideTween.scrollTrigger);
+          }
+        }
+
         return () => {
           triggers.forEach((st) => st.kill());
         };
+      });
+
+      // Mobile: responsive slide from left
+      mm.add("(max-width: 767px)", () => {
+        const projectsCard = cards[3];
+        if (projectsCard) {
+          const mobileTween = gsap.fromTo(
+            projectsCard,
+            { xPercent: -50, opacity: 0.8 },
+            {
+              xPercent: 0,
+              opacity: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: projectsCard,
+                start: "top 92%",
+                end: "top 35%",
+                scrub: 0.6,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+          return () => mobileTween.revert();
+        }
       });
 
       return () => mm.revert();
@@ -123,7 +173,7 @@ export default function StackedSections({ children }: StackedSectionsProps) {
   );
 
   return (
-    <div ref={containerRef} className="relative w-full">
+    <div ref={containerRef} className="relative w-full overflow-x-clip">
       {childArray.map((child, index) => {
         const config = cardConfigs[index] || {
           bgColor: "#ebeff5",
