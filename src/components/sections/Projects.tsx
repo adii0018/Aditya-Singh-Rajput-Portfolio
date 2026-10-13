@@ -133,16 +133,16 @@ export default function Projects() {
               <span className="hidden sm:inline">Autonomous Proctoring</span>
             </div>
 
-            {/* Middle Section: Giant Typography + AI Vision HUD */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto">
+            {/* Middle Section: Giant Typography + AI Vision Showcase Image */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center my-auto">
               {/* Title & Pill */}
-              <div className="lg:col-span-7 flex flex-col justify-center">
+              <div className="lg:col-span-6 flex flex-col justify-center">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#24242220] text-[#242426] text-[11px] font-mono font-medium self-start mb-3">
                   ✦ with real-time computer vision
                 </div>
                 <h3
                   className="font-black text-[#242426] tracking-tight leading-[1.05]"
-                  style={{ fontSize: "clamp(34px, 5.5vw, 62px)" }}
+                  style={{ fontSize: "clamp(32px, 5vw, 56px)" }}
                 >
                   Alice Exam
                   <br />
@@ -153,28 +153,22 @@ export default function Projects() {
                 </p>
               </div>
 
-              {/* Graphic/Visual Showcase: AI Vision HUD */}
-              <div className="lg:col-span-5 bg-[#18181b] text-white rounded-2xl p-4 sm:p-5 border border-white/10 shadow-xl flex flex-col justify-between min-h-[190px]">
-                <div className="flex items-center justify-between text-[11px] font-mono text-white/70 mb-3 border-b border-white/10 pb-2">
-                  <span className="flex items-center gap-1.5 text-emerald-400">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    STREAM ACTIVE // 60 FPS
-                  </span>
-                  <span>OPENCV + NLP</span>
+              {/* Graphic/Visual Showcase: Real 16:9 Banner Image */}
+              <div className="lg:col-span-6 relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#24242215] shadow-xl group bg-[#0e0e11] aspect-[16/9] w-full">
+                <img
+                  src="/alice-exam-proctor.jpg"
+                  alt="Alice Exam Proctor - AI-Powered Real-Time Integrity & Autonomous Proctoring"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
+
+                {/* Floating Badges */}
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-mono text-emerald-400 border border-emerald-500/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  LIVE MONITORING
                 </div>
-                {/* Face Targeting Box */}
-                <div className="relative py-3 flex items-center justify-center">
-                  <div className="border-2 border-dashed border-emerald-400/50 rounded-xl px-6 py-3 flex items-center gap-3 bg-emerald-500/5">
-                    <span className="text-2xl">👁️</span>
-                    <div className="text-left font-mono text-[11px]">
-                      <div className="text-emerald-400 font-bold">TARGET LOCKED</div>
-                      <div className="text-white/60">Gaze: Center (99.2%)</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-[10px] font-mono text-white/60 pt-2 border-t border-white/10">
-                  <div>Faces: 1 (Verified)</div>
-                  <div className="text-right text-emerald-400">Risk: Minimal</div>
+                <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono text-white/90 border border-white/10">
+                  AI VISION // OPENCV
                 </div>
               </div>
             </div>

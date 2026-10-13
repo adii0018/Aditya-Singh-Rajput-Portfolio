@@ -59,6 +59,7 @@ export const projects = [
     size: "large", // for bento grid
     tag: "Computer Vision",
     color: "#d9ff5c",
+    image: "/alice-exam-proctor.jpg",
   },
   {
     id: 2,
