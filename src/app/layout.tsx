@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   title: "Adii — AI/ML Engineer & Full-Stack Developer",
   description:
     "I build AI-powered products that transform complex ideas into intelligent, real-world solutions.",
+  icons: {
+    icon: "/favicons/a-minimal.png",
+    shortcut: "/favicons/a-minimal.png",
+    apple: "/favicons/a-minimal.png",
+  },
   keywords: ["AI", "ML", "Full-Stack", "Developer", "Aditya Singh Rajput", "Portfolio"],
   authors: [{ name: "Aditya Singh Rajput" }],
   openGraph: {

@@ -1,47 +1,55 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface SectionMeta {
-  emoji: string;
+  icon: string;
   title: string;
 }
 
+const FAVICONS = {
+  minimal: "/favicons/a-minimal.png", // Sleek modern black ribbon 'A'
+  teal: "/favicons/a-teal.png",       // Cyan/teal bold modern 'A'
+  pink: "/favicons/a-pink.png",       // Vibrant coral/pink pop sticker 'A'
+  nature: "/favicons/a-nature.png",   // Dark plant vine & ladybug 'A'
+  cute: "/favicons/a-cute.png",       // Friendly cute smiling 'A'
+};
+
 const SECTION_METAS: Record<string, SectionMeta> = {
   home: {
-    emoji: "🚀",
+    icon: FAVICONS.minimal,
     title: "Adii — AI/ML Engineer & Full-Stack Developer",
   },
   about: {
-    emoji: "👨‍💻",
+    icon: FAVICONS.teal,
     title: "About Me | Aditya Singh Rajput",
   },
   skills: {
-    emoji: "⚡",
+    icon: FAVICONS.pink,
     title: "Skills & Tech Stack | Adii",
   },
   features: {
-    emoji: "✨",
+    icon: FAVICONS.nature,
     title: "Smart Engine & Highlights | Adii",
   },
   projects: {
-    emoji: "💻",
+    icon: FAVICONS.pink,
     title: "Featured Projects | Adii",
   },
   experience: {
-    emoji: "💼",
+    icon: FAVICONS.teal,
     title: "Experience & Journey | Adii",
   },
   certifications: {
-    emoji: "📜",
+    icon: FAVICONS.minimal,
     title: "Certifications | Adii",
   },
   github: {
-    emoji: "🐙",
+    icon: FAVICONS.nature,
     title: "GitHub Activity | Adii",
   },
   contact: {
-    emoji: "📬",
+    icon: FAVICONS.cute,
     title: "Get in Touch | Adii",
   },
 };
@@ -59,35 +67,28 @@ const SECTION_IDS = [
   "home",
 ];
 
-function updateFavicon(emoji: string) {
-  try {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${emoji}</text></svg>`;
-    const faviconUrl = `data:image/svg+xml,${encodeURIComponent(svg)}`;
-
-    // Remove old favicon links so browser immediately re-renders
-    const existingLinks = document.querySelectorAll<HTMLLinkElement>("link[rel*='icon']");
-    existingLinks.forEach((el) => el.remove());
-
-    const link = document.createElement("link");
-    link.rel = "icon";
-    link.type = "image/svg+xml";
-    link.href = faviconUrl;
-    document.head.appendChild(link);
-  } catch {
-    // Fail silently in environments where document head is not writable
-  }
-}
-
 export default function DynamicFavicon() {
+  const [currentIcon, setCurrentIcon] = useState<string>(FAVICONS.minimal);
+  const [currentTitle, setCurrentTitle] = useState<string>(
+    SECTION_METAS.home.title
+  );
+
   const currentSectionRef = useRef<string>("home");
   const isWelcomingRef = useRef<boolean>(false);
 
   useEffect(() => {
+    // Preload all 5 favicon images for instant tab switching
+    Object.values(FAVICONS).forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+
     let welcomeTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const applySectionMeta = (sectionId: string) => {
       const meta = SECTION_METAS[sectionId] || SECTION_METAS.home;
-      updateFavicon(meta.emoji);
+      setCurrentIcon(meta.icon);
+      setCurrentTitle(meta.title);
       document.title = meta.title;
     };
 
@@ -106,7 +107,6 @@ export default function DynamicFavicon() {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          // Active if top is in upper-mid viewport and bottom has not left
           if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= 120) {
             return id;
           }
@@ -131,13 +131,17 @@ export default function DynamicFavicon() {
         // User switched tabs (Option 1: Come back!)
         if (welcomeTimeout) clearTimeout(welcomeTimeout);
         isWelcomingRef.current = false;
-        updateFavicon("👋");
-        document.title = "👋 Hey, come back! | Adii";
+        setCurrentIcon(FAVICONS.cute);
+        const awayTitle = "👋 Hey, come back! | Adii";
+        setCurrentTitle(awayTitle);
+        document.title = awayTitle;
       } else {
         // User returned to tab
         isWelcomingRef.current = true;
-        updateFavicon("🎉");
-        document.title = "🎉 Welcome back!";
+        setCurrentIcon(FAVICONS.pink);
+        const welcomeTitle = "🎉 Welcome back!";
+        setCurrentTitle(welcomeTitle);
+        document.title = welcomeTitle;
 
         welcomeTimeout = setTimeout(() => {
           isWelcomingRef.current = false;
@@ -164,5 +168,11 @@ export default function DynamicFavicon() {
     };
   }, []);
 
-  return null;
+  return (
+    <>
+      <link rel="icon" href={currentIcon} type="image/png" />
+      <link rel="shortcut icon" href={currentIcon} type="image/png" />
+      <title>{currentTitle}</title>
+    </>
+  );
 }
