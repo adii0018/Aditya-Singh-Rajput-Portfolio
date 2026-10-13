@@ -1,45 +1,18 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { AnimatedHeading } from "@/components/ui/AnimatedText";
 import { personal } from "@/lib/data";
 
-// Typing cursor blink
-function TypewriterBadge({ text }: { text: string }) {
-  const [displayed, setDisplayed] = useState("");
-  const [idx, setIdx] = useState(0);
-
-  useEffect(() => {
-    if (idx < text.length) {
-      const t = setTimeout(() => {
-        setDisplayed((p) => p + text[idx]);
-        setIdx((i) => i + 1);
-      }, 35);
-      return () => clearTimeout(t);
-    }
-  }, [idx, text]);
-
-  return (
-    <span className="font-mono text-xs tracking-widest text-[#4d4f57]">
-      {displayed}
-      <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ repeat: Infinity, duration: 0.8 }}
-        className="inline-block ml-0.5 w-0.5 h-3 bg-[#d9ff5c] align-middle"
-      />
-    </span>
-  );
-}
-
 export default function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "4%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   const scrollToAbout = () => {
@@ -50,46 +23,36 @@ export default function Hero() {
     <section
       id="home"
       ref={ref}
-      className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#ebeff5]"
+      className="relative min-h-[680px] lg:min-h-[780px] xl:min-h-screen flex flex-col justify-between overflow-hidden bg-[#ebeff5]"
     >
       {/* Subtle background grid pattern */}
       <div
-        className="absolute inset-0 opacity-25 pointer-events-none"
+        className="absolute inset-0 opacity-20 pointer-events-none z-1"
         style={{
           backgroundImage: `linear-gradient(#24242210 1px, transparent 1px), linear-gradient(90deg, #24242210 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
 
-      {/* Main hero grid: Split layout matching reference website */}
-      <div className="relative flex-1 w-full grid grid-cols-1 lg:grid-cols-2 items-center pt-24 lg:pt-20">
+      {/* Main hero area */}
+      <div className="relative flex-1 w-full flex flex-col lg:flex-row items-center justify-between pt-24 lg:pt-0">
         
         {/* LEFT COLUMN: Hero content */}
         <motion.div
           style={{ y: textY, opacity }}
-          className="flex flex-col justify-center px-6 sm:px-10 lg:pl-16 xl:pl-24 lg:pr-8 py-12 lg:py-16 z-10 max-w-2xl"
+          className="relative z-10 w-full lg:w-[48%] xl:w-[46%] flex flex-col justify-center px-6 sm:px-12 lg:pl-16 xl:pl-24 lg:pr-6 py-12 lg:py-24"
         >
           {/* Badge: AI-Powered Badge matching Makro pill */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs self-start mb-4"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs self-start mb-6"
           >
-            <span className="w-2 h-2 rounded-full bg-[#d9ff5c]" />
+            <span className="text-[12px] opacity-70">☷</span>
             <span className="text-[11px] font-mono font-medium text-[#242426] tracking-wider uppercase">
-              AI/ML ENGINEER · FULL-STACK DEVELOPER
+              AI-Powered Engineer · Full-Stack
             </span>
-          </motion.div>
-
-          {/* Typewriter role */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="mb-3"
-          >
-            <TypewriterBadge text="INNOVATOR · PROBLEM SOLVER" />
           </motion.div>
 
           {/* Main Heading: 2-line clean bold typography */}
@@ -199,12 +162,11 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* RIGHT COLUMN: Full Portrait Image with Floating Cards (Exact match to reference) */}
+        {/* RIGHT COLUMN: Full bleed photo matching reference media_1791876714572.png */}
         <motion.div
           style={{ y: imageY }}
-          className="relative w-full h-[540px] sm:h-[640px] lg:h-full min-h-[540px] lg:min-h-[720px] flex items-end justify-center lg:justify-end overflow-hidden"
+          className="w-full lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[55%] xl:w-[54%] h-[520px] sm:h-[640px] lg:h-full z-0 overflow-hidden"
         >
-          {/* Portrait Photo: Clean, high-res bleed */}
           <div className="relative w-full h-full">
             <Image
               src="/profile.jpg"
@@ -212,72 +174,9 @@ export default function Hero() {
               priority
               fill
               className="object-cover object-top lg:object-[center_top]"
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              sizes="(max-width: 1024px) 100vw, 55vw"
             />
           </div>
-
-          {/* Floating Card 1: Reduction +6% (Exact match to reference top card) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, rotate: 1 }}
-            animate={{ opacity: 1, y: 0, rotate: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            whileHover={{ y: -6, scale: 1.03, rotate: 0 }}
-            className="absolute bottom-28 right-6 sm:right-12 lg:right-16 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-2xl border border-white/60 w-44 sm:w-52 select-none"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[#242426] font-bold text-xs tracking-tight">Reduction</span>
-              <span className="text-[11px] font-mono font-semibold text-[#4d4f57] bg-[#24242208] px-2 py-0.5 rounded-full">
-                +6%
-              </span>
-            </div>
-            <div className="grid grid-cols-3 gap-1 my-2 py-2 border-y border-[#24242208] text-center">
-              <div>
-                <p className="text-[10px] font-mono text-[#4d4f57]/60">1</p>
-                <p className="text-[10px] font-semibold text-[#242426]">Mon</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-mono text-[#4d4f57]/60">2</p>
-                <p className="text-[10px] font-semibold text-[#242426]">Tue</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-mono text-[#4d4f57]/60">3</p>
-                <p className="text-[10px] font-semibold text-[#242426]">Wed</p>
-              </div>
-            </div>
-            <div className="flex items-baseline justify-between mt-2">
-              <span className="text-2xl sm:text-3xl font-black text-[#242426] tracking-tight">
-                96%
-              </span>
-              <span className="text-[#5a6e00] font-bold text-xs bg-[#d9ff5c] px-1.5 py-0.5 rounded-md">
-                ▲
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Floating Card 2: Liquidity +12% (Exact match to reference bottom-left card) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, rotate: -2 }}
-            animate={{ opacity: 1, y: 0, rotate: -2 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            whileHover={{ y: -6, scale: 1.03, rotate: 0 }}
-            className="absolute bottom-6 left-6 sm:left-12 lg:left-8 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-2xl border border-white/60 w-44 sm:w-52 select-none"
-          >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[#242426] font-bold text-xs tracking-tight">Liquidity</span>
-              <span className="text-[11px] font-mono font-semibold text-[#4d4f57] bg-[#24242208] px-2 py-0.5 rounded-full">
-                +12%
-              </span>
-            </div>
-            <p className="text-[11px] text-[#4d4f57] mb-3">Safe cash buffer</p>
-            <div className="flex items-baseline justify-between">
-              <span className="text-2xl sm:text-3xl font-black text-[#242426] tracking-tight">
-                82%
-              </span>
-              <span className="text-[#5a6e00] font-bold text-xs bg-[#d9ff5c] px-1.5 py-0.5 rounded-md">
-                ▲
-              </span>
-            </div>
-          </motion.div>
         </motion.div>
       </div>
 
