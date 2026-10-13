@@ -94,14 +94,6 @@ export default function Hero() {
       ref={heroRef}
       className="relative min-h-[680px] lg:min-h-[780px] xl:min-h-screen flex flex-col justify-between overflow-hidden bg-[#ebeff5]"
     >
-      {/* Subtle background grid pattern */}
-      <div
-        className="absolute inset-0 opacity-20 pointer-events-none z-1"
-        style={{
-          backgroundImage: `linear-gradient(#24242210 1px, transparent 1px), linear-gradient(90deg, #24242210 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
 
       {/* Main hero area */}
       <div className="relative flex-1 w-full flex flex-col lg:flex-row items-center justify-between pt-24 lg:pt-0">
