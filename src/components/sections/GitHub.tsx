@@ -97,7 +97,7 @@ export default function GitHubActivity() {
                 <p className="text-[#4d4f57] text-sm">Last 12 months</p>
               </div>
               <span className="flex items-center gap-1.5 text-xs text-[#4d4f57]">
-                <span className="w-3 h-3 rounded-sm bg-[#d9ff5c]" />
+                <span className="w-3 h-3 rounded-sm bg-[#40c463]" />
                 More active
               </span>
             </div>
@@ -105,13 +105,12 @@ export default function GitHubActivity() {
             {/* Contribution graph via GitHub chart embed */}
             <div className="w-full overflow-x-auto">
               <Image
-                src={`https://ghchart.rshah.org/d9ff5c/${personal.githubUsername}`}
+                src={`https://ghchart.rshah.org/40c463/${personal.githubUsername}`}
                 alt="GitHub Contribution Graph"
                 width={850}
                 height={125}
                 unoptimized
                 className="w-full min-w-[600px] h-auto rounded-lg"
-                style={{ filter: "contrast(1.1)" }}
               />
             </div>
           </div>
@@ -121,15 +120,15 @@ export default function GitHubActivity() {
         <ScrollReveal delay={0.2}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-              <p className="text-3xl font-black text-[#d9ff5c] mb-1">50+</p>
+              <p className="text-3xl font-black text-[#2da44e] mb-1">50+</p>
               <p className="text-[#4d4f57] text-sm font-mono">Repositories</p>
             </div>
             <div className="bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-              <p className="text-3xl font-black text-[#c0adff] mb-1">500+</p>
+              <p className="text-3xl font-black text-[#40c463] mb-1">500+</p>
               <p className="text-[#4d4f57] text-sm font-mono">Contributions</p>
             </div>
             <div className="bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-              <p className="text-3xl font-black text-[#b8deff] mb-1">42+</p>
+              <p className="text-3xl font-black text-[#2da44e] mb-1">42+</p>
               <p className="text-[#4d4f57] text-sm font-mono">Stars Earned</p>
             </div>
           </div>
@@ -144,7 +143,7 @@ export default function GitHubActivity() {
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -4 }}
-                className="block bg-white rounded-2xl border border-[#24242210] p-6 hover:border-[#d9ff5c60] hover:shadow-lg hover:shadow-[#d9ff5c15] transition-all group"
+                className="block bg-white rounded-2xl border border-[#24242210] p-6 hover:border-[#40c46360] hover:shadow-lg hover:shadow-[#40c46315] transition-all group"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
