@@ -66,11 +66,11 @@ const cardConfigs: CardConfig[] = [
   },
   // 6: GitHubActivity - light #ebeff5, slides over Certifications with organic wave curve top
   {
-    bgColor: "#ebeff5",
+    bgColor: "transparent",
     roundedTop: false,
     shadowClass: "",
     borderClass: "",
-    overflowClass: "overflow-hidden",
+    overflowClass: "overflow-visible",
   },
 ];
 

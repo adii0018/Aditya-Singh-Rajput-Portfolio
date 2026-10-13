@@ -291,19 +291,16 @@ export default function GitHubActivity() {
   );
 
   return (
-    <section id="github" ref={sectionRef} className="relative w-full bg-[#ebeff5]">
-      {/* Wave Curve Top Transition */}
-      <div className="w-full overflow-hidden leading-none block -mb-[1px]">
+    <section id="github" ref={sectionRef} className="relative w-full">
+      {/* Wave Curve Top Transition - directly cuts into video, zero gray part */}
+      <div className="w-full overflow-hidden leading-none block -mt-10 sm:-mt-16 md:-mt-24 -mb-[1px] relative z-20 pointer-events-none">
         <svg
           viewBox="0 0 1440 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
-          className="w-full h-12 sm:h-20 md:h-28 block pointer-events-none"
+          className="w-full h-12 sm:h-20 md:h-28 block pointer-events-none drop-shadow-[0_-6px_14px_rgba(0,0,0,0.35)]"
         >
-          {/* Dark background from Certifications (#242426) above */}
-          <rect width="1440" height="120" fill="#242426" />
-
           {/* Flowing Wave Curve filled with GitHub background (#ebeff5) */}
           <path
             d="M0,45 C320,110 500,10 740,55 C980,100 1180,15 1440,60 L1440,120 L0,120 Z"
@@ -313,14 +310,16 @@ export default function GitHubActivity() {
           {/* Crisp, elegant wave stroke border */}
           <path
             d="M0,45 C320,110 500,10 740,55 C980,100 1180,15 1440,60"
-            stroke="rgba(255, 255, 255, 0.14)"
+            stroke="rgba(255, 255, 255, 0.25)"
             strokeWidth="1.5"
             fill="none"
           />
         </svg>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 pt-6 sm:pt-10 pb-28 md:pb-36">
+      {/* Main GitHub Content with #ebeff5 background */}
+      <div className="w-full bg-[#ebeff5] -mt-[1px]">
+        <div className="max-w-6xl mx-auto px-6 pt-6 sm:pt-10 pb-28 md:pb-36">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
@@ -541,6 +540,7 @@ export default function GitHubActivity() {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

@@ -43,7 +43,7 @@ export default function Certifications() {
   );
 
   return (
-    <section id="certifications" ref={sectionRef} className="relative section-padding bg-[#0d1117] overflow-hidden">
+    <section id="certifications" ref={sectionRef} className="relative pt-20 sm:pt-28 pb-16 sm:pb-24 bg-[#0d1117] overflow-hidden">
       {/* Background Video - 100% Crystal Clear & Sharp */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         <video
