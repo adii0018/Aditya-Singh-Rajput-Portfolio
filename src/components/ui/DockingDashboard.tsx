@@ -273,21 +273,7 @@ export default function DockingDashboard() {
               ref={devPassBerthRef}
               className="lg:col-span-6 flex flex-col justify-center items-center relative min-h-[380px] p-2 overflow-visible"
             >
-              {/* Dashed Ghost Ticket Outline in the slot */}
-              <div
-                className="absolute w-[22em] h-[32em] rounded-2xl border-2 border-dashed border-[#7c3aed90] bg-[#1e1e2470] backdrop-blur-md flex flex-col items-center justify-center pointer-events-none text-center p-6 shadow-2xl"
-                style={{ fontSize: "10px" }}
-              >
-                <div className="w-8 h-8 rounded-full border border-dashed border-[#7c3aed] flex items-center justify-center text-[#c4b5fd] text-xs font-mono mb-2">
-                  ✦
-                </div>
-                <span className="text-xs font-mono font-bold text-[#c4b5fd] uppercase tracking-wider">
-                  Dev Pass Berth
-                </span>
-                <span className="text-[10px] font-mono text-white/60 mt-1">
-                  ASR-18-OG-DEV · ALICE
-                </span>
-              </div>
+
 
               {/* The Floating and Docking DevPassCard */}
               <div
