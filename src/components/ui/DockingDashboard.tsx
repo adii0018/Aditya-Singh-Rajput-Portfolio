@@ -118,13 +118,13 @@ export default function DockingDashboard() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-5xl mx-auto pt-16 md:pt-24 pb-8 select-none"
+      className="relative w-full max-w-5xl mx-auto pt-16 md:pt-24 pb-8 select-none overflow-visible"
     >
-      {/* Outer Dashboard Shell with Live Video Background */}
-      <div className="relative rounded-[24px] sm:rounded-[32px] border border-white/20 shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-hidden bg-black text-white min-h-[640px] sm:min-h-[680px]">
-        {/* FULL-DASHBOARD BACKGROUND VIDEO */}
+      {/* Outer Dashboard Shell with Live Video Background (overflow-visible so card can travel to Hero) */}
+      <div className="relative rounded-[24px] sm:rounded-[32px] border border-white/20 shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-visible bg-black text-white min-h-[640px] sm:min-h-[680px]">
+        {/* FULL-DASHBOARD BACKGROUND VIDEO (Clipped strictly to shell corners) */}
         <div
-          className="absolute inset-0 w-full h-full overflow-hidden flex items-center justify-center pointer-events-auto cursor-pointer"
+          className="absolute inset-0 w-full h-full rounded-[24px] sm:rounded-[32px] overflow-hidden flex items-center justify-center pointer-events-auto cursor-pointer"
           onClick={() => {
             if (videoRef.current) {
               if (videoRef.current.paused) {
@@ -292,7 +292,7 @@ export default function DockingDashboard() {
               {/* The Floating and Docking DevPassCard */}
               <div
                 ref={devPassRef}
-                className="relative z-40 cursor-pointer"
+                className="relative z-50 cursor-pointer"
                 style={{ willChange: "transform, box-shadow" }}
               >
                 <DevPassCard />
