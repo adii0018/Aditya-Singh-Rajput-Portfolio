@@ -173,6 +173,7 @@ export default function Hero() {
               alt="Aditya Singh Rajput"
               priority
               fill
+              unoptimized
               className="object-cover object-top lg:object-[center_top]"
               sizes="(max-width: 1024px) 100vw, 55vw"
             />
