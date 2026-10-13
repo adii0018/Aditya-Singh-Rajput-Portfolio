@@ -43,16 +43,34 @@ export default function Certifications() {
   );
 
   return (
-    <section id="certifications" ref={sectionRef} className="section-padding bg-[#242426]">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="certifications" ref={sectionRef} className="relative section-padding bg-[#242426] overflow-hidden">
+      {/* Background Video */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover opacity-45 scale-105"
+        >
+          <source src="/cash.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay for contrast & readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#242426]/85 via-[#242426]/60 to-[#242426]/90 pointer-events-none" />
+        {/* Subtle radial vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(36,36,38,0.75)_100%)] pointer-events-none" />
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="cert-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff60] text-xs font-mono tracking-wider uppercase mb-4">
+            <div className="cert-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff80] bg-black/40 backdrop-blur-md text-xs font-mono tracking-wider uppercase mb-4">
               ✦ Certifications
             </div>
             <h2
-              className="cert-heading font-black text-white leading-tight tracking-tight"
+              className="cert-heading font-black text-white leading-tight tracking-tight drop-shadow-sm"
               style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
             >
               What I&apos;ve
@@ -68,7 +86,7 @@ export default function Certifications() {
             <div key={cert.name} className="cert-card">
               <motion.div
                 whileHover={{ scale: 1.03, y: -4 }}
-                className="relative p-6 rounded-2xl border border-[#ffffff15] bg-[#ffffff08] group cursor-default overflow-hidden h-full"
+                className="relative p-6 rounded-2xl border border-[#ffffff18] bg-[#242426]/70 backdrop-blur-md group cursor-default overflow-hidden h-full hover:border-[#ffffff35] transition-all shadow-xl shadow-black/25"
               >
                 {/* Background glow */}
                 <div
