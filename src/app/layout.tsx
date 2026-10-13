@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Fragment_Mono } from "next/font/google";
 import "./globals.css";
 import DynamicFavicon from "@/components/ui/DynamicFavicon";
-import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 import CommandPalette from "@/components/ui/CommandPalette";
 
 const inter = Inter({
@@ -65,7 +64,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${fragmentMono.variable}`}>
       <body className={`${inter.className} noise-bg`}>
-        <ScrollProgressBar />
         <DynamicFavicon />
         <CommandPalette />
         {children}
