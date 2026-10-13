@@ -33,13 +33,63 @@ const highlights = [
   },
 ];
 
+function renderWords(
+  text: string,
+  options?: {
+    boldWords?: string[];
+    accentWords?: string[];
+    accentColor?: string;
+    targetColor?: string;
+  }
+) {
+  const words = text.split(" ");
+  return words.map((word, i) => {
+    const clean = word.replace(/[^a-zA-Z0-9/—'-]/g, "");
+    const isBold = options?.boldWords?.includes(clean);
+    const isAccent = options?.accentWords?.includes(clean);
+    const targetColor = isAccent
+      ? options?.accentColor || "#d9ff5c"
+      : options?.targetColor || "#ffffff";
+
+    return (
+      <span key={`${word}-${i}`}>
+        <span
+          className={`about-reveal-word inline-block ${isBold ? "font-bold text-white" : ""}`}
+          data-target-color={targetColor}
+          data-accent={isAccent ? targetColor : undefined}
+          style={{
+            opacity: 0.2,
+            color: "rgba(255, 255, 255, 0.2)",
+            willChange: "opacity, color",
+          }}
+        >
+          {word}
+        </span>
+        {i < words.length - 1 ? " " : ""}
+      </span>
+    );
+  });
+}
+
 export default function About() {
   const aboutRef = useRef<HTMLDivElement>(null);
+  const textWrapRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (isReducedMotion()) return;
+      if (isReducedMotion()) {
+        const words = textWrapRef.current?.querySelectorAll(".about-reveal-word");
+        if (words) {
+          gsap.set(words, {
+            opacity: 1,
+            color: (index, target) =>
+              (target as HTMLElement).dataset.targetColor || "#ffffff",
+          });
+        }
+        return;
+      }
 
+      // Static elements entrance (badge, tags, cards, stats)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: aboutRef.current,
@@ -54,23 +104,12 @@ export default function About() {
         opacity: 0,
         duration: 0.6,
       })
-      .from(".about-heading", {
-        y: 35,
-        opacity: 0,
-        duration: 0.8,
-      }, "-=0.35")
-      .from(".about-paragraph", {
-        y: 25,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 0.75,
-      }, "-=0.45")
       .from(".about-tag", {
         scale: 0.9,
         opacity: 0,
         stagger: 0.06,
         duration: 0.5,
-      }, "-=0.3")
+      }, "-=0.2")
       .from(".about-highlight-card", {
         y: 30,
         opacity: 0,
@@ -83,6 +122,31 @@ export default function About() {
         stagger: 0.08,
         duration: 0.7,
       }, "-=0.3");
+
+      // Premium scroll-linked word-by-word reveal (scrub synced with scroll)
+      const words = textWrapRef.current?.querySelectorAll(".about-reveal-word");
+      if (words && words.length > 0) {
+        gsap.fromTo(
+          words,
+          {
+            opacity: 0.2,
+            color: "rgba(255, 255, 255, 0.2)",
+          },
+          {
+            opacity: 1,
+            color: (index, target) =>
+              (target as HTMLElement).dataset.targetColor || "#ffffff",
+            stagger: 0.03,
+            ease: "none",
+            scrollTrigger: {
+              trigger: textWrapRef.current,
+              start: "top 80%",
+              end: "bottom 48%",
+              scrub: 0.8,
+            },
+          }
+        );
+      }
     },
     { scope: aboutRef }
   );
@@ -100,8 +164,8 @@ export default function About() {
 
       <div className="max-w-6xl mx-auto px-6 overflow-visible">
         
-        {/* Top Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-6">
+        {/* Top Header Section with Scroll-Linked Word Reveal */}
+        <div ref={textWrapRef} className="text-center max-w-3xl mx-auto mb-6">
           <div className="about-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff60] text-xs font-mono tracking-wider uppercase mb-6">
             ✦ About Me
           </div>
@@ -110,22 +174,73 @@ export default function About() {
             className="about-heading font-black text-white leading-tight tracking-tight mb-6"
             style={{ fontSize: "clamp(36px, 5.5vw, 68px)" }}
           >
-            I turn complex
+            <span
+              className="about-reveal-word inline-block"
+              data-target-color="#ffffff"
+              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+            >
+              I
+            </span>{" "}
+            <span
+              className="about-reveal-word inline-block"
+              data-target-color="#ffffff"
+              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+            >
+              turn
+            </span>{" "}
+            <span
+              className="about-reveal-word inline-block"
+              data-target-color="#ffffff"
+              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+            >
+              complex
+            </span>
             <br />
-            <span className="text-[#d9ff5c]">ideas into</span>
+            <span
+              className="about-reveal-word inline-block"
+              data-target-color="#d9ff5c"
+              data-accent="#d9ff5c"
+              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+            >
+              ideas
+            </span>{" "}
+            <span
+              className="about-reveal-word inline-block"
+              data-target-color="#d9ff5c"
+              data-accent="#d9ff5c"
+              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+            >
+              into
+            </span>
             <br />
-            real solutions.
+            <span
+              className="about-reveal-word inline-block"
+              data-target-color="#ffffff"
+              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+            >
+              real
+            </span>{" "}
+            <span
+              className="about-reveal-word inline-block"
+              data-target-color="#ffffff"
+              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+            >
+              solutions.
+            </span>
           </h2>
 
           <p className="about-paragraph text-[#ffffff85] text-base sm:text-lg leading-relaxed mb-4">
-            I&apos;m <strong className="text-white">Aditya Singh Rajput</strong> — an AI/ML Engineer
-            and Full-Stack Developer passionate about building products that matter. I specialize in
-            bridging the gap between cutting-edge AI research and real-world applications.
+            {renderWords(
+              "I'm Aditya Singh Rajput — an AI/ML Engineer and Full-Stack Developer passionate about building products that matter. I specialize in bridging the gap between cutting-edge AI research and real-world applications.",
+              { boldWords: ["Aditya", "Singh", "Rajput"], targetColor: "#ffffff" }
+            )}
           </p>
 
           <p className="about-paragraph text-[#ffffff60] text-sm sm:text-base leading-relaxed mb-6">
-            From AI exam proctoring systems to conversational government assistants, I thrive at the
-            intersection of machine intelligence and human-centered design — creating products that are not just smart, but truly useful.
+            {renderWords(
+              "From AI exam proctoring systems to conversational government assistants, I thrive at the intersection of machine intelligence and human-centered design — creating products that are not just smart, but truly useful.",
+              { targetColor: "rgba(255, 255, 255, 0.85)" }
+            )}
           </p>
 
           <div className="flex flex-wrap justify-center gap-2">
