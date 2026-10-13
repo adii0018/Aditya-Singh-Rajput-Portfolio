@@ -12,55 +12,32 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
+import DevPassCard from "@/components/ui/DevPassCard";
 
 export default function DockingDashboard() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const card1Ref = useRef<HTMLDivElement>(null);
-  const card2Ref = useRef<HTMLDivElement>(null);
+  const devPassRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       if (isReducedMotion()) return;
 
-      // Scroll-driven docking animation
-      // When approaching the viewport, Card 1 & Card 2 float above tilted
-      // As the user scrolls into the section, they smoothly dock into their grid slots
       const mm = gsap.matchMedia();
 
-      // Desktop & Tablet
+      // Desktop & Tablet: DevPassCard floats high and tilted, then docks into its slot
       mm.add("(min-width: 768px)", () => {
         gsap.fromTo(
-          card1Ref.current,
+          devPassRef.current,
           {
-            y: -140,
-            rotate: -4,
-            boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.35)",
+            y: -190,
+            rotate: 5,
+            boxShadow:
+              "0 35px 70px -15px rgba(0, 0, 0, 0.6), 0 0 35px rgba(124, 58, 237, 0.45)",
           },
           {
             y: 0,
             rotate: 0,
-            boxShadow: "0 4px 12px -2px rgba(0, 0, 0, 0.06)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 85%",
-              end: "top 35%",
-              scrub: 1.1,
-            },
-          }
-        );
-
-        gsap.fromTo(
-          card2Ref.current,
-          {
-            y: -220,
-            rotate: 6,
-            boxShadow: "0 35px 70px -15px rgba(0, 0, 0, 0.35)",
-          },
-          {
-            y: 0,
-            rotate: 0,
-            boxShadow: "0 4px 12px -2px rgba(0, 0, 0, 0.06)",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.8)",
             ease: "none",
             scrollTrigger: {
               trigger: containerRef.current,
@@ -75,37 +52,16 @@ export default function DockingDashboard() {
       // Mobile
       mm.add("(max-width: 767px)", () => {
         gsap.fromTo(
-          card1Ref.current,
+          devPassRef.current,
           {
-            y: -60,
-            rotate: -2,
-            boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.25)",
+            y: -80,
+            rotate: 2.5,
+            boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.4)",
           },
           {
             y: 0,
             rotate: 0,
-            boxShadow: "0 4px 12px -2px rgba(0, 0, 0, 0.06)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 90%",
-              end: "top 50%",
-              scrub: 1,
-            },
-          }
-        );
-
-        gsap.fromTo(
-          card2Ref.current,
-          {
-            y: -100,
-            rotate: 3,
-            boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.25)",
-          },
-          {
-            y: 0,
-            rotate: 0,
-            boxShadow: "0 4px 12px -2px rgba(0, 0, 0, 0.06)",
+            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.5)",
             ease: "none",
             scrollTrigger: {
               trigger: containerRef.current,
@@ -120,8 +76,7 @@ export default function DockingDashboard() {
     { scope: containerRef }
   );
 
-  // Generate vertical lines under SVG chart wave
-  // Wave path starts around y=70, dips to 76, then rises to y=20
+  // Vertical lines under SVG chart wave
   const hatchedLines = [
     { x: 14, y: 70 },
     { x: 24, y: 70 },
@@ -252,8 +207,8 @@ export default function DockingDashboard() {
             </div>
           </div>
 
-          {/* GRID LAYOUT */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          {/* GRID LAYOUT: Left Income card + Right DevPass Berth */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             
             {/* COLUMN 1: Large Income Card with signature hatched wave chart */}
             <div className="lg:col-span-6 bg-white rounded-2xl p-5 border border-[#24242610] shadow-xs flex flex-col justify-between">
@@ -351,157 +306,83 @@ export default function DockingDashboard() {
               </div>
             </div>
 
-            {/* COLUMN 2 & 3: Docking cards area + Income Sources */}
-            <div className="lg:col-span-6 flex flex-col gap-4">
+            {/* COLUMN 2: DEV PASS DOCKING BERTH (Replaces Liquidity & Reduction) */}
+            <div className="lg:col-span-6 flex flex-col justify-center items-center relative min-h-[360px] p-2 overflow-visible">
               
-              {/* Row for Card 1 & Card 2 */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                {/* SLOT 1 (Liquidity) */}
-                <div className="relative min-h-[145px]">
-                  {/* Dashed Ghost Outline (visible when card is floating above) */}
-                  <div className="absolute inset-0 rounded-2xl border-2 border-dashed border-[#24242625] bg-[#24242605] flex flex-col justify-center items-center pointer-events-none p-4">
-                    <span className="text-[11px] font-mono text-[#24242650] uppercase tracking-wider">
-                      Liquidity Slot
-                    </span>
-                  </div>
-
-                  {/* FLOATING & DOCKING CARD 1 */}
-                  <div
-                    ref={card1Ref}
-                    className="relative z-20 bg-white rounded-2xl p-5 border border-[#24242615] shadow-lg flex flex-col justify-between h-full"
-                    style={{ willChange: "transform, box-shadow" }}
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-bold text-[#242426]">
-                          Liquidity
-                        </span>
-                        <span className="px-2 py-0.5 rounded-full bg-[#40c46318] text-[#22863a] text-[10px] font-bold">
-                          +12%
-                        </span>
-                      </div>
-                      <div className="text-xs text-[#24242660]">
-                        Safe cash buffer
-                      </div>
-                    </div>
-
-                    <div className="flex items-baseline justify-between mt-4">
-                      <span className="text-3xl font-black text-[#242426] tracking-tight">
-                        82<span className="text-xl font-bold text-[#24242680]">%</span>
-                      </span>
-                      <span className="text-[#40c463] text-sm font-bold flex items-center">
-                        ▲
-                      </span>
-                    </div>
-                  </div>
+              {/* Dashed Ghost Ticket Outline in the slot */}
+              <div
+                className="absolute w-[22em] h-[32em] rounded-2xl border-2 border-dashed border-[#7c3aed40] bg-[#1e1e240a] flex flex-col items-center justify-center pointer-events-none text-center p-6"
+                style={{ fontSize: "10px" }}
+              >
+                <div className="w-8 h-8 rounded-full border border-dashed border-[#7c3aed60] flex items-center justify-center text-[#7c3aed] text-xs font-mono mb-2">
+                  ✦
                 </div>
-
-                {/* SLOT 2 (Reduction) */}
-                <div className="relative min-h-[145px]">
-                  {/* Dashed Ghost Outline (visible when card is floating above) */}
-                  <div className="absolute inset-0 rounded-2xl border-2 border-dashed border-[#24242625] bg-[#24242605] flex flex-col justify-center items-center pointer-events-none p-4">
-                    <span className="text-[11px] font-mono text-[#24242650] uppercase tracking-wider">
-                      Reduction Slot
-                    </span>
-                  </div>
-
-                  {/* FLOATING & DOCKING CARD 2 */}
-                  <div
-                    ref={card2Ref}
-                    className="relative z-20 bg-white rounded-2xl p-5 border border-[#24242615] shadow-lg flex flex-col justify-between h-full"
-                    style={{ willChange: "transform, box-shadow" }}
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-bold text-[#242426]">
-                          Reduction
-                        </span>
-                        <span className="px-2 py-0.5 rounded-full bg-[#2424260a] text-[#24242680] text-[10px] font-bold">
-                          +6%
-                        </span>
-                      </div>
-
-                      {/* Day pills */}
-                      <div className="grid grid-cols-3 gap-1 bg-[#f4f6fa] p-1 rounded-lg">
-                        <div className="bg-white rounded text-center py-1 shadow-2xs text-[10px] font-bold text-[#242426]">
-                          1 Mon
-                        </div>
-                        <div className="text-center py-1 text-[10px] font-medium text-[#24242660]">
-                          2 Tue
-                        </div>
-                        <div className="text-center py-1 text-[10px] font-medium text-[#24242660]">
-                          3 Wed
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-baseline justify-between mt-3">
-                      <span className="text-3xl font-black text-[#242426] tracking-tight">
-                        96<span className="text-xl font-bold text-[#24242680]">%</span>
-                      </span>
-                      <span className="text-[#40c463] text-sm font-bold flex items-center">
-                        ▲
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
+                <span className="text-xs font-mono font-bold text-[#7c3aed] uppercase tracking-wider">
+                  Dev Pass Berth
+                </span>
+                <span className="text-[10px] font-mono text-[#24242650] mt-1">
+                  ASR-18-OG-DEV · ALICE
+                </span>
               </div>
 
-              {/* INCOME SOURCES CARD */}
-              <div className="bg-white rounded-2xl p-5 border border-[#24242610] shadow-xs">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-bold text-[#242426]">
-                    Income Sources
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-[#242426] text-white text-[10px] font-bold">
-                    Q4 2025
-                  </span>
-                </div>
-                <div className="text-xs text-[#24242660] mb-3">
-                  Overview
-                </div>
+              {/* The Floating and Docking DevPassCard */}
+              <div
+                ref={devPassRef}
+                className="relative z-20 cursor-pointer"
+                style={{ willChange: "transform, box-shadow" }}
+              >
+                <DevPassCard />
+              </div>
+            </div>
 
-                {/* Multi-segmented color bar matching reference */}
-                <div className="h-2.5 w-full flex rounded-full overflow-hidden gap-1 mb-3">
-                  <div className="h-full bg-[#8b7bf5] rounded-l-full" style={{ width: "48%" }} title="Retainers & Subscriptions (48%)" />
-                  <div className="h-full bg-[#4d96f7]" style={{ width: "22%" }} title="Product Invoices (22%)" />
-                  <div className="h-full bg-[#42b0a8]" style={{ width: "15%" }} title="Usage-based fees (15%)" />
-                  <div className="h-full bg-[#88a83d]" style={{ width: "8%" }} title="Affiliate (8%)" />
-                  <div className="h-full bg-[#f0a732]" style={{ width: "4%" }} title="Other (4%)" />
-                  <div className="h-full bg-[#c45b43] rounded-r-full" style={{ width: "3%" }} title="Misc (3%)" />
-                </div>
-
-                {/* Breakdown items */}
-                <div className="space-y-1.5 text-xs">
-                  <div className="flex items-center justify-between text-[#242426]">
-                    <span className="flex items-center gap-2 text-[#24242680]">
-                      <span className="w-2 h-2 rounded-full bg-[#8b7bf5]" />
-                      Retainers & subscriptions
-                    </span>
-                    <span className="font-mono text-[#24242660]">48%</span>
-                    <span className="font-bold font-mono">$13,200</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[#242426]">
-                    <span className="flex items-center gap-2 text-[#24242680]">
-                      <span className="w-2 h-2 rounded-full bg-[#4d96f7]" />
-                      Product invoices
-                    </span>
-                    <span className="font-mono text-[#24242660]">22%</span>
-                    <span className="font-bold font-mono">$6,050</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[#242426]">
-                    <span className="flex items-center gap-2 text-[#24242680]">
-                      <span className="w-2 h-2 rounded-full bg-[#42b0a8]" />
-                      Usage-based fees
-                    </span>
-                    <span className="font-mono text-[#24242660]">15%</span>
-                    <span className="font-bold font-mono">$4,125</span>
-                  </div>
-                </div>
+            {/* FULL-WIDTH ROW: Income Sources Card */}
+            <div className="lg:col-span-12 bg-white rounded-2xl p-5 border border-[#24242610] shadow-xs">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm font-bold text-[#242426]">
+                  Income Sources
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-[#242426] text-white text-[10px] font-bold">
+                  Q4 2025
+                </span>
+              </div>
+              <div className="text-xs text-[#24242660] mb-3">
+                Overview
               </div>
 
+              {/* Multi-segmented color bar matching reference */}
+              <div className="h-2.5 w-full flex rounded-full overflow-hidden gap-1 mb-3">
+                <div className="h-full bg-[#8b7bf5] rounded-l-full" style={{ width: "48%" }} title="Retainers & Subscriptions (48%)" />
+                <div className="h-full bg-[#4d96f7]" style={{ width: "22%" }} title="Product Invoices (22%)" />
+                <div className="h-full bg-[#42b0a8]" style={{ width: "15%" }} title="Usage-based fees (15%)" />
+                <div className="h-full bg-[#88a83d]" style={{ width: "8%" }} title="Affiliate (8%)" />
+                <div className="h-full bg-[#f0a732]" style={{ width: "4%" }} title="Other (4%)" />
+                <div className="h-full bg-[#c45b43] rounded-r-full" style={{ width: "3%" }} title="Misc (3%)" />
+              </div>
+
+              {/* Breakdown items */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
+                <div className="flex items-center justify-between text-[#242426] bg-[#f8fafc] px-3 py-2 rounded-xl">
+                  <span className="flex items-center gap-2 text-[#24242680]">
+                    <span className="w-2 h-2 rounded-full bg-[#8b7bf5]" />
+                    Retainers
+                  </span>
+                  <span className="font-bold font-mono">$13,200</span>
+                </div>
+                <div className="flex items-center justify-between text-[#242426] bg-[#f8fafc] px-3 py-2 rounded-xl">
+                  <span className="flex items-center gap-2 text-[#24242680]">
+                    <span className="w-2 h-2 rounded-full bg-[#4d96f7]" />
+                    Invoices
+                  </span>
+                  <span className="font-bold font-mono">$6,050</span>
+                </div>
+                <div className="flex items-center justify-between text-[#242426] bg-[#f8fafc] px-3 py-2 rounded-xl">
+                  <span className="flex items-center gap-2 text-[#24242680]">
+                    <span className="w-2 h-2 rounded-full bg-[#42b0a8]" />
+                    Usage Fees
+                  </span>
+                  <span className="font-bold font-mono">$4,125</span>
+                </div>
+              </div>
             </div>
 
           </div>
