@@ -118,17 +118,17 @@ export default function BentoFeatures() {
           {/* ======================================================== */}
           {/* CARD 1: NOW PLAYING / SPOTIFY WIDGET */}
           {/* ======================================================== */}
-          <div className="bento-grid-card relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between overflow-hidden border border-[#ffffff15] shadow-xl min-h-[380px] bg-[#f6f8fb]">
+          <div className="bento-grid-card relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between overflow-hidden border border-[#ffffff15] shadow-xl min-h-[380px] bg-gradient-to-b from-[#4b6075] to-[#2c333d]">
             {/* Top Info */}
             <div className="mb-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1db95418] border border-[#1db95430] text-[#1db954] text-[11px] font-semibold mb-3">
-                <Music className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffffff15] backdrop-blur-md border border-[#ffffff20] text-white text-[11px] font-semibold mb-3">
+                <Music className="w-3.5 h-3.5 text-[#d9ff5c]" />
                 Vibes & Audio
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#242426] tracking-tight mb-1">
+              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-1">
                 Currently Playing
               </h3>
-              <p className="text-[#24242680] text-xs sm:text-sm leading-relaxed">
+              <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
                 Click any track to switch songs and live equalizer
               </p>
             </div>
