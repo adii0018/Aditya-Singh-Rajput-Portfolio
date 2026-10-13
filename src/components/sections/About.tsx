@@ -4,28 +4,29 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { Code2, Brain, Rocket, MapPin } from "lucide-react";
+import DockingDashboard from "@/components/ui/DockingDashboard";
 
 const highlights = [
   {
-    icon: <Brain size={18} />,
+    icon: <Brain size={16} />,
     label: "AI/ML Focus",
     desc: "Computer Vision, NLP & LLMs",
     color: "#d9ff5c",
   },
   {
-    icon: <Code2 size={18} />,
+    icon: <Code2 size={16} />,
     label: "Full-Stack",
     desc: "React, Next.js, Django, FastAPI",
     color: "#c0adff",
   },
   {
-    icon: <Rocket size={18} />,
+    icon: <Rocket size={16} />,
     label: "Builder",
     desc: "4+ AI-powered products shipped",
     color: "#b8deff",
   },
   {
-    icon: <MapPin size={18} />,
+    icon: <MapPin size={16} />,
     label: "Based in India",
     desc: "Open to remote opportunities",
     color: "#d9ff5c",
@@ -71,11 +72,11 @@ export default function About() {
         duration: 0.5,
       }, "-=0.3")
       .from(".about-highlight-card", {
-        y: 35,
+        y: 30,
         opacity: 0,
         stagger: 0.08,
-        duration: 0.75,
-      }, "-=0.6")
+        duration: 0.7,
+      }, "-=0.2")
       .from(".about-stat-item", {
         y: 25,
         opacity: 0,
@@ -90,83 +91,83 @@ export default function About() {
     <section
       id="about"
       ref={aboutRef}
-      className="relative section-padding overflow-hidden"
+      className="relative section-padding overflow-visible"
       style={{ background: "#242426" }}
     >
-      {/* Background accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent" />
+      {/* Background accent lines */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-          {/* Left — Text */}
-          <div>
-            <div className="about-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff60] text-xs font-mono tracking-wider uppercase mb-6">
-              ✦ About Me
-            </div>
-
-            <h2
-              className="about-heading font-black text-white leading-tight tracking-tight mb-6"
-              style={{ fontSize: "clamp(36px, 5vw, 60px)" }}
-            >
-              I turn complex
-              <br />
-              <span className="text-[#d9ff5c]">ideas into</span>
-              <br />
-              real solutions.
-            </h2>
-
-            <p className="about-paragraph text-[#ffffff80] text-base leading-relaxed mb-5">
-              I&apos;m <strong className="text-white">Aditya Singh Rajput</strong> — an AI/ML Engineer
-              and Full-Stack Developer passionate about building products that matter. I specialize in
-              bridging the gap between cutting-edge AI research and real-world applications.
-            </p>
-
-            <p className="about-paragraph text-[#ffffff60] text-base leading-relaxed mb-8">
-              From AI exam proctoring systems to conversational government assistants, I&apos;ve built
-              products that impact real people. I thrive at the intersection of machine intelligence
-              and human-centered design — creating things that are not just smart, but truly useful.
-            </p>
-
-            <div className="flex flex-wrap gap-2">
-              {["Problem Solver", "AI Enthusiast", "Open Source", "Hackathon Winner"].map(
-                (tag) => (
-                  <span
-                    key={tag}
-                    className="about-tag px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff80] text-xs font-medium"
-                  >
-                    {tag}
-                  </span>
-                )
-              )}
-            </div>
+        
+        {/* Top Header Section */}
+        <div className="text-center max-w-3xl mx-auto mb-6">
+          <div className="about-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff60] text-xs font-mono tracking-wider uppercase mb-6">
+            ✦ About Me
           </div>
 
-          {/* Right — Highlight cards */}
-          <div className="grid grid-cols-2 gap-4">
-            {highlights.map((item) => (
-              <div key={item.label} className="about-highlight-card">
-                <motion.div
-                  whileHover={{ scale: 1.03, y: -4 }}
-                  className="p-5 rounded-2xl border border-[#ffffff15] bg-[#ffffff08] backdrop-blur-sm cursor-default group h-full"
+          <h2
+            className="about-heading font-black text-white leading-tight tracking-tight mb-6"
+            style={{ fontSize: "clamp(36px, 5.5vw, 68px)" }}
+          >
+            I turn complex
+            <br />
+            <span className="text-[#d9ff5c]">ideas into</span>
+            <br />
+            real solutions.
+          </h2>
+
+          <p className="about-paragraph text-[#ffffff85] text-base sm:text-lg leading-relaxed mb-4">
+            I&apos;m <strong className="text-white">Aditya Singh Rajput</strong> — an AI/ML Engineer
+            and Full-Stack Developer passionate about building products that matter. I specialize in
+            bridging the gap between cutting-edge AI research and real-world applications.
+          </p>
+
+          <p className="about-paragraph text-[#ffffff60] text-sm sm:text-base leading-relaxed mb-6">
+            From AI exam proctoring systems to conversational government assistants, I thrive at the
+            intersection of machine intelligence and human-centered design — creating products that are not just smart, but truly useful.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-2">
+            {["Problem Solver", "AI Enthusiast", "Open Source", "Hackathon Winner"].map(
+              (tag) => (
+                <span
+                  key={tag}
+                  className="about-tag px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff80] text-xs font-medium"
                 >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                    style={{ background: item.color + "20", color: item.color }}
-                  >
-                    {item.icon}
-                  </div>
-                  <p className="text-white font-semibold text-sm mb-1">{item.label}</p>
-                  <p className="text-[#ffffff50] text-xs leading-relaxed">{item.desc}</p>
-                </motion.div>
-              </div>
-            ))}
+                  {tag}
+                </span>
+              )
+            )}
           </div>
         </div>
 
+        {/* Centerpiece: The Makro Scroll-Docking Dashboard Component */}
+        <DockingDashboard />
+
+        {/* 4 Highlight Capability Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 mb-16">
+          {highlights.map((item) => (
+            <div key={item.label} className="about-highlight-card">
+              <motion.div
+                whileHover={{ scale: 1.03, y: -4 }}
+                className="p-5 rounded-2xl border border-[#ffffff15] bg-[#ffffff08] backdrop-blur-sm cursor-default group h-full"
+              >
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center mb-3 transition-transform group-hover:scale-110"
+                  style={{ background: item.color + "20", color: item.color }}
+                >
+                  {item.icon}
+                </div>
+                <p className="text-white font-semibold text-sm mb-1">{item.label}</p>
+                <p className="text-[#ffffff50] text-xs leading-relaxed">{item.desc}</p>
+              </motion.div>
+            </div>
+          ))}
+        </div>
+
         {/* Stats row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#ffffff15] rounded-2xl overflow-hidden mt-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#ffffff15] rounded-2xl overflow-hidden">
           {[
             { num: "4+", label: "AI Projects" },
             { num: "10+", label: "Technologies" },
@@ -189,6 +190,7 @@ export default function About() {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
