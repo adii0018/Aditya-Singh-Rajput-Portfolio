@@ -60,18 +60,80 @@ export default function Experience() {
         );
       }
 
-      // Staggered reveal for timeline entries
-      gsap.utils.toArray<HTMLElement>(".timeline-entry").forEach((entry) => {
-        gsap.from(entry, {
+      // Staggered reveal for timeline entries alternating from left & right
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        gsap.utils.toArray<HTMLElement>(".timeline-entry-left").forEach((entry) => {
+          gsap.from(entry, {
+            scrollTrigger: {
+              trigger: entry,
+              start: "top 85%",
+              once: true,
+            },
+            x: -70,
+            opacity: 0,
+            duration: 0.85,
+            ease: "power3.out",
+          });
+        });
+
+        gsap.utils.toArray<HTMLElement>(".timeline-entry-right").forEach((entry) => {
+          gsap.from(entry, {
+            scrollTrigger: {
+              trigger: entry,
+              start: "top 85%",
+              once: true,
+            },
+            x: 70,
+            opacity: 0,
+            duration: 0.85,
+            ease: "power3.out",
+          });
+        });
+      });
+
+      mm.add("(max-width: 767px)", () => {
+        gsap.utils.toArray<HTMLElement>(".timeline-entry-left").forEach((entry) => {
+          gsap.from(entry, {
+            scrollTrigger: {
+              trigger: entry,
+              start: "top 85%",
+              once: true,
+            },
+            x: -35,
+            opacity: 0,
+            duration: 0.75,
+            ease: "power3.out",
+          });
+        });
+
+        gsap.utils.toArray<HTMLElement>(".timeline-entry-right").forEach((entry) => {
+          gsap.from(entry, {
+            scrollTrigger: {
+              trigger: entry,
+              start: "top 85%",
+              once: true,
+            },
+            x: 35,
+            opacity: 0,
+            duration: 0.75,
+            ease: "power3.out",
+          });
+        });
+      });
+
+      gsap.utils.toArray<HTMLElement>(".timeline-dot").forEach((dot) => {
+        gsap.from(dot, {
           scrollTrigger: {
-            trigger: entry,
+            trigger: dot,
             start: "top 85%",
             once: true,
           },
-          x: 25,
+          scale: 0.3,
           opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
+          duration: 0.6,
+          ease: "back.out(2)",
         });
       });
     },
@@ -102,23 +164,32 @@ export default function Experience() {
         </div>
 
         {/* Timeline */}
-        <div className="timeline-container relative max-w-4xl">
+        <div className="timeline-container relative max-w-5xl mx-auto">
+          {/* Timeline background track line */}
+          <div
+            className="absolute left-6 md:left-1/2 top-4 bottom-8 w-0.5 -translate-x-1/2 bg-[#24242215]"
+          />
+
           {/* Vertical scrub line */}
           <div
             ref={lineRef}
-            className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[#d9ff5c] via-[#24242230] to-transparent origin-top"
+            className="absolute left-6 md:left-1/2 top-4 bottom-8 w-0.5 -translate-x-1/2 bg-gradient-to-b from-[#d9ff5c] via-[#242426] to-[#24242690] origin-top z-0"
           />
 
-          <div className="space-y-8">
-            {experience.map((item, i) => (
-              <div key={i} className="timeline-entry">
-                <motion.div
-                  whileHover={{ x: 4 }}
-                  className="relative flex gap-8 pl-14"
+          <div className="space-y-8 md:space-y-12">
+            {experience.map((item, i) => {
+              const isLeft = i % 2 === 0;
+
+              return (
+                <div
+                  key={i}
+                  className={`timeline-entry ${
+                    isLeft ? "timeline-entry-left" : "timeline-entry-right"
+                  } relative flex flex-col md:flex-row items-start md:items-center w-full`}
                 >
-                  {/* Dot */}
+                  {/* Center Dot Node */}
                   <div
-                    className="absolute left-0 top-1.5 w-12 h-12 rounded-full flex items-center justify-center border-4 border-[#ebeff5] z-10 shadow-sm"
+                    className="timeline-dot absolute left-6 md:left-1/2 top-6 md:top-[36px] -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center border-4 border-[#ebeff5] z-10 shadow-sm"
                     style={{ background: typeColor[item.type as keyof typeof typeColor] }}
                   >
                     <span className="text-[#242426]">
@@ -126,43 +197,60 @@ export default function Experience() {
                     </span>
                   </div>
 
-                  {/* Card */}
-                  <div className="flex-1 bg-white rounded-2xl p-6 border border-[#24242210] hover:border-[#24242225] hover:shadow-lg hover:shadow-[#24242208] transition-all">
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                      <div>
-                        <h3 className="font-bold text-[#242426] text-base">{item.title}</h3>
-                        <p className="text-[#4d4f57] text-sm font-medium">{item.company}</p>
-                      </div>
-                      <span className="text-xs font-mono text-[#4d4f57] bg-[#24242208] px-3 py-1 rounded-full whitespace-nowrap self-start">
-                        {item.period}
-                      </span>
-                    </div>
+                  {/* Card wrapper */}
+                  <div
+                    className={`w-full pl-14 md:pl-0 md:w-[calc(50%-2.5rem)] relative ${
+                      isLeft ? "md:mr-auto" : "md:ml-auto"
+                    }`}
+                  >
+                    {/* Horizontal connector line on desktop */}
+                    <div
+                      className={`hidden md:block absolute top-[35px] h-[2px] w-10 bg-[#24242220] ${
+                        isLeft ? "right-[-2.5rem]" : "left-[-2.5rem]"
+                      }`}
+                    />
 
-                    <p className="text-[#4d4f57] text-sm leading-relaxed mb-4">
-                      {item.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {item.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="px-2.5 py-1 rounded-full text-xs font-medium"
-                          style={{
-                            background: typeColor[item.type as keyof typeof typeColor] + "20",
-                            color:
-                              item.type === "work"
-                                ? "#5a6e00"
-                                : typeColor[item.type as keyof typeof typeColor],
-                          }}
-                        >
-                          {t}
+                    {/* Card */}
+                    <motion.div
+                      whileHover={{ y: -4, scale: 1.01 }}
+                      className="bg-white rounded-2xl p-6 border border-[#24242210] hover:border-[#24242225] hover:shadow-lg hover:shadow-[#24242208] transition-all"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                        <div>
+                          <h3 className="font-bold text-[#242426] text-base">{item.title}</h3>
+                          <p className="text-[#4d4f57] text-sm font-medium">{item.company}</p>
+                        </div>
+                        <span className="text-xs font-mono text-[#4d4f57] bg-[#24242208] px-3 py-1 rounded-full whitespace-nowrap self-start">
+                          {item.period}
                         </span>
-                      ))}
-                    </div>
+                      </div>
+
+                      <p className="text-[#4d4f57] text-sm leading-relaxed mb-4">
+                        {item.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {item.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="px-2.5 py-1 rounded-full text-xs font-medium"
+                            style={{
+                              background: typeColor[item.type as keyof typeof typeColor] + "20",
+                              color:
+                                item.type === "work"
+                                  ? "#5a6e00"
+                                  : typeColor[item.type as keyof typeof typeColor],
+                            }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </motion.div>
                   </div>
-                </motion.div>
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
