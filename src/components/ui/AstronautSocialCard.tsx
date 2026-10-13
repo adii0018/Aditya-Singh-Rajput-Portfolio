@@ -34,8 +34,9 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
           className="image"
           alt="Astronaut"
           src="/astronaut.png"
-          width={180}
-          height={180}
+          width={160}
+          height={190}
+          style={{ width: "auto", height: "auto" }}
           unoptimized
           priority
         />
