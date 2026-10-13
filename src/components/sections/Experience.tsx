@@ -156,7 +156,7 @@ export default function Experience() {
   );
 
   return (
-    <section id="experience" ref={sectionRef} className="section-padding bg-[#ebeff5]">
+    <section id="experience" ref={sectionRef} className="section-padding bg-[#ebeff5] border-t border-[#24242215] relative z-10">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="mb-16">

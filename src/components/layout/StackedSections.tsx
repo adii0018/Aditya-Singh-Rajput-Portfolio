@@ -64,14 +64,6 @@ const cardConfigs: CardConfig[] = [
     borderClass: "",
     overflowClass: "overflow-visible",
   },
-  // 6: Experience (Where I've been) - light #ebeff5, slides over GitHubActivity
-  {
-    bgColor: "#ebeff5",
-    roundedTop: true,
-    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.16)]",
-    borderClass: "border-t border-[#24242220]",
-    overflowClass: "overflow-hidden",
-  },
 ];
 
 export default function StackedSections({ children }: StackedSectionsProps) {
