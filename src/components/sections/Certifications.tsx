@@ -43,8 +43,8 @@ export default function Certifications() {
   );
 
   return (
-    <section id="certifications" ref={sectionRef} className="relative section-padding bg-[#242426] overflow-hidden">
-      {/* Background Video */}
+    <section id="certifications" ref={sectionRef} className="relative section-padding bg-[#0d1117] overflow-hidden">
+      {/* Background Video - 100% Crystal Clear & Sharp */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         <video
           autoPlay
@@ -52,30 +52,28 @@ export default function Certifications() {
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover opacity-45 scale-105"
+          className="absolute inset-0 w-full h-full object-cover opacity-100"
         >
           <source src="/cash.mp4" type="video/mp4" />
         </video>
-        {/* Dark overlay for contrast & readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#242426]/85 via-[#242426]/60 to-[#242426]/90 pointer-events-none" />
-        {/* Subtle radial vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(36,36,38,0.75)_100%)] pointer-events-none" />
+        {/* Minimal subtle vignette gradient for smooth text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60 pointer-events-none" />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="cert-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff80] bg-black/40 backdrop-blur-md text-xs font-mono tracking-wider uppercase mb-4">
+            <div className="cert-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/25 text-white bg-black/60 backdrop-blur-md text-xs font-mono tracking-wider uppercase mb-4 shadow-lg">
               ✦ Certifications
             </div>
             <h2
-              className="cert-heading font-black text-white leading-tight tracking-tight drop-shadow-sm"
+              className="cert-heading font-black text-white leading-tight tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]"
               style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
             >
               What I&apos;ve
               <br />
-              <span className="text-[#d9ff5c]">earned</span>
+              <span className="text-[#d9ff5c] drop-shadow-[0_2px_12px_rgba(217,255,92,0.4)]">earned</span>
             </h2>
           </div>
         </div>
@@ -86,7 +84,7 @@ export default function Certifications() {
             <div key={cert.name} className="cert-card">
               <motion.div
                 whileHover={{ scale: 1.03, y: -4 }}
-                className="relative p-6 rounded-2xl border border-[#ffffff18] bg-[#242426]/70 backdrop-blur-md group cursor-default overflow-hidden h-full hover:border-[#ffffff35] transition-all shadow-xl shadow-black/25"
+                className="relative p-6 rounded-2xl border border-white/20 bg-[#0d1117]/80 backdrop-blur-md group cursor-default overflow-hidden h-full hover:border-[#d9ff5c]/60 transition-all shadow-2xl shadow-black/40"
               >
                 {/* Background glow */}
                 <div
