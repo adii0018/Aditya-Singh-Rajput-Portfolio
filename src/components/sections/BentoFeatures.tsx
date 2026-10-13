@@ -25,9 +25,11 @@ import {
   Sparkles,
   FolderTree,
   Music,
+  CreditCard as CreditCardIcon,
 } from "lucide-react";
 import FileTreeCard from "@/components/ui/FileTreeCard";
 import SpotifyCard from "@/components/ui/SpotifyCard";
+import CreditCard from "@/components/ui/CreditCard";
 
 export default function BentoFeatures() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -332,62 +334,30 @@ export default function BentoFeatures() {
 
 
           {/* ======================================================== */}
-          {/* CARD 5: INVOICE STATUS (Stacked Invoices) */}
+          {/* CARD 5: 3D VIRTUAL MASTERCARD */}
           {/* ======================================================== */}
           <div className="bento-grid-card relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between overflow-hidden border border-[#ffffff15] shadow-xl min-h-[380px] bg-[#f6f8fb]">
             {/* Top Info */}
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2424260a] border border-[#24242615] text-[#242426] text-[11px] font-medium mb-5">
-                <Search className="w-3.5 h-3.5 opacity-70" />
-                Track
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2424260a] border border-[#24242615] text-[#242426] text-[11px] font-medium mb-4">
+                <CreditCardIcon className="w-3.5 h-3.5 opacity-70" />
+                Virtual Card
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#242426] tracking-tight mb-2">
-                Invoice Status
+              <h3 className="text-xl sm:text-2xl font-bold text-[#242426] tracking-tight mb-1.5">
+                Corporate Mastercard
               </h3>
               <p className="text-[#24242680] text-xs sm:text-sm leading-relaxed">
-                Track paid, pending, and overdue invoices in one clean view
+                Flip to reveal CVV and card credentials
               </p>
             </div>
 
-            {/* Invoices List */}
-            <div className="space-y-3 mt-4">
-              {/* Invoice 1: Mira Studio */}
-              <motion.div
-                whileHover={{ scale: 1.02, y: -2 }}
-                className="bg-white rounded-2xl p-4 border border-[#24242610] shadow-sm transition-shadow hover:shadow-md"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-mono text-[#24242660]">#002-12</span>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#40c46320] text-[#22863a] text-[10px] font-bold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#40c463]" />
-                    Paid
-                  </span>
-                </div>
-                <div className="text-base font-bold text-[#242426]">Mira Studio</div>
-                <div className="flex items-center justify-between text-xs text-[#24242670] mt-1">
-                  <span>Monthly retainer</span>
-                  <span className="font-bold text-[#242426]">$1,200</span>
-                </div>
-              </motion.div>
-
-              {/* Invoice 2: Silver Desk */}
-              <motion.div
-                whileHover={{ scale: 1.02, y: -2 }}
-                className="bg-white rounded-2xl p-4 border border-[#24242610] shadow-sm transition-shadow hover:shadow-md"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-mono text-[#24242660]">#003-12</span>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e2845220] text-[#c05621] text-[10px] font-bold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#c05621]" />
-                    Overdue
-                  </span>
-                </div>
-                <div className="text-base font-bold text-[#242426]">Silver Desk</div>
-                <div className="flex items-center justify-between text-xs text-[#24242670] mt-1">
-                  <span>Brand identity package</span>
-                  <span className="font-bold text-[#242426]">$550</span>
-                </div>
-              </motion.div>
+            {/* 3D Flip Card */}
+            <div className="my-auto py-2 flex flex-col items-center justify-center">
+              <CreditCard name="BRUCE WAYNE" />
+              <div className="mt-4 flex items-center gap-1.5 text-[11px] text-[#24242660] font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#40c463] animate-pulse" />
+                <span>Hover or tap to flip card</span>
+              </div>
             </div>
           </div>
 

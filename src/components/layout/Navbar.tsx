@@ -61,9 +61,7 @@ export default function Navbar() {
             onClick={() => handleNavClick("#home")}
             className="font-black text-xl tracking-tight text-[#242426] hover:text-[#242426] transition-colors"
           >
-            <span className="font-mono text-[#242426]">A/</span>
-            <span className="text-[#242426]">dii</span>
-            <span className="text-[#d9ff5c]">.</span>
+            <span className="font-mono text-[#242426]">ꫝ 𝚂 𐍂</span>
           </Link>
 
           {/* Desktop Nav */}
