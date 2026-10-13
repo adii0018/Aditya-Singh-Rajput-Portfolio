@@ -109,15 +109,15 @@ export default function Hero() {
             </span>
           </div>
 
-          {/* Main Heading: 2-line clean bold typography */}
+          {/* Main Heading: 2-line clean refined typography matching Makro reference */}
           <h1
-            className="font-black leading-[1.05] tracking-tight text-[#242426] mb-5"
-            style={{ fontSize: "clamp(42px, 5.5vw, 76px)" }}
+            className="font-medium tracking-[-0.035em] leading-[1.08] text-[#1f2022] mb-6"
+            style={{ fontSize: "clamp(44px, 5.8vw, 80px)" }}
           >
-            <div>
+            <div className="overflow-hidden">
               <AnimatedHeading text={personal.heroLine1} />
             </div>
-            <div>
+            <div className="overflow-hidden">
               <AnimatedHeading text={personal.heroLine2} />
             </div>
           </h1>

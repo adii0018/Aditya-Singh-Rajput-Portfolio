@@ -15,11 +15,13 @@ export function AnimatedHeading({
 }: AnimatedHeadingProps) {
   const words = text.split(" ");
   return (
-    <span className={`inline-block ${className}`}>
+    <span className={`inline-flex flex-wrap ${className}`}>
       {words.map((word, i) => (
         <span
           key={i}
-          className="inline-block overflow-hidden align-top mr-[0.25em] pb-1"
+          className={`inline-block overflow-hidden align-top ${
+            i < words.length - 1 ? "mr-[0.32em]" : ""
+          } pb-1`}
         >
           <span className={`inline-block ${wordClassName}`}>
             {word}
