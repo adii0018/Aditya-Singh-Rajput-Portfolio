@@ -6,6 +6,7 @@ import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 import { BentoCard } from "@/components/ui/BentoCard";
+import CodeLoader from "@/components/ui/CodeLoader";
 import { projects } from "@/lib/data";
 
 function ProjectCard({
@@ -149,6 +150,12 @@ export default function Projects() {
         opacity: 0,
         duration: 0.8,
       }, "-=0.35")
+      .from(".projects-code-loader", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.7,
+        ease: "back.out(1.7)",
+      }, "-=0.5")
       .from(".projects-all-btn", {
         y: 15,
         opacity: 0,
@@ -173,14 +180,19 @@ export default function Projects() {
             <div className="projects-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
               ✦ Featured Projects
             </div>
-            <h2
-              className="projects-heading font-black text-[#242426] leading-tight tracking-tight"
-              style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
-            >
-              Things I&apos;ve
-              <br />
-              <span className="italic text-[#4d4f57]">built</span>
-            </h2>
+            <div className="flex items-center gap-4 sm:gap-6">
+              <h2
+                className="projects-heading font-black text-[#242426] leading-tight tracking-tight"
+                style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
+              >
+                Things I&apos;ve
+                <br />
+                <span className="italic text-[#4d4f57]">built</span>
+              </h2>
+              <div className="projects-code-loader flex items-center">
+                <CodeLoader />
+              </div>
+            </div>
           </div>
 
           <motion.a
