@@ -1,13 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
 import { Star, GitFork, ExternalLink } from "lucide-react";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 
-// Static top repos data — update with real repos
 const topRepos = [
   {
     name: "alice-exam-proctor",
@@ -51,99 +51,139 @@ const langColors: Record<string, string> = {
 };
 
 export default function GitHubActivity() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotion()) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+        defaults: { ease: "power3.out" },
+      });
+
+      tl.from(".gh-badge", {
+        y: -15,
+        opacity: 0,
+        duration: 0.6,
+      })
+      .from(".gh-heading", {
+        y: 30,
+        opacity: 0,
+        duration: 0.75,
+      }, "-=0.35")
+      .from(".gh-profile-btn", {
+        y: 15,
+        opacity: 0,
+        duration: 0.6,
+      }, "-=0.45")
+      .from(".gh-chart-card", {
+        y: 35,
+        opacity: 0,
+        duration: 0.8,
+      }, "-=0.3")
+      .from(".gh-stat-card", {
+        y: 25,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.65,
+      }, "-=0.4")
+      .from(".gh-repo-card", {
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.75,
+      }, "-=0.3");
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section id="github" className="section-padding bg-[#ebeff5]">
+    <section id="github" ref={sectionRef} className="section-padding bg-[#ebeff5]">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <ScrollReveal>
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
-                ✦ GitHub Activity
-              </span>
-            </ScrollReveal>
-            <ScrollReveal delay={0.1}>
-              <h2
-                className="font-black text-[#242426] leading-tight tracking-tight"
-                style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
-              >
-                Code I&apos;ve
-                <br />
-                <span className="italic text-[#4d4f57]">shipped</span>
-              </h2>
-            </ScrollReveal>
+            <div className="gh-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
+              ✦ GitHub Activity
+            </div>
+            <h2
+              className="gh-heading font-black text-[#242426] leading-tight tracking-tight"
+              style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
+            >
+              Code I&apos;ve
+              <br />
+              <span className="italic text-[#4d4f57]">shipped</span>
+            </h2>
           </div>
 
-          <ScrollReveal delay={0.2}>
-            <motion.a
-              href={personal.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.04, y: -2 }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#242426] text-white text-sm font-semibold hover:bg-[#3a3a3c] transition-all"
-            >
-              <GithubIcon size={15} /> @{personal.githubUsername}
-              <ExternalLink size={12} />
-            </motion.a>
-          </ScrollReveal>
+          <motion.a
+            href={personal.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.04, y: -2 }}
+            className="gh-profile-btn flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#242426] text-white text-sm font-semibold hover:bg-[#3a3a3c] transition-all cursor-pointer self-start md:self-auto"
+          >
+            <GithubIcon size={15} /> @{personal.githubUsername}
+            <ExternalLink size={12} />
+          </motion.a>
         </div>
 
         {/* GitHub Contribution Graph embed */}
-        <ScrollReveal delay={0.1}>
-          <div className="bg-white rounded-3xl border border-[#24242210] p-6 md:p-8 mb-8 overflow-hidden">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="font-bold text-[#242426] text-base">Contribution Activity</h3>
-                <p className="text-[#4d4f57] text-sm">Last 12 months</p>
-              </div>
-              <span className="flex items-center gap-1.5 text-xs text-[#4d4f57]">
-                <span className="w-3 h-3 rounded-sm bg-[#40c463]" />
-                More active
-              </span>
+        <div className="gh-chart-card bg-white rounded-3xl border border-[#24242210] p-6 md:p-8 mb-8 overflow-hidden">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="font-bold text-[#242426] text-base">Contribution Activity</h3>
+              <p className="text-[#4d4f57] text-sm">Last 12 months</p>
             </div>
-
-            {/* Contribution graph via GitHub chart embed */}
-            <div className="w-full overflow-x-auto">
-              <Image
-                src={`https://ghchart.rshah.org/40c463/${personal.githubUsername}`}
-                alt="GitHub Contribution Graph"
-                width={850}
-                height={125}
-                unoptimized
-                className="w-full min-w-[600px] h-auto rounded-lg"
-              />
-            </div>
+            <span className="flex items-center gap-1.5 text-xs text-[#4d4f57]">
+              <span className="w-3 h-3 rounded-sm bg-[#40c463]" />
+              More active
+            </span>
           </div>
-        </ScrollReveal>
+
+          <div className="w-full overflow-x-auto">
+            <Image
+              src={`https://ghchart.rshah.org/40c463/${personal.githubUsername}`}
+              alt="GitHub Contribution Graph"
+              width={850}
+              height={125}
+              unoptimized
+              className="w-full min-w-[600px] h-auto rounded-lg"
+            />
+          </div>
+        </div>
 
         {/* GitHub Stats Cards */}
-        <ScrollReveal delay={0.2}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-              <p className="text-3xl font-black text-[#2da44e] mb-1">50+</p>
-              <p className="text-[#4d4f57] text-sm font-mono">Repositories</p>
-            </div>
-            <div className="bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-              <p className="text-3xl font-black text-[#40c463] mb-1">500+</p>
-              <p className="text-[#4d4f57] text-sm font-mono">Contributions</p>
-            </div>
-            <div className="bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-              <p className="text-3xl font-black text-[#2da44e] mb-1">42+</p>
-              <p className="text-[#4d4f57] text-sm font-mono">Stars Earned</p>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
+            <p className="text-3xl font-black text-[#2da44e] mb-1">50+</p>
+            <p className="text-[#4d4f57] text-sm font-mono">Repositories</p>
           </div>
-        </ScrollReveal>
+          <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
+            <p className="text-3xl font-black text-[#40c463] mb-1">500+</p>
+            <p className="text-[#4d4f57] text-sm font-mono">Contributions</p>
+          </div>
+          <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
+            <p className="text-3xl font-black text-[#2da44e] mb-1">42+</p>
+            <p className="text-[#4d4f57] text-sm font-mono">Stars Earned</p>
+          </div>
+        </div>
 
         {/* Top Repos */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {topRepos.map((repo, i) => (
-            <ScrollReveal key={repo.name} delay={i * 0.1}>
+          {topRepos.map((repo) => (
+            <div key={repo.name} className="gh-repo-card">
               <motion.a
                 href={`${personal.github}/${repo.name}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -4 }}
-                className="block bg-white rounded-2xl border border-[#24242210] p-6 hover:border-[#40c46360] hover:shadow-lg hover:shadow-[#40c46315] transition-all group"
+                className="block bg-white rounded-2xl border border-[#24242210] p-6 hover:border-[#40c46360] hover:shadow-lg hover:shadow-[#40c46315] transition-all group h-full cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
@@ -176,7 +216,7 @@ export default function GitHubActivity() {
                   </span>
                 </div>
               </motion.a>
-            </ScrollReveal>
+            </div>
           ))}
         </div>
       </div>

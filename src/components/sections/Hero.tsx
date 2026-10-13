@@ -1,19 +1,88 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { AnimatedHeading } from "@/components/ui/AnimatedText";
 import { personal } from "@/lib/data";
 
 export default function Hero() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "4%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const imageWrapRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotion()) return;
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+      });
+
+      // 1. Badge entrance
+      tl.from(".hero-badge", {
+        y: -18,
+        opacity: 0,
+        duration: 0.7,
+      })
+      // 2. Heading: Cinematic word mask reveal
+      .from(".hero-title-word", {
+        y: "115%",
+        opacity: 0,
+        duration: 0.95,
+        stagger: 0.05,
+        ease: "power4.out",
+      }, "-=0.35")
+      // 3. Subtitle: smooth rise
+      .from(".hero-subtitle", {
+        y: 22,
+        opacity: 0,
+        duration: 0.75,
+      }, "-=0.55")
+      // 4. CTA buttons & avatars row
+      .from(".hero-cta-wrap", {
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+      }, "-=0.45")
+      // 5. Social proof links
+      .from(".hero-social-row", {
+        y: 12,
+        opacity: 0,
+        duration: 0.5,
+      }, "-=0.35")
+      // 6. Right photo entrance: subtle scale from 1.05 to 1 & fade in
+      .from(imageWrapRef.current, {
+        scale: 1.05,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power2.out",
+      }, 0.15)
+      // 7. Scroll indicator
+      .from(".hero-scroll-btn", {
+        opacity: 0,
+        y: 12,
+        duration: 0.6,
+      }, "-=0.2");
+
+      // Subtle scroll parallax on hero photo
+      if (imageWrapRef.current) {
+        gsap.to(imageWrapRef.current, {
+          yPercent: 6,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
+    },
+    { scope: heroRef }
+  );
 
   const scrollToAbout = () => {
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
@@ -22,7 +91,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      ref={ref}
+      ref={heroRef}
       className="relative min-h-[680px] lg:min-h-[780px] xl:min-h-screen flex flex-col justify-between overflow-hidden bg-[#ebeff5]"
     >
       {/* Subtle background grid pattern */}
@@ -38,22 +107,15 @@ export default function Hero() {
       <div className="relative flex-1 w-full flex flex-col lg:flex-row items-center justify-between pt-24 lg:pt-0">
         
         {/* LEFT COLUMN: Hero content */}
-        <motion.div
-          style={{ y: textY, opacity }}
-          className="relative z-10 w-full lg:w-[48%] xl:w-[46%] flex flex-col justify-center px-6 sm:px-12 lg:pl-16 xl:pl-24 lg:pr-6 py-12 lg:py-24"
-        >
+        <div className="relative z-10 w-full lg:w-[48%] xl:w-[46%] flex flex-col justify-center px-6 sm:px-12 lg:pl-16 xl:pl-24 lg:pr-6 py-12 lg:py-24">
+          
           {/* Badge: AI-Powered Badge matching Makro pill */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs self-start mb-6"
-          >
+          <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs self-start mb-6">
             <span className="text-[12px] opacity-70">☷</span>
             <span className="text-[11px] font-mono font-medium text-[#242426] tracking-wider uppercase">
               AI-Powered Engineer · Full-Stack
             </span>
-          </motion.div>
+          </div>
 
           {/* Main Heading: 2-line clean bold typography */}
           <h1
@@ -69,22 +131,12 @@ export default function Hero() {
           </h1>
 
           {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-[#4d4f57] text-base sm:text-lg leading-relaxed max-w-lg mb-8"
-          >
+          <p className="hero-subtitle text-[#4d4f57] text-base sm:text-lg leading-relaxed max-w-lg mb-8">
             {personal.subtitle}
-          </motion.p>
+          </p>
 
           {/* CTA Buttons & Social proof row matching Makro */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
-            className="flex flex-wrap items-center gap-4 mb-6"
-          >
+          <div className="hero-cta-wrap flex flex-wrap items-center gap-4 mb-6">
             {/* Primary button: Dark pill with inner green arrow circle (Exact Makro signature button) */}
             <motion.button
               type="button"
@@ -101,7 +153,7 @@ export default function Hero() {
               <span>Explore My Work</span>
             </motion.button>
 
-            {/* Social avatar proof: Matching exact reference layout */}
+            {/* Social avatar proof */}
             <div className="flex items-center gap-3">
               <div className="flex -space-x-2">
                 <div className="w-8 h-8 rounded-full border-2 border-white bg-gradient-to-br from-[#c0adff] to-[#d9ff5c] flex items-center justify-center text-[10px] font-bold text-[#242426]">
@@ -121,15 +173,10 @@ export default function Hero() {
                 Trusted by solopreneurs
               </span>
             </div>
-          </motion.div>
+          </div>
 
           {/* Secondary links & Connect button */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.1 }}
-            className="flex items-center gap-4 text-xs"
-          >
+          <div className="hero-social-row flex items-center gap-4 text-xs">
             <motion.button
               type="button"
               whileHover={{ scale: 1.03 }}
@@ -159,12 +206,12 @@ export default function Hero() {
             >
               <LinkedinIcon size={14} /> LinkedIn
             </a>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* RIGHT COLUMN: Full bleed photo matching reference media_1791876714572.png */}
-        <motion.div
-          style={{ y: imageY }}
+        <div
+          ref={imageWrapRef}
           className="w-full lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[55%] xl:w-[54%] h-[520px] sm:h-[640px] lg:h-full z-0 overflow-hidden"
         >
           <div className="relative w-full h-full">
@@ -178,17 +225,14 @@ export default function Hero() {
               sizes="(max-width: 1024px) 100vw, 55vw"
             />
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.button
+      <button
         type="button"
         onClick={scrollToAbout}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1.5 text-[#4d4f57] hover:text-[#242426] transition-colors border-0 bg-transparent cursor-pointer z-30"
+        className="hero-scroll-btn absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1.5 text-[#4d4f57] hover:text-[#242426] transition-colors border-0 bg-transparent cursor-pointer z-30"
       >
         <span className="text-[10px] font-mono tracking-wider">SCROLL</span>
         <motion.div
@@ -197,7 +241,7 @@ export default function Hero() {
         >
           <ArrowDown size={14} />
         </motion.div>
-      </motion.button>
+      </button>
     </section>
   );
 }

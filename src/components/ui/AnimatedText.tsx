@@ -1,36 +1,49 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { ReactNode } from "react";
 
-interface AnimatedTextProps {
+interface AnimatedHeadingProps {
   text: string;
   className?: string;
-  delay?: number;
+  wordClassName?: string;
 }
 
 export function AnimatedHeading({
   text,
   className = "",
-  delay = 0.3,
-}: AnimatedTextProps) {
+  wordClassName = "hero-title-word",
+}: AnimatedHeadingProps) {
   const words = text.split(" ");
   return (
-    <span className={className}>
+    <span className={`inline-block ${className}`}>
       {words.map((word, i) => (
-        <motion.span
+        <span
           key={i}
-          className="inline-block mr-[0.25em]"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: delay + i * 0.12,
-            ease: [0.21, 0.47, 0.32, 0.98],
-          }}
+          className="inline-block overflow-hidden align-top mr-[0.25em] pb-1"
         >
-          {word}
-        </motion.span>
+          <span className={`inline-block ${wordClassName}`}>
+            {word}
+          </span>
+        </span>
       ))}
+    </span>
+  );
+}
+
+export function MaskedReveal({
+  children,
+  className = "",
+  innerClassName = "masked-item",
+}: {
+  children: ReactNode;
+  className?: string;
+  innerClassName?: string;
+}) {
+  return (
+    <span className={`inline-block overflow-hidden align-top ${className}`}>
+      <span className={`inline-block ${innerClassName}`}>
+        {children}
+      </span>
     </span>
   );
 }
