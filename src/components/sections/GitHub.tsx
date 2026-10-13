@@ -6,7 +6,7 @@ import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
 import { Star, GitFork, ExternalLink, Copy, Check, Clock } from "lucide-react";
 import { GithubIcon } from "@/components/ui/GithubIcon";
-import GridCardLoader from "@/components/ui/GridCardLoader";
+import WavingOctocat from "@/components/ui/WavingOctocat";
 import GitHubContributionCalendar from "@/components/ui/GitHubContributionCalendar";
 
 interface GitHubRepo {
@@ -301,7 +301,7 @@ export default function GitHubActivity() {
             </div>
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="gh-loader shrink-0 flex items-center justify-center">
-                <GridCardLoader />
+                <WavingOctocat size={64} />
               </div>
               <h2
                 className="gh-heading font-black text-[#242426] leading-tight tracking-tight"
