@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { navLinks } from "@/lib/data";
-import { Menu, X } from "lucide-react";
+import { Menu, X, FileDown } from "lucide-react";
 
 // Mapping of all page sections to their corresponding visible navbar item
 const SECTION_TO_NAV_MAP: Record<string, string> = {
@@ -168,14 +168,26 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* CTA & Resume */}
+          <div className="hidden md:flex items-center gap-2.5">
+            <motion.a
+              href="/Aditya_Singh_Rajput_Resume.pdf"
+              download="Aditya_Singh_Rajput_Resume.pdf"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#242426] rounded-full border border-[#24242220] hover:border-[#242426] bg-white transition-all cursor-pointer shadow-2xs"
+              title="Download Resume / CV"
+            >
+              <FileDown size={13} className="text-[#2da44e]" />
+              <span>Resume</span>
+            </motion.a>
+
             <motion.button
               type="button"
               onClick={() => handleNavClick("#contact")}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center justify-center px-5 py-2.5 bg-[#242426] text-white text-sm font-semibold rounded-full hover:bg-[#3a3a3c] transition-colors cursor-pointer border-0"
+              className="inline-flex items-center justify-center px-4 py-2 bg-[#242426] text-white text-xs font-semibold rounded-full hover:bg-[#3a3a3c] transition-colors cursor-pointer border-0"
             >
               Get in touch →
             </motion.button>
@@ -218,13 +230,23 @@ export default function Navbar() {
                   {link.label}
                 </button>
               ))}
-              <button
-                type="button"
-                onClick={() => handleNavClick("#contact")}
-                className="mt-3 px-4 py-3 bg-[#242426] text-white text-sm font-semibold rounded-xl text-center border-0 cursor-pointer"
-              >
-                Get in touch →
-              </button>
+              <div className="flex gap-2 mt-3 pt-3 border-t border-[#24242210]">
+                <a
+                  href="/Aditya_Singh_Rajput_Resume.pdf"
+                  download="Aditya_Singh_Rajput_Resume.pdf"
+                  className="flex-1 py-3 text-center bg-white border border-[#24242220] text-[#242426] text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <FileDown size={14} className="text-[#2da44e]" />
+                  <span>Resume</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => handleNavClick("#contact")}
+                  className="flex-[2] py-3 bg-[#242426] text-white text-xs font-semibold rounded-xl text-center border-0 cursor-pointer"
+                >
+                  Get in touch →
+                </button>
+              </div>
             </nav>
           </motion.div>
         )}

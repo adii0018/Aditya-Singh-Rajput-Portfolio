@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Fragment_Mono } from "next/font/google";
 import "./globals.css";
 import DynamicFavicon from "@/components/ui/DynamicFavicon";
+import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
+import CommandPalette from "@/components/ui/CommandPalette";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,19 +21,39 @@ const fragmentMono = Fragment_Mono({
 export const metadata: Metadata = {
   title: "Adii — AI/ML Engineer & Full-Stack Developer",
   description:
-    "I build AI-powered products that transform complex ideas into intelligent, real-world solutions.",
+    "I build AI-powered products that transform complex ideas into intelligent, real-world solutions. Computer Vision, NLP, and scalable architectures.",
   icons: {
     icon: "/favicons/a-minimal.png",
     shortcut: "/favicons/a-minimal.png",
     apple: "/favicons/a-minimal.png",
   },
-  keywords: ["AI", "ML", "Full-Stack", "Developer", "Aditya Singh Rajput", "Portfolio"],
-  authors: [{ name: "Aditya Singh Rajput" }],
+  keywords: [
+    "AI Engineer",
+    "Machine Learning",
+    "Computer Vision",
+    "NLP",
+    "Full-Stack Developer",
+    "Next.js",
+    "Python",
+    "FastAPI",
+    "Aditya Singh Rajput",
+    "Adii Portfolio",
+  ],
+  authors: [{ name: "Aditya Singh Rajput", url: "https://github.com/adii0018" }],
+  creator: "Aditya Singh Rajput",
   openGraph: {
     title: "Adii — AI/ML Engineer & Full-Stack Developer",
     description:
       "I build AI-powered products that transform complex ideas into intelligent, real-world solutions.",
     type: "website",
+    locale: "en_US",
+    siteName: "Adii Portfolio",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Adii — AI/ML Engineer & Full-Stack Developer",
+    description:
+      "I build AI-powered products that transform complex ideas into intelligent, real-world solutions.",
   },
 };
 
@@ -43,7 +65,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${fragmentMono.variable}`}>
       <body className={`${inter.className} noise-bg`}>
+        <ScrollProgressBar />
         <DynamicFavicon />
+        <CommandPalette />
         {children}
       </body>
     </html>

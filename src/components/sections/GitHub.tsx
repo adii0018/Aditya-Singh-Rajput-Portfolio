@@ -1,15 +1,25 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
-import { Star, GitFork, ExternalLink } from "lucide-react";
+import { Star, GitFork, ExternalLink, RefreshCw } from "lucide-react";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 import GridCardLoader from "@/components/ui/GridCardLoader";
 
-const topRepos = [
+interface GitHubRepo {
+  name: string;
+  description: string;
+  stars: number;
+  forks: number;
+  language: string;
+  color?: string;
+  html_url?: string;
+}
+
+const defaultRepos: GitHubRepo[] = [
   {
     name: "alice-exam-proctor",
     description: "AI-powered exam proctoring with computer vision & NLP",
@@ -17,6 +27,7 @@ const topRepos = [
     forks: 4,
     language: "Python",
     color: "#3572A5",
+    html_url: `${personal.github}/alice-exam-proctor`,
   },
   {
     name: "alice-mandi",
@@ -25,6 +36,7 @@ const topRepos = [
     forks: 2,
     language: "Python",
     color: "#3572A5",
+    html_url: `${personal.github}/alice-mandi`,
   },
   {
     name: "janSetu-ai",
@@ -33,6 +45,7 @@ const topRepos = [
     forks: 6,
     language: "TypeScript",
     color: "#2b7489",
+    html_url: `${personal.github}/janSetu-ai`,
   },
   {
     name: "ffzone",
@@ -41,6 +54,7 @@ const topRepos = [
     forks: 1,
     language: "TypeScript",
     color: "#2b7489",
+    html_url: `${personal.github}/ffzone`,
   },
 ];
 
@@ -49,10 +63,65 @@ const langColors: Record<string, string> = {
   TypeScript: "#2b7489",
   JavaScript: "#f1e05a",
   React: "#61dafb",
+  HTML: "#e34c26",
+  CSS: "#563d7c",
 };
 
 export default function GitHubActivity() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [repos, setRepos] = useState<GitHubRepo[]>(defaultRepos);
+  const [stats, setStats] = useState({
+    reposCount: 50,
+    followers: 18,
+    starsCount: 42,
+    isLive: false,
+  });
+
+  useEffect(() => {
+    // 1. Fetch user public profile
+    fetch(`https://api.github.com/users/${personal.githubUsername}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((userData) => {
+        if (!userData) return;
+        setStats((prev) => ({
+          ...prev,
+          reposCount: userData.public_repos || prev.reposCount,
+          followers: userData.followers || prev.followers,
+          isLive: true,
+        }));
+      })
+      .catch(() => {});
+
+    // 2. Fetch public repos
+    fetch(
+      `https://api.github.com/users/${personal.githubUsername}/repos?sort=updated&per_page=6`
+    )
+      .then((res) => (res.ok ? res.json() : null))
+      .then((repoList) => {
+        if (!Array.isArray(repoList) || repoList.length === 0) return;
+        const totalStars = repoList.reduce(
+          (acc: number, r: { stargazers_count?: number }) =>
+            acc + (r.stargazers_count || 0),
+          0
+        );
+        const mappedRepos: GitHubRepo[] = repoList.slice(0, 4).map((r) => ({
+          name: r.name,
+          description: r.description || "Open source software project",
+          stars: r.stargazers_count || 0,
+          forks: r.forks_count || 0,
+          language: r.language || "TypeScript",
+          html_url: r.html_url,
+          color: langColors[r.language] || "#3572A5",
+        }));
+        setRepos(mappedRepos);
+        setStats((prev) => ({
+          ...prev,
+          starsCount: totalStars > 0 ? totalStars : prev.starsCount,
+          isLive: true,
+        }));
+      })
+      .catch(() => {});
+  }, []);
 
   useGSAP(
     () => {
@@ -173,25 +242,33 @@ export default function GitHubActivity() {
         {/* GitHub Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-            <p className="text-3xl font-black text-[#2da44e] mb-1">50+</p>
-            <p className="text-[#4d4f57] text-sm font-mono">Repositories</p>
+            <p className="text-3xl font-black text-[#2da44e] mb-1">
+              {stats.reposCount}
+              <span className="text-xl">+</span>
+            </p>
+            <p className="text-[#4d4f57] text-sm font-mono">Public Repositories</p>
           </div>
           <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-            <p className="text-3xl font-black text-[#40c463] mb-1">500+</p>
-            <p className="text-[#4d4f57] text-sm font-mono">Contributions</p>
+            <p className="text-3xl font-black text-[#40c463] mb-1">
+              500<span className="text-xl">+</span>
+            </p>
+            <p className="text-[#4d4f57] text-sm font-mono">Contributions & Commits</p>
           </div>
           <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-            <p className="text-3xl font-black text-[#2da44e] mb-1">42+</p>
-            <p className="text-[#4d4f57] text-sm font-mono">Stars Earned</p>
+            <p className="text-3xl font-black text-[#2da44e] mb-1">
+              {stats.starsCount}
+              <span className="text-xl">+</span>
+            </p>
+            <p className="text-[#4d4f57] text-sm font-mono">Stars & Interactions</p>
           </div>
         </div>
 
         {/* Top Repos */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {topRepos.map((repo) => (
+          {repos.map((repo) => (
             <div key={repo.name} className="gh-repo-card">
               <motion.a
-                href={`${personal.github}/${repo.name}`}
+                href={repo.html_url || `${personal.github}/${repo.name}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -4 }}
@@ -216,7 +293,7 @@ export default function GitHubActivity() {
                   <span className="flex items-center gap-1 text-xs text-[#4d4f57]">
                     <span
                       className="w-2.5 h-2.5 rounded-full"
-                      style={{ background: langColors[repo.language] || "#888" }}
+                      style={{ background: repo.color || langColors[repo.language] || "#888" }}
                     />
                     {repo.language}
                   </span>

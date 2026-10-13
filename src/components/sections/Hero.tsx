@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, FileDown, Terminal } from "lucide-react";
 import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
@@ -101,12 +101,21 @@ export default function Hero() {
         {/* LEFT COLUMN: Hero content */}
         <div className="relative z-10 w-full lg:w-[48%] xl:w-[46%] flex flex-col justify-center px-6 sm:px-12 lg:pl-16 xl:pl-24 lg:pr-6 py-12 lg:py-24">
           
-          {/* Badge: AI-Powered Badge matching Makro pill */}
-          <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs self-start mb-6">
-            <span className="text-[12px] opacity-70">☷</span>
-            <span className="text-[11px] font-mono font-medium text-[#242426] tracking-wider uppercase">
-              ADITYA SINGH RAJPUT· AI & ML Engineer
-            </span>
+          {/* Badge & Live Availability */}
+          <div className="flex flex-wrap items-center gap-3 self-start mb-6">
+            <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs">
+              <span className="text-[12px] opacity-70">☷</span>
+              <span className="text-[11px] font-mono font-medium text-[#242426] tracking-wider uppercase">
+                ADITYA SINGH RAJPUT · AI & ML Engineer
+              </span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-xs border border-[#24242215] text-[#242426] text-[11px] font-mono shadow-xs">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2da44e] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2da44e]"></span>
+              </span>
+              <span>Available for Roles</span>
+            </div>
           </div>
 
           {/* Main Heading: 2-line clean refined typography matching Makro reference */}
@@ -145,26 +154,30 @@ export default function Hero() {
               <span>Explore My Work</span>
             </motion.button>
 
-            {/* Social avatar proof */}
-            <div className="flex items-center gap-3">
-              <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full border-2 border-white bg-gradient-to-br from-[#c0adff] to-[#d9ff5c] flex items-center justify-center text-[10px] font-bold text-[#242426]">
-                  AI
-                </div>
-                <div className="w-8 h-8 rounded-full border-2 border-white bg-[#242426] text-white flex items-center justify-center text-[10px] font-bold">
-                  ML
-                </div>
-                <div className="w-8 h-8 rounded-full border-2 border-white bg-[#d9ff5c] text-[#242426] flex items-center justify-center text-[10px] font-bold">
-                  TS
-                </div>
-                <div className="w-8 h-8 rounded-full border-2 border-white bg-[#b8deff] text-[#242426] flex items-center justify-center text-[10px] font-bold">
-                  PY
-                </div>
-              </div>
-              <span className="text-xs text-[#4d4f57] font-medium">
-                Trusted by solopreneurs
-              </span>
-            </div>
+            {/* Download CV Button */}
+            <motion.a
+              href="/Aditya_Singh_Rajput_Resume.pdf"
+              download="Aditya_Singh_Rajput_Resume.pdf"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-[#242426] bg-white border border-[#24242220] hover:border-[#242426] hover:shadow-xs transition-all cursor-pointer"
+            >
+              <FileDown size={16} className="text-[#2da44e]" />
+              <span>Download CV</span>
+            </motion.a>
+
+            {/* Terminal quick-launch pill */}
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => window.dispatchEvent(new CustomEvent("open-terminal"))}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-full text-xs font-mono text-[#4d4f57] bg-[#242426]/5 hover:bg-[#242426]/10 transition-all cursor-pointer border border-[#24242210]"
+              title="Open Developer Terminal (Ctrl+K)"
+            >
+              <Terminal size={13} className="text-[#242426]" />
+              <span className="hidden sm:inline">⌘K Terminal</span>
+            </motion.button>
           </div>
 
           {/* Secondary links & Connect button */}
