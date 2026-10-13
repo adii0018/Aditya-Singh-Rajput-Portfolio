@@ -18,6 +18,7 @@ export default function DockingDashboard() {
   const containerRef = useRef<HTMLDivElement>(null);
   const devPassRef = useRef<HTMLDivElement>(null);
   const devPassBerthRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useGSAP(
     () => {
@@ -112,77 +113,96 @@ export default function DockingDashboard() {
     { scope: containerRef }
   );
 
-  // Vertical lines under SVG chart wave
-  const hatchedLines = [
-    { x: 14, y: 70 },
-    { x: 24, y: 70 },
-    { x: 34, y: 71 },
-    { x: 44, y: 72 },
-    { x: 54, y: 73 },
-    { x: 64, y: 75 },
-    { x: 74, y: 76 },
-    { x: 84, y: 75 },
-    { x: 94, y: 73 },
-    { x: 104, y: 71 },
-    { x: 114, y: 69 },
-    { x: 124, y: 66 },
-    { x: 134, y: 61 },
-    { x: 144, y: 54 },
-    { x: 154, y: 44 },
-    { x: 164, y: 32 },
-    { x: 174, y: 24 },
-    { x: 184, y: 20 },
-    { x: 194, y: 20 },
-    { x: 204, y: 20 },
-    { x: 214, y: 20 },
-    { x: 224, y: 20 },
-    { x: 234, y: 20 },
-    { x: 244, y: 20 },
-  ];
+
 
   return (
     <div
       ref={containerRef}
       className="relative w-full max-w-5xl mx-auto pt-16 md:pt-24 pb-8 select-none"
     >
-      {/* Outer Dashboard Shell */}
-      <div className="relative rounded-[24px] sm:rounded-[32px] bg-[#ecf0f5] border border-[#d2d9e4] shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-visible">
-        
-        {/* LEFT SIDEBAR */}
-        <aside className="hidden sm:flex flex-col items-center justify-between py-2 px-1 border-r border-[#24242610] pr-4">
+      {/* Outer Dashboard Shell with Live Video Background */}
+      <div
+        className="relative rounded-[24px] sm:rounded-[32px] border border-white/20 shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-hidden bg-black text-white"
+        style={{ containerType: "size" } as React.CSSProperties}
+      >
+        {/* FULL-DASHBOARD BACKGROUND VIDEO */}
+        <div
+          className="absolute inset-0 w-full h-full overflow-hidden flex items-center justify-center pointer-events-auto cursor-pointer"
+          onClick={() => {
+            if (videoRef.current) {
+              if (videoRef.current.paused) {
+                videoRef.current.play();
+              } else {
+                videoRef.current.pause();
+              }
+            }
+          }}
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          <video
+            ref={videoRef}
+            src="/video%202.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            controls={false}
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen noremoteplayback"
+            onContextMenu={(e) => e.preventDefault()}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              width: "max(100cqh, 56.25cqw)",
+              height: "max(100cqw, 177.78cqh)",
+              transform: "translate(-50%, -50%) rotate(270deg)",
+              objectFit: "cover",
+            }}
+            className="pointer-events-none"
+          />
+
+          {/* Dark Glass / Vignette Overlay for Crisp Readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/75 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+        </div>
+
+        {/* LEFT SIDEBAR (Frosted Glass) */}
+        <aside className="relative z-10 hidden sm:flex flex-col items-center justify-between py-2 px-1 border-r border-white/15 pr-4 pointer-events-auto">
           <div className="flex flex-col items-center gap-6">
             {/* Makro two-semicircle icon */}
             <div className="relative w-7 h-7 flex items-center justify-center">
-              <div className="w-4 h-6 rounded-l-full bg-[#8c929d] absolute left-0" />
-              <div className="w-4 h-4 rounded-full bg-[#656c78] absolute right-0" />
+              <div className="w-4 h-6 rounded-l-full bg-white/70 absolute left-0" />
+              <div className="w-4 h-4 rounded-full bg-white/40 absolute right-0" />
             </div>
 
             {/* Nav icons */}
             <div className="flex flex-col items-center gap-3">
               <button
                 type="button"
-                className="w-10 h-10 rounded-xl bg-[#d9ff5c] text-[#242426] flex items-center justify-center shadow-xs transition-transform hover:scale-105"
+                className="w-10 h-10 rounded-xl bg-[#d9ff5c] text-[#242426] flex items-center justify-center shadow-md transition-transform hover:scale-105"
                 title="Dashboard"
               >
                 <LayoutGrid className="w-5 h-5" />
               </button>
               <button
                 type="button"
-                className="w-10 h-10 rounded-xl text-[#24242660] flex items-center justify-center hover:text-[#242426] hover:bg-white/50 transition-colors"
+                className="w-10 h-10 rounded-xl text-white/70 flex items-center justify-center hover:text-white hover:bg-white/10 transition-colors"
                 title="Analytics"
               >
                 <BarChart3 className="w-5 h-5" />
               </button>
               <button
                 type="button"
-                className="w-10 h-10 rounded-xl text-[#24242660] flex items-center justify-center hover:text-[#242426] hover:bg-white/50 transition-colors"
+                className="w-10 h-10 rounded-xl text-white/70 flex items-center justify-center hover:text-white hover:bg-white/10 transition-colors"
                 title="History"
               >
                 <Clock className="w-5 h-5" />
               </button>
               <button
                 type="button"
-                className="w-10 h-10 rounded-xl text-[#24242660] flex items-center justify-center hover:text-[#242426] hover:bg-white/50 transition-colors"
+                className="w-10 h-10 rounded-xl text-white/70 flex items-center justify-center hover:text-white hover:bg-white/10 transition-colors"
                 title="Settings"
               >
                 <Settings className="w-5 h-5" />
@@ -191,7 +211,7 @@ export default function DockingDashboard() {
           </div>
 
           {/* Bottom user avatar */}
-          <div className="w-8 h-8 rounded-full overflow-hidden border border-white shadow-xs">
+          <div className="w-8 h-8 rounded-full overflow-hidden border border-white/40 shadow-xs">
             <Image
               src="/profile.jpg"
               alt="User"
@@ -204,16 +224,16 @@ export default function DockingDashboard() {
         </aside>
 
         {/* MAIN DASHBOARD CONTENT */}
-        <div className="flex-1 min-w-0">
+        <div className="relative z-10 flex-1 min-w-0">
           
           {/* HEADER */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
-              <h3 className="text-xl sm:text-2xl font-black text-[#242426] tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                 Projected balance
               </h3>
-              <p className="text-xs text-[#24242680] flex items-center gap-1.5 mt-0.5">
-                <span className="w-2 h-2 rounded-full bg-[#8c929d]" />
+              <p className="text-xs text-white/75 flex items-center gap-1.5 mt-0.5">
+                <span className="w-2 h-2 rounded-full bg-[#40c463] animate-pulse" />
                 No negative cash days expected
               </p>
             </div>
@@ -221,21 +241,21 @@ export default function DockingDashboard() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242615] text-[#242426] text-xs font-medium shadow-2xs hover:bg-[#fafbfc] transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-medium backdrop-blur-md transition-colors"
               >
                 Next 30 days
-                <ChevronDown className="w-3.5 h-3.5 opacity-60" />
+                <ChevronDown className="w-3.5 h-3.5 opacity-80" />
               </button>
               <button
                 type="button"
-                className="w-8 h-8 rounded-full bg-white border border-[#24242615] text-[#242426] flex items-center justify-center shadow-2xs hover:bg-[#fafbfc] transition-colors"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-colors"
                 title="Share"
               >
                 <Share2 className="w-3.5 h-3.5" />
               </button>
               <button
                 type="button"
-                className="w-8 h-8 rounded-full bg-[#242426] text-white flex items-center justify-center shadow-xs hover:bg-[#1a1a1c] transition-colors"
+                className="w-8 h-8 rounded-full bg-[#d9ff5c] text-[#242426] flex items-center justify-center shadow-xs hover:bg-[#cbf544] transition-colors"
                 title="Add new"
               >
                 <Plus className="w-4 h-4" />
@@ -243,122 +263,31 @@ export default function DockingDashboard() {
             </div>
           </div>
 
-          {/* GRID LAYOUT: Left Income card + Right DevPass Berth */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          {/* GRID LAYOUT: Left open video view + Right DevPass Berth */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch min-h-[380px] sm:min-h-[420px] mb-5">
             
-            {/* COLUMN 1: Large Income Card with signature hatched wave chart */}
-            <div className="lg:col-span-6 bg-white rounded-2xl p-5 border border-[#24242610] shadow-xs flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-semibold text-[#24242680] uppercase tracking-wider">
-                    Income
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-[#242426] text-white text-[10px] font-bold">
-                    +18%
-                  </span>
-                </div>
-                <div className="text-2xl sm:text-3xl font-black text-[#242426] tracking-tight">
-                  $27,500
-                </div>
-
-                {/* Hatched Area Chart */}
-                <div className="bg-[#f5f8fb] rounded-xl p-3 mt-4 border border-[#24242608]">
-                  <svg
-                    viewBox="0 0 260 120"
-                    className="w-full h-28 sm:h-32 overflow-visible"
-                    fill="none"
-                  >
-                    {/* Vertical hatched lines under the curve */}
-                    {hatchedLines.map((line, idx) => (
-                      <line
-                        key={idx}
-                        x1={line.x}
-                        y1={line.y}
-                        x2={line.x}
-                        y2={110}
-                        stroke="#242426"
-                        strokeWidth="1"
-                        strokeOpacity="0.35"
-                      />
-                    ))}
-
-                    {/* Main smooth curve */}
-                    <path
-                      d="M 10 70 C 50 70, 70 76, 110 70 C 145 64, 155 24, 185 20 L 250 20"
-                      stroke="#242426"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-
-                    {/* Bottom baseline */}
-                    <line
-                      x1="10"
-                      y1="110"
-                      x2="250"
-                      y2="110"
-                      stroke="#242426"
-                      strokeWidth="1"
-                      strokeOpacity="0.1"
-                    />
-                  </svg>
-
-                  {/* Dates axis */}
-                  <div className="flex justify-between text-[10px] font-medium text-[#24242660] mt-1 px-1">
-                    <span>Dec 1</span>
-                    <span>Dec 7</span>
-                    <span>Dec 14</span>
-                    <span>Dec 21</span>
-                    <span>Dec 28</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Sub-stats row */}
-              <div className="grid grid-cols-3 gap-2 pt-4 mt-4 border-t border-[#24242608] text-left">
-                <div>
-                  <div className="text-[10px] text-[#24242660] uppercase tracking-wider font-mono">
-                    Peak
-                  </div>
-                  <div className="text-xs sm:text-sm font-bold text-[#242426]">
-                    15:30
-                  </div>
-                </div>
-                <div>
-                  <div className="text-[10px] text-[#24242660] uppercase tracking-wider font-mono">
-                    Safe buffer
-                  </div>
-                  <div className="text-xs sm:text-sm font-bold text-[#242426]">
-                    $7,200
-                  </div>
-                </div>
-                <div>
-                  <div className="text-[10px] text-[#24242660] uppercase tracking-wider font-mono">
-                    At-risk
-                  </div>
-                  <div className="text-xs sm:text-sm font-bold text-[#242426]">
-                    $1,380
-                  </div>
-                </div>
-              </div>
+            {/* COLUMN 1: Open panoramic video viewing area */}
+            <div className="hidden lg:flex lg:col-span-6 flex-col justify-end p-4 pointer-events-none">
+              {/* Clean unobstructed video vista */}
             </div>
 
             {/* COLUMN 2: DEV PASS DOCKING BERTH */}
             <div
               ref={devPassBerthRef}
-              className="lg:col-span-6 flex flex-col justify-center items-center relative min-h-[360px] p-2 overflow-visible"
+              className="lg:col-span-6 flex flex-col justify-center items-center relative min-h-[380px] p-2 overflow-visible"
             >
               {/* Dashed Ghost Ticket Outline in the slot */}
               <div
-                className="absolute w-[22em] h-[32em] rounded-2xl border-2 border-dashed border-[#7c3aed40] bg-[#1e1e240a] flex flex-col items-center justify-center pointer-events-none text-center p-6"
+                className="absolute w-[22em] h-[32em] rounded-2xl border-2 border-dashed border-[#7c3aed90] bg-[#1e1e2470] backdrop-blur-md flex flex-col items-center justify-center pointer-events-none text-center p-6 shadow-2xl"
                 style={{ fontSize: "10px" }}
               >
-                <div className="w-8 h-8 rounded-full border border-dashed border-[#7c3aed60] flex items-center justify-center text-[#7c3aed] text-xs font-mono mb-2">
+                <div className="w-8 h-8 rounded-full border border-dashed border-[#7c3aed] flex items-center justify-center text-[#c4b5fd] text-xs font-mono mb-2">
                   ✦
                 </div>
-                <span className="text-xs font-mono font-bold text-[#7c3aed] uppercase tracking-wider">
+                <span className="text-xs font-mono font-bold text-[#c4b5fd] uppercase tracking-wider">
                   Dev Pass Berth
                 </span>
-                <span className="text-[10px] font-mono text-[#24242650] mt-1">
+                <span className="text-[10px] font-mono text-white/60 mt-1">
                   ASR-18-OG-DEV · ALICE
                 </span>
               </div>
@@ -373,56 +302,56 @@ export default function DockingDashboard() {
               </div>
             </div>
 
-            {/* FULL-WIDTH ROW: Income Sources Card */}
-            <div className="lg:col-span-12 bg-white rounded-2xl p-5 border border-[#24242610] shadow-xs">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-sm font-bold text-[#242426]">
-                  Income Sources
-                </span>
-                <span className="px-2 py-0.5 rounded-full bg-[#242426] text-white text-[10px] font-bold">
-                  Q4 2025
-                </span>
-              </div>
-              <div className="text-xs text-[#24242660] mb-3">
-                Overview
-              </div>
+          </div>
 
-              {/* Multi-segmented color bar matching reference */}
-              <div className="h-2.5 w-full flex rounded-full overflow-hidden gap-1 mb-3">
-                <div className="h-full bg-[#8b7bf5] rounded-l-full" style={{ width: "48%" }} title="Retainers & Subscriptions (48%)" />
-                <div className="h-full bg-[#4d96f7]" style={{ width: "22%" }} title="Product Invoices (22%)" />
-                <div className="h-full bg-[#42b0a8]" style={{ width: "15%" }} title="Usage-based fees (15%)" />
-                <div className="h-full bg-[#88a83d]" style={{ width: "8%" }} title="Affiliate (8%)" />
-                <div className="h-full bg-[#f0a732]" style={{ width: "4%" }} title="Other (4%)" />
-                <div className="h-full bg-[#c45b43] rounded-r-full" style={{ width: "3%" }} title="Misc (3%)" />
-              </div>
-
-              {/* Breakdown items */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
-                <div className="flex items-center justify-between text-[#242426] bg-[#f8fafc] px-3 py-2 rounded-xl">
-                  <span className="flex items-center gap-2 text-[#24242680]">
-                    <span className="w-2 h-2 rounded-full bg-[#8b7bf5]" />
-                    Retainers
-                  </span>
-                  <span className="font-bold font-mono">$13,200</span>
-                </div>
-                <div className="flex items-center justify-between text-[#242426] bg-[#f8fafc] px-3 py-2 rounded-xl">
-                  <span className="flex items-center gap-2 text-[#24242680]">
-                    <span className="w-2 h-2 rounded-full bg-[#4d96f7]" />
-                    Invoices
-                  </span>
-                  <span className="font-bold font-mono">$6,050</span>
-                </div>
-                <div className="flex items-center justify-between text-[#242426] bg-[#f8fafc] px-3 py-2 rounded-xl">
-                  <span className="flex items-center gap-2 text-[#24242680]">
-                    <span className="w-2 h-2 rounded-full bg-[#42b0a8]" />
-                    Usage Fees
-                  </span>
-                  <span className="font-bold font-mono">$4,125</span>
-                </div>
-              </div>
+          {/* FULL-WIDTH ROW: Income Sources (Frosted Glass Card) */}
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/15 text-white shadow-xl">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-sm font-bold text-white">
+                Income Sources
+              </span>
+              <span className="px-2 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold">
+                Q4 2025
+              </span>
+            </div>
+            <div className="text-xs text-white/60 mb-3">
+              Overview
             </div>
 
+            {/* Multi-segmented color bar matching reference */}
+            <div className="h-2.5 w-full flex rounded-full overflow-hidden gap-1 mb-3">
+              <div className="h-full bg-[#8b7bf5] rounded-l-full" style={{ width: "48%" }} title="Retainers & Subscriptions (48%)" />
+              <div className="h-full bg-[#4d96f7]" style={{ width: "22%" }} title="Product Invoices (22%)" />
+              <div className="h-full bg-[#42b0a8]" style={{ width: "15%" }} title="Usage-based fees (15%)" />
+              <div className="h-full bg-[#88a83d]" style={{ width: "8%" }} title="Affiliate (8%)" />
+              <div className="h-full bg-[#f0a732]" style={{ width: "4%" }} title="Other (4%)" />
+              <div className="h-full bg-[#c45b43] rounded-r-full" style={{ width: "3%" }} title="Misc (3%)" />
+            </div>
+
+            {/* Breakdown items */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
+              <div className="flex items-center justify-between text-white bg-white/10 border border-white/10 px-3 py-2 rounded-xl">
+                <span className="flex items-center gap-2 text-white/80">
+                  <span className="w-2 h-2 rounded-full bg-[#8b7bf5]" />
+                  Retainers
+                </span>
+                <span className="font-bold font-mono text-white">$13,200</span>
+              </div>
+              <div className="flex items-center justify-between text-white bg-white/10 border border-white/10 px-3 py-2 rounded-xl">
+                <span className="flex items-center gap-2 text-white/80">
+                  <span className="w-2 h-2 rounded-full bg-[#4d96f7]" />
+                  Invoices
+                </span>
+                <span className="font-bold font-mono text-white">$6,050</span>
+              </div>
+              <div className="flex items-center justify-between text-white bg-white/10 border border-white/10 px-3 py-2 rounded-xl">
+                <span className="flex items-center gap-2 text-white/80">
+                  <span className="w-2 h-2 rounded-full bg-[#42b0a8]" />
+                  Usage Fees
+                </span>
+                <span className="font-bold font-mono text-white">$4,125</span>
+              </div>
+            </div>
           </div>
 
         </div>
