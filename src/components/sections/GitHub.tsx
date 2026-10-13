@@ -2,12 +2,12 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
 import { Star, GitFork, ExternalLink, Copy, Check, Clock } from "lucide-react";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 import GridCardLoader from "@/components/ui/GridCardLoader";
+import GitHubContributionCalendar from "@/components/ui/GitHubContributionCalendar";
 
 interface GitHubRepo {
   name: string;
@@ -123,6 +123,7 @@ export default function GitHubActivity() {
     reposCount: 50,
     followers: 18,
     starsCount: 42,
+    contributionsCount: 1080,
     isLive: false,
   });
 
@@ -327,28 +328,28 @@ export default function GitHubActivity() {
 
         {/* Latest Commit Live Ticker */}
         {latestCommit && (
-          <div className="gh-ticker mb-8 p-3.5 sm:p-4 rounded-2xl bg-white border border-[#24242210] flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm shadow-sm">
+          <div className="gh-ticker mb-8 p-3.5 sm:p-4 rounded-2xl bg-[#0d1117] border border-[#30363d] flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm shadow-xl shadow-black/20">
             <div className="flex items-center gap-2.5 min-w-0">
               <span className="relative flex h-2.5 w-2.5 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#40c463] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#40c463]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#39d353] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#39d353]"></span>
               </span>
-              <span className="font-mono text-[11px] uppercase tracking-wider font-semibold text-[#4d4f57] bg-[#ebeff5] px-2 py-0.5 rounded-full shrink-0">
+              <span className="font-mono text-[11px] uppercase tracking-wider font-semibold text-[#7d8590] bg-[#161b22] border border-[#30363d] px-2.5 py-0.5 rounded-full shrink-0">
                 Live Activity
               </span>
-              <span className="text-[#242426] font-medium truncate">
+              <span className="text-[#e6edf3] font-medium truncate">
                 Pushed to{" "}
-                <span className="font-semibold text-[#242426] underline decoration-[#40c463] underline-offset-2">
+                <span className="font-semibold text-white underline decoration-[#39d353] underline-offset-2">
                   {latestCommit.repo}
                 </span>
                 {latestCommit.message ? (
-                  <span className="text-[#4d4f57] hidden sm:inline">
+                  <span className="text-[#7d8590] hidden sm:inline">
                     {" "}— &ldquo;{latestCommit.message}&rdquo;
                   </span>
                 ) : null}
               </span>
             </div>
-            <div className="flex items-center gap-3 shrink-0 text-[#4d4f57] text-xs font-mono ml-auto sm:ml-0">
+            <div className="flex items-center gap-3 shrink-0 text-[#7d8590] text-xs font-mono ml-auto sm:ml-0">
               <span className="flex items-center gap-1">
                 <Clock size={12} /> {latestCommit.timeAgo}
               </span>
@@ -356,7 +357,7 @@ export default function GitHubActivity() {
                 href={latestCommit.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-sans text-xs text-[#242426] font-semibold hover:text-[#40c463] transition-colors"
+                className="inline-flex items-center gap-1 font-sans text-xs text-[#e6edf3] font-semibold hover:text-[#39d353] transition-colors"
               >
                 View <ExternalLink size={11} />
               </a>
@@ -365,42 +366,27 @@ export default function GitHubActivity() {
         )}
 
         {/* GitHub Contribution Graph & Language Breakdown */}
-        <div className="gh-chart-card bg-white rounded-3xl border border-[#24242210] p-6 md:p-8 mb-8 overflow-hidden shadow-sm">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="font-bold text-[#242426] text-base">Contribution Activity</h3>
-              <p className="text-[#4d4f57] text-sm">Last 12 months</p>
-            </div>
-            <span className="flex items-center gap-1.5 text-xs text-[#4d4f57]">
-              <span className="w-3 h-3 rounded-sm bg-[#40c463]" />
-              More active
-            </span>
-          </div>
-
-          <div className="w-full overflow-x-auto">
-            <Image
-              src={`https://ghchart.rshah.org/40c463/${personal.githubUsername}`}
-              alt="GitHub Contribution Graph"
-              width={850}
-              height={125}
-              unoptimized
-              className="w-full min-w-[600px] h-auto rounded-lg"
-            />
-          </div>
+        <div className="gh-chart-card bg-[#0d1117] rounded-3xl border border-[#30363d] p-6 md:p-8 mb-8 overflow-hidden shadow-2xl shadow-black/30">
+          <GitHubContributionCalendar
+            username={personal.githubUsername}
+            onTotalChange={(total) =>
+              setStats((prev) => ({ ...prev, contributionsCount: total }))
+            }
+          />
 
           {/* Languages Segmented Progress Bar */}
-          <div className="mt-8 pt-6 border-t border-[#24242210]">
+          <div className="mt-8 pt-6 border-t border-[#30363d]">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-mono uppercase tracking-wider text-[#4d4f57] font-semibold">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#7d8590] font-semibold">
                 Language Distribution
               </span>
-              <span className="text-xs text-[#4d4f57] font-mono">
+              <span className="text-xs text-[#7d8590] font-mono">
                 {stats.reposCount} Repositories Analyzed
               </span>
             </div>
 
             {/* Segmented bar */}
-            <div className="h-3 w-full rounded-full overflow-hidden flex bg-[#ebeff5] gap-0.5 p-0.5">
+            <div className="h-3 w-full rounded-full overflow-hidden flex bg-[#161b22] border border-[#30363d]/60 gap-0.5 p-0.5">
               {languages.map((lang) => (
                 <div
                   key={lang.name}
@@ -417,13 +403,13 @@ export default function GitHubActivity() {
             {/* Language badges */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3.5">
               {languages.map((lang) => (
-                <div key={lang.name} className="flex items-center gap-1.5 text-xs text-[#242426]">
+                <div key={lang.name} className="flex items-center gap-1.5 text-xs text-[#e6edf3]">
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0"
                     style={{ backgroundColor: lang.color }}
                   />
                   <span className="font-medium">{lang.name}</span>
-                  <span className="text-[#4d4f57] font-mono text-[11px]">{lang.percentage}%</span>
+                  <span className="text-[#7d8590] font-mono text-[11px]">{lang.percentage}%</span>
                 </div>
               ))}
             </div>
@@ -432,25 +418,26 @@ export default function GitHubActivity() {
 
         {/* GitHub Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-            <p className="text-3xl font-black text-[#2da44e] mb-1">
+          <div className="gh-stat-card bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 text-center shadow-lg shadow-black/20">
+            <p className="text-3xl font-black text-[#39d353] mb-1">
               {stats.reposCount}
               <span className="text-xl">+</span>
             </p>
-            <p className="text-[#4d4f57] text-sm font-mono">Public Repositories</p>
+            <p className="text-[#7d8590] text-sm font-mono">Public Repositories</p>
           </div>
-          <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-            <p className="text-3xl font-black text-[#40c463] mb-1">
-              500<span className="text-xl">+</span>
+          <div className="gh-stat-card bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 text-center shadow-lg shadow-black/20">
+            <p className="text-3xl font-black text-[#39d353] mb-1">
+              {(stats.contributionsCount || 1080).toLocaleString()}
+              <span className="text-xl">+</span>
             </p>
-            <p className="text-[#4d4f57] text-sm font-mono">Contributions & Commits</p>
+            <p className="text-[#7d8590] text-sm font-mono">Contributions in Last Year</p>
           </div>
-          <div className="gh-stat-card bg-white rounded-2xl border border-[#24242210] p-6 text-center">
-            <p className="text-3xl font-black text-[#2da44e] mb-1">
+          <div className="gh-stat-card bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 text-center shadow-lg shadow-black/20">
+            <p className="text-3xl font-black text-[#39d353] mb-1">
               {stats.starsCount}
               <span className="text-xl">+</span>
             </p>
-            <p className="text-[#4d4f57] text-sm font-mono">Stars & Interactions</p>
+            <p className="text-[#7d8590] text-sm font-mono">Stars & Interactions</p>
           </div>
         </div>
 
@@ -463,12 +450,12 @@ export default function GitHubActivity() {
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -4 }}
-                className="block bg-white rounded-2xl border border-[#24242210] p-6 hover:border-[#40c46360] hover:shadow-lg hover:shadow-[#40c46315] transition-all group h-full cursor-pointer"
+                className="block bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 hover:border-[#39d35380] hover:shadow-xl hover:shadow-[#39d35315] transition-all group h-full cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <GithubIcon size={15} className="text-[#4d4f57]" />
-                    <span className="font-semibold text-[#242426] text-sm group-hover:text-[#242426]">
+                    <GithubIcon size={15} className="text-[#7d8590]" />
+                    <span className="font-semibold text-[#e6edf3] text-sm group-hover:text-white transition-colors">
                       {repo.name}
                     </span>
                   </div>
@@ -484,12 +471,12 @@ export default function GitHubActivity() {
                         setTimeout(() => setCopiedRepo(null), 2000);
                       }}
                       title="Copy git clone command"
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#ebeff5] hover:bg-[#242426] text-[#4d4f57] hover:text-white transition-all cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#161b22] border border-[#30363d] hover:bg-[#21262d] text-[#7d8590] hover:text-[#e6edf3] transition-all cursor-pointer"
                     >
                       {copiedRepo === repo.name ? (
                         <>
-                          <Check size={11} className="text-[#40c463]" />
-                          <span className="text-[#40c463] font-semibold">Copied!</span>
+                          <Check size={11} className="text-[#39d353]" />
+                          <span className="text-[#39d353] font-semibold">Copied!</span>
                         </>
                       ) : (
                         <>
@@ -500,25 +487,25 @@ export default function GitHubActivity() {
                     </button>
                     <ExternalLink
                       size={13}
-                      className="text-[#24242240] group-hover:text-[#242426] transition-colors"
+                      className="text-[#7d8590] group-hover:text-white transition-colors"
                     />
                   </div>
                 </div>
 
-                <p className="text-[#4d4f57] text-xs leading-relaxed mb-4">{repo.description}</p>
+                <p className="text-[#7d8590] text-xs leading-relaxed mb-4">{repo.description}</p>
 
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1 text-xs text-[#4d4f57]">
+                  <span className="flex items-center gap-1 text-xs text-[#7d8590]">
                     <span
                       className="w-2.5 h-2.5 rounded-full"
                       style={{ background: repo.color || langColors[repo.language] || "#888" }}
                     />
                     {repo.language}
                   </span>
-                  <span className="flex items-center gap-1 text-xs text-[#4d4f57]">
+                  <span className="flex items-center gap-1 text-xs text-[#7d8590]">
                     <Star size={11} /> {repo.stars}
                   </span>
-                  <span className="flex items-center gap-1 text-xs text-[#4d4f57]">
+                  <span className="flex items-center gap-1 text-xs text-[#7d8590]">
                     <GitFork size={11} /> {repo.forks}
                   </span>
                 </div>
