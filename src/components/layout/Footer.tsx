@@ -38,8 +38,8 @@ export default function Footer() {
           {/* Brand & Social Card */}
           <div className="col-span-2 md:col-span-1 overflow-visible">
             <div className="font-black text-2xl mb-4">
-              <span className="font-mono">A/</span>dii
-              <span className="text-[#d9ff5c]">.</span>
+              <span className="font-mono">ꫝ 𝚂 𐍂</span>
+              <span className="text-[#d9ff5c]"></span>
             </div>
             <p className="text-[#ffffff80] text-sm leading-relaxed mb-6">
               Building intelligence.<br />Shaping tomorrow.

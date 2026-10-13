@@ -105,7 +105,7 @@ export default function Hero() {
           <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs self-start mb-6">
             <span className="text-[12px] opacity-70">☷</span>
             <span className="text-[11px] font-mono font-medium text-[#242426] tracking-wider uppercase">
-              AI-Powered Engineer · Full-Stack
+              ADITYA SINGH RAJPUT· AI & ML Engineer
             </span>
           </div>
 

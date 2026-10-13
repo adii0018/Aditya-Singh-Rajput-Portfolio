@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fragment_Mono } from "next/font/google";
 import "./globals.css";
+import DynamicFavicon from "@/components/ui/DynamicFavicon";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,7 +37,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${fragmentMono.variable}`}>
-      <body className={`${inter.className} noise-bg`}>{children}</body>
+      <body className={`${inter.className} noise-bg`}>
+        <DynamicFavicon />
+        {children}
+      </body>
     </html>
   );
 }
