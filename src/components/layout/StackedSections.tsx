@@ -12,15 +12,17 @@ interface CardConfig {
   roundedTop: boolean;
   shadowClass: string;
   borderClass: string;
+  overflowClass: string;
 }
 
 const cardConfigs: CardConfig[] = [
-  // 0: About (About Me) - dark #242426, slides over Hero
+  // 0: About (About Me) - dark #242426, slides over Hero, overflow-visible for floating DevPassCard
   {
     bgColor: "#242426",
     roundedTop: true,
     shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.4)]",
     borderClass: "border-t border-[#ffffff15]",
+    overflowClass: "overflow-visible",
   },
   // 1: BentoFeatures (Smart Engine) - dark #242426, slides over About
   {
@@ -28,6 +30,7 @@ const cardConfigs: CardConfig[] = [
     roundedTop: true,
     shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.5)]",
     borderClass: "border-t border-[#ffffff20]",
+    overflowClass: "overflow-hidden",
   },
   // 2: Skills (Tech Stack) - light #ebeff5, slides over BentoFeatures
   {
@@ -35,6 +38,7 @@ const cardConfigs: CardConfig[] = [
     roundedTop: true,
     shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
     borderClass: "border-t border-[#24242215]",
+    overflowClass: "overflow-hidden",
   },
   // 3: Projects (Featured Projects) - light #f5f7fc, slides over Skills
   {
@@ -42,6 +46,7 @@ const cardConfigs: CardConfig[] = [
     roundedTop: true,
     shadowClass: "shadow-[0_-15px_40px_rgba(0,0,0,0.08)]",
     borderClass: "border-t border-[#24242215]",
+    overflowClass: "overflow-hidden",
   },
   // 4: Experience (Experience & Achievements) - light #ebeff5, slides over Projects
   {
@@ -49,6 +54,7 @@ const cardConfigs: CardConfig[] = [
     roundedTop: true,
     shadowClass: "shadow-[0_-15px_40px_rgba(0,0,0,0.08)]",
     borderClass: "border-t border-[#24242215]",
+    overflowClass: "overflow-hidden",
   },
   // 5: Certifications - dark #242426, slides over Experience
   {
@@ -56,6 +62,7 @@ const cardConfigs: CardConfig[] = [
     roundedTop: true,
     shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.35)]",
     borderClass: "border-t border-[#ffffff15]",
+    overflowClass: "overflow-hidden",
   },
   // 6: GitHubActivity - light #ebeff5, slides over Certifications
   {
@@ -63,6 +70,7 @@ const cardConfigs: CardConfig[] = [
     roundedTop: true,
     shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
     borderClass: "border-t border-[#24242215]",
+    overflowClass: "overflow-hidden",
   },
 ];
 
@@ -122,6 +130,7 @@ export default function StackedSections({ children }: StackedSectionsProps) {
           roundedTop: index > 0,
           shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
           borderClass: "border-t border-[#24242215]",
+          overflowClass: "overflow-hidden",
         };
 
         const zIndex = 10 + index * 10;
@@ -129,7 +138,7 @@ export default function StackedSections({ children }: StackedSectionsProps) {
         return (
           <div
             key={index}
-            className={`stacked-card-wrapper relative w-full overflow-hidden ${
+            className={`stacked-card-wrapper relative w-full ${config.overflowClass} ${
               config.roundedTop
                 ? `rounded-t-[32px] sm:rounded-t-[44px] ${config.shadowClass} ${config.borderClass}`
                 : ""

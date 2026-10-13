@@ -155,7 +155,7 @@ export default function About() {
     <section
       id="about"
       ref={aboutRef}
-      className="relative z-20 section-padding overflow-visible"
+      className="relative z-20 section-padding overflow-visible rounded-t-[32px] sm:rounded-t-[44px]"
       style={{ background: "#242426" }}
     >
       {/* Background accent lines */}
