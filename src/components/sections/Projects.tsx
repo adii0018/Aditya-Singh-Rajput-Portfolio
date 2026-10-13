@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { BentoCard } from "@/components/ui/BentoCard";
 import { projects } from "@/lib/data";
 
 function ProjectCard({
@@ -16,22 +17,11 @@ function ProjectCard({
   const isLarge = project.size === "large";
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-      whileHover={{ y: -6 }}
-      className={`relative group rounded-3xl overflow-hidden border border-[#24242212] bg-white flex flex-col transition-all duration-300 hover:shadow-2xl hover:shadow-[#24242215] ${
-        isLarge ? "lg:col-span-2 lg:row-span-2" : ""
-      }`}
+    <BentoCard
+      color={project.color}
+      delay={index * 0.1}
+      className={isLarge ? "lg:col-span-2 lg:row-span-2" : ""}
     >
-      {/* Top accent bar */}
-      <div
-        className="h-1 w-full transition-all duration-300 group-hover:h-1.5"
-        style={{ background: project.color }}
-      />
-
       {/* Card content */}
       <div className={`p-7 flex flex-col flex-1 ${isLarge ? "p-9" : ""}`}>
         {/* Tag */}
@@ -123,7 +113,7 @@ function ProjectCard({
       <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
         <ArrowUpRight size={18} className="text-[#24242240]" />
       </div>
-    </motion.div>
+    </BentoCard>
   );
 }
 

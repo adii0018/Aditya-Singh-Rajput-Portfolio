@@ -18,13 +18,14 @@ function CopyEmail({ email }: { email: string }) {
 
   return (
     <motion.button
+      type="button"
       onClick={copy}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.97 }}
-      className="flex items-center gap-3 px-5 py-3 bg-[#ffffff15] hover:bg-[#ffffff20] rounded-xl border border-[#ffffff20] text-white text-sm transition-all group"
+      className="flex items-center gap-3 px-5 py-3 bg-[#ffffff15] hover:bg-[#ffffff20] rounded-xl border border-[#ffffff20] text-white text-sm transition-all group cursor-pointer w-full"
     >
       <Mail size={15} className="text-[#ffffff80]" />
-      <span className="font-mono text-[#ffffff90]">{email}</span>
+      <span className="font-mono text-[#ffffff90] text-xs sm:text-sm">{email}</span>
       <span className="ml-auto text-[#ffffff50] group-hover:text-white transition-colors">
         {copied ? <Check size={14} className="text-[#d9ff5c]" /> : <Copy size={14} />}
       </span>
@@ -39,7 +40,7 @@ export default function Contact() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#d9ff5c] opacity-[0.04] blur-3xl pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent" />
 
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
         {/* Main CTA */}
         <div className="text-center mb-16">
           <ScrollReveal>

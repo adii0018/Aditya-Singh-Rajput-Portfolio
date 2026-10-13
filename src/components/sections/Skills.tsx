@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/ScrollReveal";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { skills, skillCategories } from "@/lib/data";
 
 export default function Skills() {
@@ -41,12 +41,13 @@ export default function Skills() {
               {categories.map((cat) => (
                 <motion.button
                   key={cat}
+                  type="button"
                   onClick={() => setActiveCategory(cat)}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
                     activeCategory === cat
-                      ? "bg-[#242426] text-white"
+                      ? "bg-[#242426] text-white border-0"
                       : "bg-white border border-[#24242220] text-[#4d4f57] hover:border-[#24242240]"
                   }`}
                 >

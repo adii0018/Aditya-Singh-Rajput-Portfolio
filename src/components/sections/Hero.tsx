@@ -4,31 +4,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
+import { AnimatedHeading } from "@/components/ui/AnimatedText";
 import { personal } from "@/lib/data";
-
-// Animated word-by-word text (same as Makro hero)
-function AnimatedHeading({ text, className }: { text: string; className?: string }) {
-  const words = text.split(" ");
-  return (
-    <span className={className}>
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          className="inline-block mr-[0.25em]"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.3 + i * 0.12,
-            ease: [0.21, 0.47, 0.32, 0.98],
-          }}
-        >
-          {word}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
 
 // Typing cursor blink
 function TypewriterBadge({ text }: { text: string }) {
@@ -148,22 +125,24 @@ export default function Hero() {
               className="flex flex-wrap items-center gap-3 mt-2"
             >
               <motion.button
+                type="button"
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() =>
                   document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="flex items-center gap-2 px-6 py-3 bg-[#d9ff5c] text-[#242426] font-bold rounded-full text-sm hover:shadow-lg hover:shadow-[#d9ff5c40] transition-all"
+                className="flex items-center gap-2 px-6 py-3 bg-[#d9ff5c] text-[#242426] font-bold rounded-full text-sm hover:shadow-lg hover:shadow-[#d9ff5c40] transition-all border-0 cursor-pointer"
               >
                 <span>→</span> Explore My Work
               </motion.button>
               <motion.button
+                type="button"
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() =>
                   document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="flex items-center gap-2 px-6 py-3 bg-[#242426] text-white font-semibold rounded-full text-sm hover:bg-[#3a3a3c] transition-all"
+                className="flex items-center gap-2 px-6 py-3 bg-[#242426] text-white font-semibold rounded-full text-sm hover:bg-[#3a3a3c] transition-all border-0 cursor-pointer"
               >
                 Let&apos;s Connect
               </motion.button>
@@ -196,7 +175,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right — Photo placeholder */}
+          {/* Right — Photo / Developer Portrait Card */}
           <motion.div
             style={{ y: imageY }}
             className="relative flex justify-center lg:justify-end z-10"
@@ -207,14 +186,48 @@ export default function Hero() {
               transition={{ duration: 0.9, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
               className="relative"
             >
-              {/* Photo frame */}
-              <div className="relative w-[300px] h-[380px] md:w-[360px] md:h-[460px] rounded-3xl overflow-hidden">
-                {/* Placeholder — replace with <Image> when photo is ready */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#c0adff40] via-[#ebeff5] to-[#d9ff5c30] flex flex-col items-center justify-center gap-4">
-                  <div className="w-24 h-24 rounded-full bg-[#24242215] border-2 border-dashed border-[#24242230] flex items-center justify-center text-4xl">
-                    🧑‍💻
+              {/* Profile Card Frame */}
+              <div className="relative w-[300px] h-[380px] md:w-[360px] md:h-[460px] rounded-3xl overflow-hidden bg-gradient-to-b from-[#242426] via-[#2a2a2d] to-[#1c1c1e] border border-[#24242215] shadow-2xl p-6 flex flex-col justify-between select-none">
+                {/* Ambient glow backgrounds */}
+                <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#d9ff5c]/15 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-[#c0adff]/20 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Top card bar */}
+                <div className="relative z-10 flex items-center justify-between">
+                  <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white text-[11px] font-mono">
+                    <span className="w-2 h-2 rounded-full bg-[#d9ff5c] animate-pulse" />
+                    SYSTEM ONLINE
+                  </span>
+                  <span className="text-[#ffffff40] font-mono text-xs">AI · 2024</span>
+                </div>
+
+                {/* Center visual avatar */}
+                <div className="relative z-10 flex flex-col items-center justify-center py-6">
+                  <div className="relative w-28 h-28 rounded-full bg-gradient-to-tr from-[#d9ff5c]/30 via-[#c0adff]/30 to-white/10 p-1 mb-4 flex items-center justify-center shadow-inner">
+                    <div className="w-full h-full rounded-full bg-[#242426] border border-white/10 flex items-center justify-center">
+                      <span className="text-3xl font-black tracking-tight text-white font-mono">
+                        A<span className="text-[#d9ff5c]">/</span>
+                      </span>
+                    </div>
+                    {/* Orbiting accent dot */}
+                    <div className="absolute -top-1 right-2 w-3.5 h-3.5 rounded-full bg-[#d9ff5c] border-2 border-[#242426]" />
                   </div>
-                  <p className="text-[#24242250] text-sm font-medium">Photo coming soon</p>
+
+                  <h3 className="text-white font-bold text-lg tracking-tight mb-1">
+                    Aditya Singh Rajput
+                  </h3>
+                  <p className="text-[#ffffff60] text-xs font-mono tracking-wide">
+                    AI/ML Engineer & Full-Stack
+                  </p>
+                </div>
+
+                {/* Bottom card details */}
+                <div className="relative z-10 bg-white/5 backdrop-blur-md rounded-2xl p-3 border border-white/10 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-[#d9ff5c]" />
+                    <span className="text-white/80 text-xs font-medium">Neural Networks & Web</span>
+                  </div>
+                  <span className="text-[11px] font-mono text-[#d9ff5c] font-semibold">v1.0</span>
                 </div>
               </div>
 
@@ -246,11 +259,12 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.button
+        type="button"
         onClick={scrollToAbout}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#4d4f57] hover:text-[#242426] transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#4d4f57] hover:text-[#242426] transition-colors border-0 bg-transparent cursor-pointer"
       >
         <span className="text-xs font-mono tracking-wider">SCROLL</span>
         <motion.div

@@ -20,7 +20,7 @@ const typeColor = {
 export default function Experience() {
   return (
     <section id="experience" className="section-padding bg-[#ebeff5]">
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="mb-16">
           <ScrollReveal>
@@ -41,7 +41,7 @@ export default function Experience() {
         </div>
 
         {/* Timeline */}
-        <div className="relative">
+        <div className="relative max-w-4xl">
           {/* Vertical line */}
           <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[#d9ff5c] via-[#24242220] to-transparent" />
 

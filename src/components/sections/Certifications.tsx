@@ -32,7 +32,7 @@ export default function Certifications() {
 
         {/* Certs grid */}
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {certifications.map((cert, i) => (
+          {certifications.map((cert) => (
             <StaggerItem key={cert.name}>
               <motion.div
                 whileHover={{ scale: 1.03, y: -4 }}

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { personal } from "@/lib/data";
 import { Star, GitFork, ExternalLink } from "lucide-react";
@@ -103,10 +104,13 @@ export default function GitHubActivity() {
 
             {/* Contribution graph via GitHub chart embed */}
             <div className="w-full overflow-x-auto">
-              <img
+              <Image
                 src={`https://ghchart.rshah.org/d9ff5c/${personal.githubUsername}`}
                 alt="GitHub Contribution Graph"
-                className="w-full min-w-[600px] rounded-lg"
+                width={850}
+                height={125}
+                unoptimized
+                className="w-full min-w-[600px] h-auto rounded-lg"
                 style={{ filter: "contrast(1.1)" }}
               />
             </div>

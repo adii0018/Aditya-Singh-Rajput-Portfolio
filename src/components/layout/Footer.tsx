@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { Mail, ArrowUpRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { personal } from "@/lib/data";
@@ -98,8 +97,9 @@ export default function Footer() {
                       </a>
                     ) : (
                       <button
+                        type="button"
                         onClick={() => scrollTo(link.href)}
-                        className="text-[#ffffff80] text-sm hover:text-white transition-colors text-left"
+                        className="text-[#ffffff80] text-sm hover:text-white transition-colors text-left border-0 bg-transparent cursor-pointer p-0"
                       >
                         {link.label}
                       </button>

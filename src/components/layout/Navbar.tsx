@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { navLinks, personal } from "@/lib/data";
 import { Menu, X } from "lucide-react";
-import { GithubIcon } from "@/components/ui/GithubIcon";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -72,8 +71,9 @@ export default function Navbar() {
             {navLinks.map((link) => (
               <button
                 key={link.href}
+                type="button"
                 onClick={() => handleNavClick(link.href)}
-                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
+                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 border-0 bg-transparent cursor-pointer select-none ${
                   activeSection === link.href.replace("#", "")
                     ? "text-[#242426]"
                     : "text-[#4d4f57] hover:text-[#242426]"
@@ -82,7 +82,7 @@ export default function Navbar() {
                 {activeSection === link.href.replace("#", "") && (
                   <motion.span
                     layoutId="nav-pill"
-                    className="absolute inset-0 bg-[#d9ff5c] rounded-full"
+                    className="absolute inset-0 bg-[#d9ff5c] rounded-full -z-0"
                     transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
                   />
                 )}
@@ -97,7 +97,7 @@ export default function Navbar() {
               href={`mailto:${personal.email}`}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="px-5 py-2.5 bg-[#242426] text-white text-sm font-semibold rounded-full hover:bg-[#3a3a3c] transition-colors"
+              className="inline-flex items-center justify-center px-5 py-2.5 bg-[#242426] text-white text-sm font-semibold rounded-full hover:bg-[#3a3a3c] transition-colors cursor-pointer"
             >
               Get in touch →
             </motion.a>
@@ -105,8 +105,10 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 rounded-xl text-[#242426]"
+            className="md:hidden p-2 rounded-xl text-[#242426] border-0 bg-transparent cursor-pointer hover:bg-[#24242210] transition-colors"
+            aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -127,11 +129,12 @@ export default function Navbar() {
               {navLinks.map((link) => (
                 <button
                   key={link.href}
+                  type="button"
                   onClick={() => handleNavClick(link.href)}
-                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all border-0 cursor-pointer ${
                     activeSection === link.href.replace("#", "")
                       ? "bg-[#d9ff5c] text-[#242426]"
-                      : "text-[#4d4f57] hover:bg-[#24242210]"
+                      : "bg-transparent text-[#4d4f57] hover:bg-[#24242210]"
                   }`}
                 >
                   {link.label}
