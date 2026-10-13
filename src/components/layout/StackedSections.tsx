@@ -48,29 +48,29 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-r border-[#24242215]",
     overflowClass: "overflow-hidden",
   },
-  // 4: Experience (Experience & Achievements) - light #ebeff5, slides over Projects
+  // 4: Certifications (What I've earned) - dark #0d1117 with cash video, slides over Projects
   {
-    bgColor: "#ebeff5",
+    bgColor: "#0d1117",
     roundedTop: true,
-    shadowClass: "shadow-[0_-15px_40px_rgba(0,0,0,0.08)]",
-    borderClass: "border-t border-[#24242215]",
-    overflowClass: "overflow-hidden",
-  },
-  // 5: Certifications - dark #242426, slides over Experience
-  {
-    bgColor: "#242426",
-    roundedTop: true,
-    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.35)]",
+    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.4)]",
     borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-hidden",
   },
-  // 6: GitHubActivity - light #ebeff5, slides over Certifications with organic wave curve top
+  // 5: GitHubActivity (Code I've shipped) - light #ebeff5, slides over Certifications with wave curve top
   {
     bgColor: "transparent",
     roundedTop: false,
     shadowClass: "",
     borderClass: "",
     overflowClass: "overflow-visible",
+  },
+  // 6: Experience (Where I've been) - light #ebeff5, slides over GitHubActivity
+  {
+    bgColor: "#ebeff5",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.16)]",
+    borderClass: "border-t border-[#24242220]",
+    overflowClass: "overflow-hidden",
   },
 ];
 

@@ -22,9 +22,9 @@ export default function Home() {
           <Skills />
           <BentoFeatures />
           <Projects />
-          <Experience />
           <Certifications />
           <GitHubActivity />
+          <Experience />
         </StackedSections>
         <Contact />
       </main>

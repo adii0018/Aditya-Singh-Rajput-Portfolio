@@ -22,9 +22,9 @@ const SECTION_TO_NAV_MAP: Record<string, string> = {
 // Evaluated bottom-up for natural scroll flow
 const TRACKED_SECTIONS = [
   "contact",
+  "experience",
   "github",
   "certifications",
-  "experience",
   "projects",
   "features",
   "skills",
