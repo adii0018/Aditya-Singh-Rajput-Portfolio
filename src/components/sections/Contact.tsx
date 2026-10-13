@@ -93,16 +93,19 @@ export default function Contact() {
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         {/* Main CTA */}
-        <div className="text-center mb-16">
-          <div className="contact-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff60] text-xs font-mono tracking-wider uppercase mb-6">
-            ✦ Get In Touch
+        <div className="relative text-center mb-16">
+          {/* Badge at the very top above Ready to build */}
+          <div className="w-full flex justify-center mb-6">
+            <div className="contact-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#ffffff20] bg-[#ffffff08] text-[#ffffff90] text-xs font-mono tracking-wider uppercase relative z-20">
+              ✦ Get In Touch
+            </div>
           </div>
 
           <div className="relative inline-block">
-            {/* Anchor marker for baby astronaut: parallel to 'Ready to build' on left */}
+            {/* Anchor marker for baby astronaut: parallel to 'Ready to build' on left, completely clear of 'Get In Touch' */}
             <div
               id="contact-astronaut-anchor"
-              className="absolute -left-24 sm:-left-32 md:-left-40 lg:-left-48 top-0 w-[140px] sm:w-[160px] h-[160px] sm:h-[190px] pointer-events-none opacity-0 z-30"
+              className="absolute -left-28 sm:-left-36 md:-left-44 lg:-left-52 top-1/2 -translate-y-1/2 w-[140px] sm:w-[150px] h-[150px] sm:h-[170px] pointer-events-none opacity-0"
             />
 
             <h2

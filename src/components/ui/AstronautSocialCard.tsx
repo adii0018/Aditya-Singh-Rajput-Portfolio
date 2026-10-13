@@ -110,7 +110,7 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
       tl.fromTo(
         babyTravelRef.current,
         {
-          x: () => getDelta().deltaX,
+          x: () => Math.max(getDelta().deltaX, -70),
           y: () => getDelta().deltaY,
           rotate: -10,
           scale: 1.08,

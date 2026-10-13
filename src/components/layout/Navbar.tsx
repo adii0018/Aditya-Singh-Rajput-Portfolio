@@ -91,14 +91,15 @@ export default function Navbar() {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <motion.a
-              href={`mailto:${personal.email}`}
+            <motion.button
+              type="button"
+              onClick={() => handleNavClick("#contact")}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center justify-center px-5 py-2.5 bg-[#242426] text-white text-sm font-semibold rounded-full hover:bg-[#3a3a3c] transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center px-5 py-2.5 bg-[#242426] text-white text-sm font-semibold rounded-full hover:bg-[#3a3a3c] transition-colors cursor-pointer border-0"
             >
               Get in touch →
-            </motion.a>
+            </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -138,12 +139,13 @@ export default function Navbar() {
                   {link.label}
                 </button>
               ))}
-              <a
-                href={`mailto:${personal.email}`}
-                className="mt-3 px-4 py-3 bg-[#242426] text-white text-sm font-semibold rounded-xl text-center"
+              <button
+                type="button"
+                onClick={() => handleNavClick("#contact")}
+                className="mt-3 px-4 py-3 bg-[#242426] text-white text-sm font-semibold rounded-xl text-center border-0 cursor-pointer"
               >
                 Get in touch →
-              </a>
+              </button>
             </nav>
           </motion.div>
         )}
