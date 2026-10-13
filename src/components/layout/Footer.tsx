@@ -31,12 +31,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#242426] text-white pt-20 pb-0 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
+    <footer className="bg-[#242426] text-white pt-20 pb-0 relative overflow-visible">
+      <div className="max-w-6xl mx-auto px-6 overflow-visible">
         {/* Links grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16 overflow-visible">
           {/* Brand & Social Card */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-2 md:col-span-1 overflow-visible">
             <div className="font-black text-2xl mb-4">
               <span className="font-mono">A/</span>dii
               <span className="text-[#d9ff5c]">.</span>

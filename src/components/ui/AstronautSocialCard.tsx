@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
+import { useGSAP, gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { personal } from "@/lib/data";
 import "./astronaut-card.css";
@@ -27,12 +28,89 @@ function InstagramIcon({ size = 18 }: { size?: number }) {
 }
 
 export default function AstronautSocialCard({ className = "" }: { className?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const babyTravelRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (isReducedMotion() || !babyTravelRef.current || !containerRef.current) return;
+
+    const mm = gsap.matchMedia();
+
+    // Desktop & Tablet: Baby starts up and to the top-left, glides down into its docking berth
+    mm.add("(min-width: 768px)", () => {
+      gsap.fromTo(
+        babyTravelRef.current,
+        {
+          x: -130,
+          y: -280,
+          rotate: -20,
+          scale: 1.15,
+          immediateRender: true,
+        },
+        {
+          x: 0,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 95%",
+            end: "center 75%",
+            scrub: 1.2,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
+    });
+
+    // Mobile: responsive travel vector
+    mm.add("(max-width: 767px)", () => {
+      gsap.fromTo(
+        babyTravelRef.current,
+        {
+          x: -60,
+          y: -190,
+          rotate: -15,
+          scale: 1.1,
+          immediateRender: true,
+        },
+        {
+          x: 0,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 95%",
+            end: "center 80%",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
+    });
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 250);
+
+    return () => clearTimeout(timer);
+  });
+
   return (
-    <div className={`astronaut-card ${className}`}>
-      <div className="relative w-full flex justify-center">
+    <div ref={containerRef} className={`astronaut-card ${className}`}>
+      {/* Outer wrapper: animated by GSAP ScrollTrigger along the travel path */}
+      <div
+        ref={babyTravelRef}
+        className="relative w-full flex justify-center z-20 cursor-pointer pointer-events-auto"
+        style={{ willChange: "transform" }}
+      >
+        {/* Inner element: keeps ambient continuous zero-g floating bob/tilt animation */}
         <Image
           className="image"
-          alt="Astronaut"
+          alt="Baby Astronaut"
           src="/astronaut.png"
           width={160}
           height={190}
@@ -41,6 +119,7 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
           priority
         />
       </div>
+
       <div className="heading">We&apos;re on Social Media</div>
       <div className="icons">
         <a
