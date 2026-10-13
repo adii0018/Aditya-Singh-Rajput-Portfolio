@@ -17,8 +17,8 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <About />
         <StackedSections>
+          <About />
           <BentoFeatures />
           <Skills />
           <Projects />

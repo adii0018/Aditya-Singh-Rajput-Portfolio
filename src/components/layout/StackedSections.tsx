@@ -15,42 +15,49 @@ interface CardConfig {
 }
 
 const cardConfigs: CardConfig[] = [
-  // 0: BentoFeatures (Smart Engine) - dark #242426, seamlessly connects with About
+  // 0: About (About Me) - dark #242426, slides over Hero
   {
     bgColor: "#242426",
-    roundedTop: false,
-    shadowClass: "",
-    borderClass: "",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.4)]",
+    borderClass: "border-t border-[#ffffff15]",
   },
-  // 1: Skills (Tech Stack) - light #ebeff5
+  // 1: BentoFeatures (Smart Engine) - dark #242426, slides over About
+  {
+    bgColor: "#242426",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.5)]",
+    borderClass: "border-t border-[#ffffff20]",
+  },
+  // 2: Skills (Tech Stack) - light #ebeff5, slides over BentoFeatures
   {
     bgColor: "#ebeff5",
     roundedTop: true,
     shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
     borderClass: "border-t border-[#24242215]",
   },
-  // 2: Projects (Featured Projects) - light #f5f7fc
+  // 3: Projects (Featured Projects) - light #f5f7fc, slides over Skills
   {
     bgColor: "#f5f7fc",
     roundedTop: true,
     shadowClass: "shadow-[0_-15px_40px_rgba(0,0,0,0.08)]",
     borderClass: "border-t border-[#24242215]",
   },
-  // 3: Experience (Experience & Achievements) - light #ebeff5
+  // 4: Experience (Experience & Achievements) - light #ebeff5, slides over Projects
   {
     bgColor: "#ebeff5",
     roundedTop: true,
     shadowClass: "shadow-[0_-15px_40px_rgba(0,0,0,0.08)]",
     borderClass: "border-t border-[#24242215]",
   },
-  // 4: Certifications - dark #242426
+  // 5: Certifications - dark #242426, slides over Experience
   {
     bgColor: "#242426",
     roundedTop: true,
     shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.35)]",
     borderClass: "border-t border-[#ffffff15]",
   },
-  // 5: GitHubActivity - light #ebeff5
+  // 6: GitHubActivity - light #ebeff5, slides over Certifications
   {
     bgColor: "#ebeff5",
     roundedTop: true,
