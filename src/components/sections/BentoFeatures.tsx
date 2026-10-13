@@ -23,7 +23,9 @@ import {
   Truck,
   TrendingUp,
   Sparkles,
+  FolderTree,
 } from "lucide-react";
+import FileTreeCard from "@/components/ui/FileTreeCard";
 
 export default function BentoFeatures() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -205,51 +207,26 @@ export default function BentoFeatures() {
 
 
           {/* ======================================================== */}
-          {/* CARD 2: BANK SYNC (Stacked Notification Cards) */}
+          {/* CARD 2: CODEBASE ARCHITECTURE (Interactive File Tree) */}
           {/* ======================================================== */}
           <div className="bento-grid-card relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between overflow-hidden border border-[#ffffff15] shadow-xl min-h-[380px] bg-[#f6f8fb]">
             {/* Top Info */}
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2424260a] border border-[#24242615] text-[#242426] text-[11px] font-medium mb-5">
-                <RefreshCw className="w-3.5 h-3.5 opacity-70" />
-                Connect
+            <div className="mb-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2424260a] border border-[#24242615] text-[#242426] text-[11px] font-medium mb-3">
+                <FolderTree className="w-3.5 h-3.5 opacity-70" />
+                Architecture
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#242426] tracking-tight mb-2">
-                Bank Sync
+              <h3 className="text-xl sm:text-2xl font-bold text-[#242426] tracking-tight mb-1">
+                Project Structure
               </h3>
               <p className="text-[#24242680] text-xs sm:text-sm leading-relaxed">
-                Auto-imported, deduped, always current
+                Click folders to expand and explore the codebase
               </p>
             </div>
 
-            {/* Layered Notification Card Stack */}
-            <div className="relative pt-6 pb-2">
-              {/* Back Card 3 */}
-              <div className="w-[82%] mx-auto h-12 bg-[#d7dfe9] rounded-2xl scale-90 translate-y-3 opacity-50" />
-              {/* Back Card 2 */}
-              <div className="w-[90%] mx-auto h-12 bg-[#e5ebf2] rounded-2xl scale-95 translate-y-1.5 opacity-80 -mt-9 shadow-xs" />
-
-              {/* Front Active Card */}
-              <motion.div
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="relative -mt-9 rounded-2xl overflow-hidden shadow-2xl border border-[#24242615] cursor-pointer"
-              >
-                {/* Dark Header */}
-                <div className="bg-[#242426] text-white px-4 py-3 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#40c463] shadow-[0_0_8px_#40c463] animate-pulse" />
-                    <span className="text-xs font-semibold tracking-wide">Wire Transfer</span>
-                  </div>
-                  <span className="text-[10px] text-white/50 font-mono">1 min ago</span>
-                </div>
-
-                {/* White Body */}
-                <div className="bg-white p-5 text-center">
-                  <div className="text-2xl sm:text-3xl font-black text-[#242426] tracking-tight">
-                    <span className="text-[#40c463] mr-1">+$</span>1,250<span className="text-lg text-[#24242680]">.00</span>
-                  </div>
-                </div>
-              </motion.div>
+            {/* Interactive File Tree */}
+            <div className="w-full flex justify-center pb-1">
+              <FileTreeCard />
             </div>
           </div>
 
