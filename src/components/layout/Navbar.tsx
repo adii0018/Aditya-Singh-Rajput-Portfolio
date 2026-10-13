@@ -1,38 +1,117 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { navLinks, personal } from "@/lib/data";
+import { navLinks } from "@/lib/data";
 import { Menu, X } from "lucide-react";
+
+// Mapping of all page sections to their corresponding visible navbar item
+const SECTION_TO_NAV_MAP: Record<string, string> = {
+  home: "home",
+  about: "about",
+  skills: "skills",
+  features: "skills",
+  projects: "projects",
+  experience: "experience",
+  certifications: "experience",
+  github: "experience",
+  contact: "contact",
+};
+
+// Evaluated bottom-up for natural scroll flow
+const TRACKED_SECTIONS = [
+  "contact",
+  "github",
+  "certifications",
+  "experience",
+  "projects",
+  "features",
+  "skills",
+  "about",
+  "home",
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const isClickingRef = useRef(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    let ticking = false;
 
-      // Active section detection
-      const sections = navLinks.map((l) => l.href.replace("#", ""));
-      for (const section of sections.reverse()) {
-        const el = document.getElementById(section);
-        if (el && window.scrollY >= el.offsetTop - 100) {
-          setActiveSection(section);
-          break;
+    const detectActiveSection = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 20);
+
+      // If user recently clicked a nav item, hold active highlight during smooth scroll
+      if (isClickingRef.current) return;
+
+      // 1. Top of page: always home
+      if (scrollY < 120) {
+        setActiveSection("home");
+        return;
+      }
+
+      // 2. Bottom of page: always contact
+      if (
+        window.innerHeight + scrollY >=
+        document.documentElement.scrollHeight - 80
+      ) {
+        setActiveSection("contact");
+        return;
+      }
+
+      // 3. Viewport-based intersection check (immune to offsetParent or nested wrappers)
+      for (const id of TRACKED_SECTIONS) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+
+        const rect = el.getBoundingClientRect();
+        // Active when section top enters upper 45% of viewport and bottom is still visible
+        if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= 100) {
+          const targetNav = SECTION_TO_NAV_MAP[id] || id;
+          setActiveSection(targetNav);
+          return;
         }
       }
+
+      setActiveSection("home");
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          detectActiveSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // Initial check
+    detectActiveSection();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
     const id = href.replace("#", "");
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const mappedId = SECTION_TO_NAV_MAP[id] || id;
+    setActiveSection(mappedId);
+
+    isClickingRef.current = true;
+    setTimeout(() => {
+      isClickingRef.current = false;
+    }, 850);
+
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
