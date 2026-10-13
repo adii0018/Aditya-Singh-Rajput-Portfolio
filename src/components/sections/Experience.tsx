@@ -138,17 +138,19 @@ export default function Experience() {
         });
       });
 
-      gsap.from(".pokeball-end", {
-        scrollTrigger: {
-          trigger: ".pokeball-end",
-          start: "top 92%",
-          once: true,
-        },
-        scale: 0.2,
-        opacity: 0,
-        duration: 0.8,
-        ease: "back.out(2)",
-      });
+      if (sectionRef.current?.querySelector(".pokeball-end")) {
+        gsap.from(".pokeball-end", {
+          scrollTrigger: {
+            trigger: ".pokeball-end",
+            start: "top 92%",
+            once: true,
+          },
+          scale: 0.2,
+          opacity: 0,
+          duration: 0.8,
+          ease: "back.out(2)",
+        });
+      }
     },
     { scope: sectionRef }
   );

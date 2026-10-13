@@ -41,7 +41,7 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
           scrolled
             ? "py-3"
             : "py-5"
@@ -122,7 +122,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed top-20 left-4 right-4 z-40 bg-[#ebeff5]/95 backdrop-blur-xl border border-[#24242215] rounded-2xl shadow-xl p-6"
+            className="fixed top-20 left-4 right-4 z-[100] bg-[#ebeff5]/95 backdrop-blur-xl border border-[#24242215] rounded-2xl shadow-xl p-6"
           >
             <nav className="flex flex-col gap-1">
               {navLinks.map((link) => (

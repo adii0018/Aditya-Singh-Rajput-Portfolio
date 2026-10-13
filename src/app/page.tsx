@@ -9,6 +9,7 @@ import Experience from "@/components/sections/Experience";
 import Certifications from "@/components/sections/Certifications";
 import GitHubActivity from "@/components/sections/GitHub";
 import Contact from "@/components/sections/Contact";
+import StackedSections from "@/components/layout/StackedSections";
 
 export default function Home() {
   return (
@@ -17,12 +18,14 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        <BentoFeatures />
-        <Skills />
-        <Projects />
-        <Experience />
-        <Certifications />
-        <GitHubActivity />
+        <StackedSections>
+          <BentoFeatures />
+          <Skills />
+          <Projects />
+          <Experience />
+          <Certifications />
+          <GitHubActivity />
+        </StackedSections>
         <Contact />
       </main>
       <Footer />
