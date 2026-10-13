@@ -98,14 +98,22 @@ export default function Contact() {
             ✦ Get In Touch
           </div>
 
-          <h2
-            className="contact-title font-black text-white leading-tight tracking-tight mb-6"
-            style={{ fontSize: "clamp(40px, 7vw, 80px)" }}
-          >
-            Ready to build
-            <br />
-            <span className="text-[#d9ff5c]">something great?</span>
-          </h2>
+          <div className="relative inline-block">
+            {/* Anchor marker for baby astronaut: parallel to 'Ready to build' on left */}
+            <div
+              id="contact-astronaut-anchor"
+              className="absolute -left-24 sm:-left-32 md:-left-40 lg:-left-48 top-0 w-[140px] sm:w-[160px] h-[160px] sm:h-[190px] pointer-events-none opacity-0 z-30"
+            />
+
+            <h2
+              className="contact-title font-black text-white leading-tight tracking-tight mb-6"
+              style={{ fontSize: "clamp(40px, 7vw, 80px)" }}
+            >
+              Ready to build
+              <br />
+              <span className="text-[#d9ff5c]">something great?</span>
+            </h2>
+          </div>
 
           <p className="contact-sub text-[#ffffff60] text-lg leading-relaxed max-w-lg mx-auto mb-10">
             Whether you have a project in mind, a job opportunity, or just want to talk AI —

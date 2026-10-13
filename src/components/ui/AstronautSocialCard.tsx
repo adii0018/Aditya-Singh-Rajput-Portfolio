@@ -34,17 +34,53 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
   useGSAP(() => {
     if (isReducedMotion() || !babyTravelRef.current || !containerRef.current) return;
 
+    // Vector calculation from footer dock up to Contact 'Ready to build' anchor
+    const getDelta = () => {
+      const anchor = document.getElementById("contact-astronaut-anchor");
+      const berth = containerRef.current;
+      if (!anchor || !berth) return { deltaX: -180, deltaY: -700 };
+
+      const anchorRect = anchor.getBoundingClientRect();
+      const berthRect = berth.getBoundingClientRect();
+
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const scrollX = window.scrollX || window.pageXOffset || 0;
+
+      const anchorCenterX = anchorRect.left + scrollX + anchorRect.width / 2;
+      const anchorCenterY = anchorRect.top + scrollY + anchorRect.height / 2;
+
+      const berthCenterX = berthRect.left + scrollX + berthRect.width / 2;
+      const berthCenterY = berthRect.top + scrollY + berthRect.height / 2;
+
+      return {
+        deltaX: anchorCenterX - berthCenterX,
+        deltaY: anchorCenterY - berthCenterY,
+      };
+    };
+
     const mm = gsap.matchMedia();
 
-    // Desktop & Tablet: Baby starts up and to the top-left, glides down into its docking berth
+    // Desktop & Tablet: Starts parallel to 'Ready to build' on the left side, glides down into footer dock
     mm.add("(min-width: 768px)", () => {
-      gsap.fromTo(
+      const anchor = document.getElementById("contact-astronaut-anchor");
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: anchor || "#contact",
+          start: "top 75%",
+          endTrigger: containerRef.current,
+          end: "center 85%",
+          scrub: 1.2,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      tl.fromTo(
         babyTravelRef.current,
         {
-          x: -130,
-          y: -280,
-          rotate: -20,
-          scale: 1.15,
+          x: () => getDelta().deltaX,
+          y: () => getDelta().deltaY,
+          rotate: -15,
+          scale: 1.2,
           immediateRender: true,
         },
         {
@@ -53,26 +89,31 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
           rotate: 0,
           scale: 1,
           ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 95%",
-            end: "center 75%",
-            scrub: 1.2,
-            invalidateOnRefresh: true,
-          },
         }
       );
     });
 
-    // Mobile: responsive travel vector
+    // Mobile: Responsive flight path
     mm.add("(max-width: 767px)", () => {
-      gsap.fromTo(
+      const anchor = document.getElementById("contact-astronaut-anchor");
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: anchor || "#contact",
+          start: "top 70%",
+          endTrigger: containerRef.current,
+          end: "center 88%",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      tl.fromTo(
         babyTravelRef.current,
         {
-          x: -60,
-          y: -190,
-          rotate: -15,
-          scale: 1.1,
+          x: () => getDelta().deltaX,
+          y: () => getDelta().deltaY,
+          rotate: -10,
+          scale: 1.08,
           immediateRender: true,
         },
         {
@@ -81,13 +122,6 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
           rotate: 0,
           scale: 1,
           ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 95%",
-            end: "center 80%",
-            scrub: 1,
-            invalidateOnRefresh: true,
-          },
         }
       );
     });
@@ -101,13 +135,13 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
 
   return (
     <div ref={containerRef} className={`astronaut-card ${className}`}>
-      {/* Outer wrapper: animated by GSAP ScrollTrigger along the travel path */}
+      {/* Outer wrapper: travels from 'Ready to build' into footer dock on scroll */}
       <div
         ref={babyTravelRef}
-        className="relative w-full flex justify-center z-20 cursor-pointer pointer-events-auto"
+        className="relative w-full flex justify-center z-30 cursor-pointer pointer-events-auto"
         style={{ willChange: "transform" }}
       >
-        {/* Inner element: keeps ambient continuous zero-g floating bob/tilt animation */}
+        {/* Inner element: keeps ambient continuous floating bob/tilt animation */}
         <Image
           className="image"
           alt="Baby Astronaut"
