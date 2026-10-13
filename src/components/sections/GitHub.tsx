@@ -291,8 +291,36 @@ export default function GitHubActivity() {
   );
 
   return (
-    <section id="github" ref={sectionRef} className="section-padding bg-[#ebeff5]">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="github" ref={sectionRef} className="relative w-full bg-[#ebeff5]">
+      {/* Wave Curve Top Transition */}
+      <div className="w-full overflow-hidden leading-none block -mb-[1px]">
+        <svg
+          viewBox="0 0 1440 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          className="w-full h-12 sm:h-20 md:h-28 block pointer-events-none"
+        >
+          {/* Dark background from Certifications (#242426) above */}
+          <rect width="1440" height="120" fill="#242426" />
+
+          {/* Flowing Wave Curve filled with GitHub background (#ebeff5) */}
+          <path
+            d="M0,45 C320,110 500,10 740,55 C980,100 1180,15 1440,60 L1440,120 L0,120 Z"
+            fill="#ebeff5"
+          />
+
+          {/* Crisp, elegant wave stroke border */}
+          <path
+            d="M0,45 C320,110 500,10 740,55 C980,100 1180,15 1440,60"
+            stroke="rgba(255, 255, 255, 0.14)"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        </svg>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 pt-6 sm:pt-10 pb-28 md:pb-36">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>

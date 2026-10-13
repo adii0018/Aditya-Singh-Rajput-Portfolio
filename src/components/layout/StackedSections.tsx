@@ -64,12 +64,12 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-hidden",
   },
-  // 6: GitHubActivity - light #ebeff5, slides over Certifications
+  // 6: GitHubActivity - light #ebeff5, slides over Certifications with organic wave curve top
   {
     bgColor: "#ebeff5",
-    roundedTop: true,
-    shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
-    borderClass: "border-t border-[#24242215]",
+    roundedTop: false,
+    shadowClass: "",
+    borderClass: "",
     overflowClass: "overflow-hidden",
   },
 ];
