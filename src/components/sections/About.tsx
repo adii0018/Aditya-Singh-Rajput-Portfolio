@@ -91,14 +91,14 @@ export default function About() {
     <section
       id="about"
       ref={aboutRef}
-      className="relative section-padding overflow-visible"
+      className="relative z-20 section-padding overflow-visible"
       style={{ background: "#242426" }}
     >
       {/* Background accent lines */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6 overflow-visible">
         
         {/* Top Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-6">

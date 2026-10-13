@@ -69,14 +69,17 @@ export default function BentoFeatures() {
           opacity: 0,
           stagger: 0.1,
           duration: 0.8,
-        }, "-=0.3")
-        .from(".bento-pill-drop", {
+        }, "-=0.3");
+
+      if (sectionRef.current?.querySelector(".bento-pill-drop")) {
+        tl.from(".bento-pill-drop", {
           y: -30,
           opacity: 0,
           stagger: 0.05,
           duration: 0.6,
           ease: "back.out(1.7)",
         }, "-=0.4");
+      }
     },
     { scope: sectionRef }
   );

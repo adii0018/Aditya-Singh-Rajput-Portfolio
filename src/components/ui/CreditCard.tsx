@@ -12,9 +12,9 @@ interface CreditCardProps {
 }
 
 export const CreditCard: React.FC<CreditCardProps> = ({
-  name = "BRUCE WAYNE",
-  number = "9759 2484 5269 6576",
-  expiry = "1 2 / 2 4",
+  name = "DEVLOPER",
+  number = "9759 2484 5269 xxxx",
+  expiry = "0 8 / 2 6",
   cvv = "***",
   className = "",
 }) => {
@@ -30,7 +30,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({
         <div className="flip-card-inner">
           {/* Front Face */}
           <div className="flip-card-front">
-            <p className="heading_8264">MASTERCARD</p>
+            <p className="heading_8264">ADITYA SINGH RAJPUT</p>
 
             {/* Mastercard Logo */}
             <svg
@@ -92,7 +92,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({
 
             {/* Card Details */}
             <p className="number">{number}</p>
-            <p className="valid_thru">VALID THRU</p>
+            <p className="valid_thru"></p>
             <p className="date_8264">{expiry}</p>
             <p className="name">{name}</p>
           </div>

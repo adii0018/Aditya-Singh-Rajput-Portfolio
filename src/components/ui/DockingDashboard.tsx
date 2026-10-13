@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useGSAP, gsap, isReducedMotion } from "@/lib/gsap";
+import { useGSAP, gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 import {
   LayoutGrid,
   BarChart3,
@@ -20,98 +20,114 @@ export default function DockingDashboard() {
   const devPassBerthRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useGSAP(
-    () => {
-      if (isReducedMotion()) return;
+  useGSAP(() => {
+    if (isReducedMotion()) return;
 
-      // Function to calculate exact vector from target berth back up to the Hero anchor
-      const getDelta = () => {
-        const heroAnchor = document.getElementById("hero-devpass-anchor");
-        const berth = devPassBerthRef.current;
-        if (!heroAnchor || !berth) return { deltaX: 0, deltaY: -750 };
+    // Function to calculate exact vector from target berth back up to the Hero anchor
+    const getDelta = () => {
+      const heroAnchor = document.getElementById("hero-devpass-anchor");
+      const berth = devPassBerthRef.current;
+      if (!heroAnchor || !berth) return { deltaX: 0, deltaY: -750 };
 
-        const anchorRect = heroAnchor.getBoundingClientRect();
-        const berthRect = berth.getBoundingClientRect();
+      const anchorRect = heroAnchor.getBoundingClientRect();
+      const berthRect = berth.getBoundingClientRect();
 
-        const deltaX =
-          anchorRect.left + anchorRect.width / 2 - (berthRect.left + berthRect.width / 2);
-        const deltaY =
-          anchorRect.top + anchorRect.height / 2 - (berthRect.top + berthRect.height / 2);
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const scrollX = window.scrollX || window.pageXOffset || 0;
 
-        return { deltaX, deltaY };
+      const anchorCenterX = anchorRect.left + scrollX + anchorRect.width / 2;
+      const anchorCenterY = anchorRect.top + scrollY + anchorRect.height / 2;
+
+      const berthCenterX = berthRect.left + scrollX + berthRect.width / 2;
+      const berthCenterY = berthRect.top + scrollY + berthRect.height / 2;
+
+      return {
+        deltaX: anchorCenterX - berthCenterX,
+        deltaY: anchorCenterY - berthCenterY,
       };
+    };
 
-      const mm = gsap.matchMedia();
+    const heroEl = document.getElementById("home");
+    const mm = gsap.matchMedia();
 
-      // Desktop & Tablet: starts in Hero section, travels down on scroll into the dashboard slot
-      mm.add("(min-width: 768px)", () => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: "#home",
-            start: "top top",
-            endTrigger: devPassBerthRef.current,
-            end: "center 55%",
-            scrub: 1.2,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        tl.fromTo(
-          devPassRef.current,
-          {
-            x: () => getDelta().deltaX,
-            y: () => getDelta().deltaY,
-            rotate: 7,
-            scale: 0.95,
-            boxShadow:
-              "0 35px 70px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(124, 58, 237, 0.45)",
-          },
-          {
-            x: 0,
-            y: 0,
-            rotate: 0,
-            scale: 1,
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.8)",
-            ease: "power1.inOut",
-          }
-        );
+    // Desktop & Tablet: starts in Hero section, travels down on scroll into the dashboard slot
+    mm.add("(min-width: 768px)", () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroEl || "#home",
+          start: "top top",
+          endTrigger: devPassBerthRef.current,
+          end: "center 55%",
+          scrub: 1.2,
+          invalidateOnRefresh: true,
+        },
       });
 
-      // Mobile
-      mm.add("(max-width: 767px)", () => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: "#home",
-            start: "top top",
-            endTrigger: devPassBerthRef.current,
-            end: "center 60%",
-            scrub: 1,
-            invalidateOnRefresh: true,
-          },
-        });
+      tl.fromTo(
+        devPassRef.current,
+        {
+          x: () => getDelta().deltaX,
+          y: () => getDelta().deltaY,
+          rotate: 7,
+          scale: 0.95,
+          boxShadow:
+            "0 35px 70px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(124, 58, 237, 0.45)",
+          immediateRender: true,
+        },
+        {
+          x: 0,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          boxShadow: "0 20px 40px rgba(0, 0, 0, 0.8)",
+          ease: "power1.inOut",
+        }
+      );
+    });
 
-        tl.fromTo(
-          devPassRef.current,
-          {
-            x: () => getDelta().deltaX,
-            y: () => getDelta().deltaY,
-            rotate: 3,
-            scale: 0.9,
-            boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)",
-          },
-          {
-            x: 0,
-            y: 0,
-            rotate: 0,
-            scale: 1,
-            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.5)",
-            ease: "power1.inOut",
-          }
-        );
+    // Mobile: responsive scroll docking
+    mm.add("(max-width: 767px)", () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroEl || "#home",
+          start: "top top",
+          endTrigger: devPassBerthRef.current,
+          end: "center 60%",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
       });
-    },
-    { scope: containerRef }
-  );
+
+      tl.fromTo(
+        devPassRef.current,
+        {
+          x: () => getDelta().deltaX,
+          y: () => getDelta().deltaY,
+          rotate: 3,
+          scale: 0.9,
+          boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)",
+          immediateRender: true,
+        },
+        {
+          x: 0,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.5)",
+          ease: "power1.inOut",
+        }
+      );
+    });
+
+    // Ensure coordinates refresh once layout and media settle
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 250);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  });
 
 
 
