@@ -121,7 +121,7 @@ export default function DockingDashboard() {
       className="relative w-full max-w-5xl mx-auto pt-16 md:pt-24 pb-8 select-none overflow-visible"
     >
       {/* Outer Dashboard Shell with Live Video Background (overflow-visible so card can travel to Hero) */}
-      <div className="relative rounded-[24px] sm:rounded-[32px] border border-white/20 shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-visible bg-black text-white min-h-[640px] sm:min-h-[680px]">
+      <div className="relative rounded-[24px] sm:rounded-[32px] border border-white/20 shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-visible bg-black text-white min-h-[520px] sm:min-h-[560px]">
         {/* FULL-DASHBOARD BACKGROUND VIDEO (Clipped strictly to shell corners) */}
         <div
           className="absolute inset-0 w-full h-full rounded-[24px] sm:rounded-[32px] overflow-hidden flex items-center justify-center pointer-events-auto cursor-pointer"
@@ -261,7 +261,7 @@ export default function DockingDashboard() {
           </div>
 
           {/* GRID LAYOUT: Left open video view + Right DevPass Berth */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch min-h-[380px] sm:min-h-[420px] mb-5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch min-h-[400px] sm:min-h-[440px]">
             
             {/* COLUMN 1: Open panoramic video viewing area */}
             <div className="hidden lg:flex lg:col-span-6 flex-col justify-end p-4 pointer-events-none">
@@ -299,56 +299,6 @@ export default function DockingDashboard() {
               </div>
             </div>
 
-          </div>
-
-          {/* FULL-WIDTH ROW: Income Sources (Frosted Glass Card) */}
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/15 text-white shadow-xl">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-sm font-bold text-white">
-                Income Sources
-              </span>
-              <span className="px-2 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-bold">
-                Q4 2025
-              </span>
-            </div>
-            <div className="text-xs text-white/60 mb-3">
-              Overview
-            </div>
-
-            {/* Multi-segmented color bar matching reference */}
-            <div className="h-2.5 w-full flex rounded-full overflow-hidden gap-1 mb-3">
-              <div className="h-full bg-[#8b7bf5] rounded-l-full" style={{ width: "48%" }} title="Retainers & Subscriptions (48%)" />
-              <div className="h-full bg-[#4d96f7]" style={{ width: "22%" }} title="Product Invoices (22%)" />
-              <div className="h-full bg-[#42b0a8]" style={{ width: "15%" }} title="Usage-based fees (15%)" />
-              <div className="h-full bg-[#88a83d]" style={{ width: "8%" }} title="Affiliate (8%)" />
-              <div className="h-full bg-[#f0a732]" style={{ width: "4%" }} title="Other (4%)" />
-              <div className="h-full bg-[#c45b43] rounded-r-full" style={{ width: "3%" }} title="Misc (3%)" />
-            </div>
-
-            {/* Breakdown items */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
-              <div className="flex items-center justify-between text-white bg-white/10 border border-white/10 px-3 py-2 rounded-xl">
-                <span className="flex items-center gap-2 text-white/80">
-                  <span className="w-2 h-2 rounded-full bg-[#8b7bf5]" />
-                  Retainers
-                </span>
-                <span className="font-bold font-mono text-white">$13,200</span>
-              </div>
-              <div className="flex items-center justify-between text-white bg-white/10 border border-white/10 px-3 py-2 rounded-xl">
-                <span className="flex items-center gap-2 text-white/80">
-                  <span className="w-2 h-2 rounded-full bg-[#4d96f7]" />
-                  Invoices
-                </span>
-                <span className="font-bold font-mono text-white">$6,050</span>
-              </div>
-              <div className="flex items-center justify-between text-white bg-white/10 border border-white/10 px-3 py-2 rounded-xl">
-                <span className="flex items-center gap-2 text-white/80">
-                  <span className="w-2 h-2 rounded-full bg-[#42b0a8]" />
-                  Usage Fees
-                </span>
-                <span className="font-bold font-mono text-white">$4,125</span>
-              </div>
-            </div>
           </div>
 
         </div>
