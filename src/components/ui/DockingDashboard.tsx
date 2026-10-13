@@ -121,10 +121,7 @@ export default function DockingDashboard() {
       className="relative w-full max-w-5xl mx-auto pt-16 md:pt-24 pb-8 select-none"
     >
       {/* Outer Dashboard Shell with Live Video Background */}
-      <div
-        className="relative rounded-[24px] sm:rounded-[32px] border border-white/20 shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-hidden bg-black text-white"
-        style={{ containerType: "size" } as React.CSSProperties}
-      >
+      <div className="relative rounded-[24px] sm:rounded-[32px] border border-white/20 shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-hidden bg-black text-white min-h-[640px] sm:min-h-[680px]">
         {/* FULL-DASHBOARD BACKGROUND VIDEO */}
         <div
           className="absolute inset-0 w-full h-full overflow-hidden flex items-center justify-center pointer-events-auto cursor-pointer"
@@ -155,8 +152,8 @@ export default function DockingDashboard() {
               position: "absolute",
               top: "50%",
               left: "50%",
-              width: "max(100cqh, 56.25cqw)",
-              height: "max(100cqw, 177.78cqh)",
+              width: "180%",
+              height: "180%",
               transform: "translate(-50%, -50%) rotate(270deg)",
               objectFit: "cover",
             }}
