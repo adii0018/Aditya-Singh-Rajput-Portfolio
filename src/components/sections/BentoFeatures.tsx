@@ -24,8 +24,10 @@ import {
   TrendingUp,
   Sparkles,
   FolderTree,
+  Music,
 } from "lucide-react";
 import FileTreeCard from "@/components/ui/FileTreeCard";
+import SpotifyCard from "@/components/ui/SpotifyCard";
 
 export default function BentoFeatures() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -114,94 +116,26 @@ export default function BentoFeatures() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           
           {/* ======================================================== */}
-          {/* CARD 1: SMART EXPENSES (Falling / Tumbled Pills) */}
+          {/* CARD 1: NOW PLAYING / SPOTIFY WIDGET */}
           {/* ======================================================== */}
-          <div className="bento-grid-card relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between overflow-hidden border border-[#ffffff15] shadow-xl min-h-[380px] bg-gradient-to-b from-[#4b6075] to-[#2c333d]">
+          <div className="bento-grid-card relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between overflow-hidden border border-[#ffffff15] shadow-xl min-h-[380px] bg-[#f6f8fb]">
             {/* Top Info */}
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffffff15] backdrop-blur-md border border-[#ffffff20] text-white text-[11px] font-medium mb-5">
-                <ListFilter className="w-3.5 h-3.5 opacity-80" />
-                Sort
+            <div className="mb-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1db95418] border border-[#1db95430] text-[#1db954] text-[11px] font-semibold mb-3">
+                <Music className="w-3.5 h-3.5" />
+                Vibes & Audio
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2">
-                Smart Expenses
+              <h3 className="text-xl sm:text-2xl font-bold text-[#242426] tracking-tight mb-1">
+                Currently Playing
               </h3>
-              <p className="text-white/70 text-xs sm:text-sm leading-relaxed max-w-[260px]">
-                AI automatically groups every transaction into clear, accurate categories
+              <p className="text-[#24242680] text-xs sm:text-sm leading-relaxed">
+                Click any track to switch songs and live equalizer
               </p>
             </div>
 
-            {/* Bottom Tumbled Gravity Pills */}
-            <div className="relative h-44 w-full mt-6">
-              {/* Pill 1: Marketing */}
-              <motion.div
-                whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-                className="bento-pill-drop absolute top-1 left-2 bg-[#1e2329d9] text-white/95 border border-white/20 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg flex items-center gap-1.5 cursor-pointer select-none"
-                style={{ transform: "rotate(-165deg)" }}
-              >
-                <Target className="w-3.5 h-3.5 text-[#d9ff5c]" />
-                Marketing
-              </motion.div>
-
-              {/* Pill 2: Operations */}
-              <motion.div
-                whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-                className="bento-pill-drop absolute top-12 left-0 bg-[#1e2329d9] text-white/95 border border-white/20 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg flex items-center gap-1.5 cursor-pointer select-none"
-                style={{ transform: "rotate(-90deg)" }}
-              >
-                <DollarSign className="w-3.5 h-3.5 text-[#b8deff]" />
-                Operations
-              </motion.div>
-
-              {/* Pill 3: Rent */}
-              <motion.div
-                whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-                className="bento-pill-drop absolute bottom-2 left-10 bg-[#1e2329d9] text-white/95 border border-white/20 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg flex items-center gap-1.5 cursor-pointer select-none"
-                style={{ transform: "rotate(-90deg)" }}
-              >
-                <Building className="w-3.5 h-3.5 text-[#c0adff]" />
-                Rent
-              </motion.div>
-
-              {/* Pill 4: Utility */}
-              <motion.div
-                whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-                className="bento-pill-drop absolute top-8 left-16 bg-[#1e2329d9] text-white/95 border border-white/20 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg flex items-center gap-1.5 cursor-pointer select-none"
-                style={{ transform: "rotate(175deg)" }}
-              >
-                <Sun className="w-3.5 h-3.5 text-[#ffd166]" />
-                Utility
-              </motion.div>
-
-              {/* Pill 5: Software */}
-              <motion.div
-                whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-                className="bento-pill-drop absolute top-14 right-2 bg-[#1e2329d9] text-white/95 border border-white/20 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg flex items-center gap-1.5 cursor-pointer select-none"
-                style={{ transform: "rotate(20deg)" }}
-              >
-                <Cpu className="w-3.5 h-3.5 text-[#06d6a0]" />
-                Software
-              </motion.div>
-
-              {/* Pill 6: Taxes & Fees */}
-              <motion.div
-                whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-                className="bento-pill-drop absolute bottom-5 right-6 bg-[#1e2329d9] text-white/95 border border-white/20 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg flex items-center gap-1.5 cursor-pointer select-none"
-                style={{ transform: "rotate(-150deg)" }}
-              >
-                <Receipt className="w-3.5 h-3.5 text-[#ef476f]" />
-                Taxes & Fees
-              </motion.div>
-
-              {/* Pill 7: Income */}
-              <motion.div
-                whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-                className="bento-pill-drop absolute bottom-1 left-24 bg-[#1e2329d9] text-white/95 border border-white/20 px-3.5 py-1.5 rounded-full text-xs font-bold backdrop-blur-md shadow-lg flex items-center gap-1.5 cursor-pointer select-none"
-                style={{ transform: "rotate(0deg)" }}
-              >
-                <TrendingUp className="w-3.5 h-3.5 text-[#d9ff5c]" />
-                Income
-              </motion.div>
+            {/* Spotify Widget */}
+            <div className="w-full flex justify-center pb-1">
+              <SpotifyCard />
             </div>
           </div>
 

@@ -1,0 +1,157 @@
+.spotify-card-container {
+  width: 100%;
+  max-width: 320px;
+  background-color: #ffffff;
+  padding: 1.1em;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e4e4e7;
+  font-family: inherit;
+  user-select: none;
+}
+
+.spotify-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin-bottom: 0.85em;
+  padding-left: 0.2em;
+}
+
+.spotify-logo {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.spotify-card-container:hover .spotify-logo {
+  transform: scale(1.05);
+}
+
+.spotify-heading {
+  color: #121212;
+  font-size: 1.05em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.spotify-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  padding: 0.6em 0.8em;
+  border-radius: 10px;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.spotify-item:hover {
+  background-color: #f4f4f5;
+}
+
+.spotify-item.is-active {
+  background-color: #f4f4f580;
+}
+
+.spotify-cover {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.spotify-song-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.spotify-song-name {
+  color: #121212;
+  font-size: 0.88em;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.spotify-item.is-active .spotify-song-name {
+  color: #1db954;
+}
+
+.spotify-artist {
+  color: #71717a;
+  font-size: 0.72em;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Sound Wave Equalizer */
+.spotify-equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 20px;
+  padding-right: 0.2em;
+}
+
+.spotify-bar {
+  width: 3px;
+  background-color: #1db954;
+  border-radius: 3px;
+  animation: spotifySoundWave 1.1s ease-in-out infinite alternate;
+}
+
+.spotify-bar:nth-child(1) {
+  height: 6px;
+  animation-delay: 0.1s;
+}
+
+.spotify-bar:nth-child(2) {
+  height: 16px;
+  animation-delay: 0.35s;
+}
+
+.spotify-bar:nth-child(3) {
+  height: 11px;
+  animation-delay: 0.55s;
+}
+
+.spotify-bar:nth-child(4) {
+  height: 18px;
+  animation-delay: 0.2s;
+}
+
+@keyframes spotifySoundWave {
+  0% {
+    height: 4px;
+  }
+  100% {
+    height: 20px;
+  }
+}
+
+/* Play triangle icon */
+.spotify-play-btn {
+  width: 14px;
+  height: 14px;
+  clip-path: polygon(25% 15%, 85% 50%, 25% 85%);
+  background-color: #71717a;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.spotify-item:hover .spotify-play-btn {
+  background-color: #121212;
+  transform: scale(1.15);
+}
