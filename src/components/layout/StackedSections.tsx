@@ -91,18 +91,24 @@ export default function StackedSections({ children }: StackedSectionsProps) {
       mm.add("(min-width: 768px)", () => {
         const triggers: ScrollTrigger[] = [];
 
-        // Pin each section (except the last one) so the next section slides over it
+        // Pin each section so the next section slides over it
         for (let i = 0; i < cards.length - 1; i++) {
+          // Card 3 (Projects) pins itself internally for horizontal scrolling
+          if (i === 3) continue;
+
           const currentCard = cards[i];
           const nextCard = cards[i + 1];
 
           const isTall = (el: HTMLElement) => el.offsetHeight > window.innerHeight;
 
+          // BentoFeatures (i === 2) unpins when Projects hits top top
+          const endValue = i === 2 ? "top top" : (isTall(nextCard) ? "bottom bottom" : "top top");
+
           const st = ScrollTrigger.create({
             trigger: currentCard,
             start: () => (isTall(currentCard) ? "bottom bottom" : "top top"),
             endTrigger: nextCard,
-            end: () => (isTall(nextCard) ? "bottom bottom" : "top top"),
+            end: () => endValue,
             pin: true,
             pinSpacing: false,
             anticipatePin: 1,
@@ -112,59 +118,9 @@ export default function StackedSections({ children }: StackedSectionsProps) {
           triggers.push(st);
         }
 
-        // Slide Card 3 (Featured Projects) in from the left side on scroll over Smart Engine
-        const projectsCard = cards[3];
-        if (projectsCard) {
-          const slideTween = gsap.fromTo(
-            projectsCard,
-            {
-              xPercent: -100,
-            },
-            {
-              xPercent: 0,
-              ease: "power1.out",
-              scrollTrigger: {
-                trigger: projectsCard,
-                start: "top 95%",
-                end: "top 25%",
-                scrub: 0.6,
-                invalidateOnRefresh: true,
-              },
-            }
-          );
-
-          if (slideTween.scrollTrigger) {
-            triggers.push(slideTween.scrollTrigger);
-          }
-        }
-
         return () => {
           triggers.forEach((st) => st.kill());
         };
-      });
-
-      // Mobile: responsive slide from left
-      mm.add("(max-width: 767px)", () => {
-        const projectsCard = cards[3];
-        if (projectsCard) {
-          const mobileTween = gsap.fromTo(
-            projectsCard,
-            { xPercent: -50, opacity: 0.8 },
-            {
-              xPercent: 0,
-              opacity: 1,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: projectsCard,
-                start: "top 92%",
-                end: "top 35%",
-                scrub: 0.6,
-                invalidateOnRefresh: true,
-              },
-            }
-          );
-          return () => mobileTween.revert();
-        }
       });
 
       return () => mm.revert();
