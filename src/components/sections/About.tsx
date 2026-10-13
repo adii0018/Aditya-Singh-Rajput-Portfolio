@@ -89,39 +89,78 @@ export default function About() {
         return;
       }
 
-      // Static elements entrance (badge, tags, cards, stats)
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: aboutRef.current,
-          start: "top 78%",
-          once: true,
-        },
-        defaults: { ease: "power3.out" },
+      const mm = gsap.matchMedia();
+
+      // Static elements entrance from the left
+      mm.add("(min-width: 768px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: aboutRef.current,
+            start: "top 78%",
+            once: true,
+          },
+          defaults: { ease: "power3.out" },
+        });
+
+        tl.from(".about-badge", {
+          x: -35,
+          opacity: 0,
+          duration: 0.6,
+        })
+        .from(".about-tag", {
+          x: -25,
+          opacity: 0,
+          stagger: 0.05,
+          duration: 0.5,
+        }, "-=0.2")
+        .from(".about-highlight-card", {
+          x: -50,
+          opacity: 0,
+          stagger: 0.08,
+          duration: 0.75,
+        }, "-=0.2")
+        .from(".about-stat-item", {
+          x: -35,
+          opacity: 0,
+          stagger: 0.08,
+          duration: 0.7,
+        }, "-=0.3");
       });
 
-      tl.from(".about-badge", {
-        y: -15,
-        opacity: 0,
-        duration: 0.6,
-      })
-      .from(".about-tag", {
-        scale: 0.9,
-        opacity: 0,
-        stagger: 0.06,
-        duration: 0.5,
-      }, "-=0.2")
-      .from(".about-highlight-card", {
-        y: 30,
-        opacity: 0,
-        stagger: 0.08,
-        duration: 0.7,
-      }, "-=0.2")
-      .from(".about-stat-item", {
-        y: 25,
-        opacity: 0,
-        stagger: 0.08,
-        duration: 0.7,
-      }, "-=0.3");
+      mm.add("(max-width: 767px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: aboutRef.current,
+            start: "top 80%",
+            once: true,
+          },
+          defaults: { ease: "power3.out" },
+        });
+
+        tl.from(".about-badge", {
+          x: -20,
+          opacity: 0,
+          duration: 0.5,
+        })
+        .from(".about-tag", {
+          x: -15,
+          opacity: 0,
+          stagger: 0.04,
+          duration: 0.45,
+        }, "-=0.2")
+        .from(".about-highlight-card", {
+          x: -25,
+          opacity: 0,
+          stagger: 0.06,
+          duration: 0.6,
+        }, "-=0.2")
+        .from(".about-stat-item", {
+          x: -20,
+          opacity: 0,
+          stagger: 0.06,
+          duration: 0.6,
+        }, "-=0.3");
+      });
 
       // Premium scroll-linked word-by-word reveal (scrub synced with scroll)
       const words = textWrapRef.current?.querySelectorAll(".about-reveal-word");
@@ -142,7 +181,7 @@ export default function About() {
               trigger: textWrapRef.current,
               start: "top 80%",
               end: "bottom 48%",
-              scrub: 0.8,
+              scrub: 0.3,
             },
           }
         );

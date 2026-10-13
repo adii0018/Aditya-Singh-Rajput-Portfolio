@@ -35,10 +35,10 @@ export default function Experience() {
           start: "top 80%",
           once: true,
         },
-        y: 30,
+        y: 25,
         opacity: 0,
-        stagger: 0.15,
-        duration: 0.8,
+        stagger: 0.12,
+        duration: 0.7,
         ease: "power3.out",
       });
 
@@ -55,108 +55,97 @@ export default function Experience() {
               trigger: ".timeline-container",
               start: "top 75%",
               end: "bottom 80%",
-              scrub: 0.6,
+              scrub: 0.4,
             },
           }
         );
       }
 
-      // Staggered reveal for timeline entries alternating from left & right
+      // Single smooth entries timeline with alternating left/right directional motion
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 768px)", () => {
-        gsap.utils.toArray<HTMLElement>(".timeline-entry-left").forEach((entry) => {
-          gsap.from(entry, {
-            scrollTrigger: {
-              trigger: entry,
-              start: "top 85%",
-              once: true,
-            },
-            x: -70,
-            opacity: 0,
-            duration: 0.85,
-            ease: "power3.out",
-          });
+        const entriesTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".timeline-container",
+            start: "top 75%",
+            once: true,
+          },
+          defaults: { ease: "power3.out" },
         });
 
-        gsap.utils.toArray<HTMLElement>(".timeline-entry-right").forEach((entry) => {
-          gsap.from(entry, {
-            scrollTrigger: {
-              trigger: entry,
-              start: "top 85%",
-              once: true,
-            },
-            x: 70,
+        // Alternating entries from left and right
+        entriesTl
+          .from(".timeline-entry-left", {
+            x: -65,
             opacity: 0,
-            duration: 0.85,
-            ease: "power3.out",
-          });
-        });
+            stagger: 0.2,
+            duration: 0.8,
+          }, 0)
+          .from(".timeline-entry-right", {
+            x: 65,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 0.8,
+          }, 0.1)
+          .from(".timeline-dot", {
+            scale: 0.3,
+            opacity: 0,
+            stagger: 0.15,
+            duration: 0.6,
+            ease: "back.out(1.8)",
+          }, 0.05);
+
+        if (sectionRef.current?.querySelector(".pokeball-end")) {
+          entriesTl.from(
+            ".pokeball-end",
+            {
+              scale: 0.3,
+              opacity: 0,
+              duration: 0.6,
+              ease: "back.out(1.8)",
+            },
+            "-=0.2"
+          );
+        }
       });
 
       mm.add("(max-width: 767px)", () => {
-        gsap.utils.toArray<HTMLElement>(".timeline-entry-left").forEach((entry) => {
-          gsap.from(entry, {
-            scrollTrigger: {
-              trigger: entry,
-              start: "top 85%",
-              once: true,
-            },
-            x: -35,
-            opacity: 0,
-            duration: 0.75,
-            ease: "power3.out",
-          });
-        });
-
-        gsap.utils.toArray<HTMLElement>(".timeline-entry-right").forEach((entry) => {
-          gsap.from(entry, {
-            scrollTrigger: {
-              trigger: entry,
-              start: "top 85%",
-              once: true,
-            },
-            x: 35,
-            opacity: 0,
-            duration: 0.75,
-            ease: "power3.out",
-          });
-        });
-      });
-
-      gsap.utils.toArray<HTMLElement>(".timeline-dot").forEach((dot) => {
-        gsap.from(dot, {
+        const entriesTl = gsap.timeline({
           scrollTrigger: {
-            trigger: dot,
-            start: "top 85%",
+            trigger: ".timeline-container",
+            start: "top 80%",
             once: true,
           },
-          scale: 0.3,
-          opacity: 0,
-          duration: 0.6,
-          ease: "back.out(2)",
+          defaults: { ease: "power3.out" },
         });
-      });
 
-      if (sectionRef.current?.querySelector(".pokeball-end")) {
-        gsap.from(".pokeball-end", {
-          scrollTrigger: {
-            trigger: ".pokeball-end",
-            start: "top 92%",
-            once: true,
-          },
-          scale: 0.2,
-          opacity: 0,
-          duration: 0.8,
-          ease: "back.out(2)",
-        });
-      }
+        entriesTl
+          .from(".timeline-entry-left", {
+            x: -25,
+            opacity: 0,
+            stagger: 0.15,
+            duration: 0.65,
+          }, 0)
+          .from(".timeline-entry-right", {
+            x: 25,
+            opacity: 0,
+            stagger: 0.15,
+            duration: 0.65,
+          }, 0.1)
+          .from(".timeline-dot", {
+            scale: 0.3,
+            opacity: 0,
+            stagger: 0.12,
+            duration: 0.5,
+          }, 0.05);
+      });
     },
     { scope: sectionRef }
   );
 
   return (
-    <section id="experience" ref={sectionRef} className="section-padding bg-[#ebeff5]">
+    <section id="experience" ref={sectionRef} className="section-padding bg-[#ebeff5] overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="mb-16">

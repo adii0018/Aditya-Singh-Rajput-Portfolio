@@ -64,45 +64,46 @@ export default function GitHubActivity() {
           start: "top 80%",
           once: true,
         },
-        defaults: { ease: "power3.out" },
+        defaults: { ease: "power2.out" },
       });
 
+      // Subtle scale and opacity reveal
       tl.from(".gh-badge", {
-        y: -15,
+        scale: 0.92,
         opacity: 0,
         duration: 0.6,
       })
       .from(".gh-loader", {
         scale: 0.8,
         opacity: 0,
-        duration: 0.7,
+        duration: 0.65,
         ease: "back.out(1.7)",
       }, "-=0.35")
       .from(".gh-heading", {
-        y: 30,
+        scale: 0.95,
         opacity: 0,
-        duration: 0.75,
-      }, "-=0.5")
+        duration: 0.7,
+      }, "-=0.45")
       .from(".gh-profile-btn", {
-        y: 15,
+        scale: 0.94,
         opacity: 0,
         duration: 0.6,
-      }, "-=0.45")
+      }, "-=0.4")
       .from(".gh-chart-card", {
-        y: 35,
+        scale: 0.95,
         opacity: 0,
         duration: 0.8,
-      }, "-=0.3")
+      }, "-=0.25")
       .from(".gh-stat-card", {
-        y: 25,
+        scale: 0.92,
         opacity: 0,
         stagger: 0.08,
         duration: 0.65,
       }, "-=0.4")
       .from(".gh-repo-card", {
-        y: 30,
+        scale: 0.93,
         opacity: 0,
-        stagger: 0.1,
+        stagger: 0.09,
         duration: 0.75,
       }, "-=0.3");
     },

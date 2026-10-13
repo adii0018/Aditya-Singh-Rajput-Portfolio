@@ -1,11 +1,47 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Mail, ArrowUpRight } from "lucide-react";
 import AstronautSocialCard from "@/components/ui/AstronautSocialCard";
 import { personal } from "@/lib/data";
+import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotion()) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 85%",
+          once: true,
+        },
+        defaults: { ease: "power2.out" },
+      });
+
+      // Restrained reveal: gentle rise and fade
+      tl.from(".footer-column", {
+        y: 20,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.7,
+        clearProps: "transform,opacity",
+      }).from(
+        ".footer-divider",
+        {
+          opacity: 0,
+          duration: 0.6,
+          clearProps: "opacity",
+        },
+        "-=0.3"
+      );
+    },
+    { scope: footerRef }
+  );
   const footerLinks = {
     Index: [
       { label: "Home", href: "#home" },
@@ -31,12 +67,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#242426] text-white pt-20 pb-0 relative overflow-visible">
+    <footer ref={footerRef} className="bg-[#242426] text-white pt-20 pb-0 relative overflow-visible">
       <div className="max-w-6xl mx-auto px-6 overflow-visible">
         {/* Links grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16 overflow-visible">
           {/* Brand & Social Card */}
-          <div className="col-span-2 md:col-span-1 overflow-visible">
+          <div className="footer-column col-span-2 md:col-span-1 overflow-visible">
             <div className="font-black text-2xl mb-4">
               <span className="font-mono">ꫝ 𝚂 𐍂</span>
               <span className="text-[#d9ff5c]"></span>
@@ -51,7 +87,7 @@ export default function Footer() {
 
           {/* Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
+            <div key={category} className="footer-column">
               <h4 className="text-sm font-semibold text-[#ffffff60] uppercase tracking-wider mb-4">
                 {category}
               </h4>
@@ -88,7 +124,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-[#ffffff15] py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="footer-divider border-t border-[#ffffff15] py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[#ffffff40] text-xs">
             © 2024 Aditya Singh Rajput. All rights reserved.
           </p>

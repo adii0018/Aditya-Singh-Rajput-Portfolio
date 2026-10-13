@@ -25,8 +25,8 @@ export default function Home() {
           <Experience />
           <Certifications />
           <GitHubActivity />
+          <Contact />
         </StackedSections>
-        <Contact />
       </main>
       <Footer />
     </>

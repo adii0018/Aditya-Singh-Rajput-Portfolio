@@ -152,17 +152,28 @@ export default function DynamicFavicon() {
       }
     };
 
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     // Initial setup
     const initialSection = detectActiveSection();
     currentSectionRef.current = initialSection;
     applySectionMeta(initialSection);
 
     // Event listeners
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (welcomeTimeout) clearTimeout(welcomeTimeout);
     };

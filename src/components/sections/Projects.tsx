@@ -27,6 +27,20 @@ export default function Projects() {
       mm.add("(min-width: 768px)", () => {
         const getScrollDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
+        // Header entrance from left
+        gsap.from([".projects-badge", ".projects-heading"], {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            once: true,
+          },
+          x: -45,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.75,
+          ease: "power3.out",
+        });
+
         const tween = gsap.to(track, {
           x: () => -getScrollDistance(),
           ease: "none",
@@ -35,9 +49,9 @@ export default function Projects() {
             start: "top top",
             end: () => `+=${Math.max(getScrollDistance(), 1800)}`,
             pin: true,
-            scrub: 1,
+            scrub: 0.4,
             invalidateOnRefresh: true,
-            anticipatePin: 1,
+            anticipatePin: 0,
             onUpdate: (self) => {
               const idx = Math.min(
                 Math.floor(self.progress * projects.length),

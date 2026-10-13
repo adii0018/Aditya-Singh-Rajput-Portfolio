@@ -16,34 +16,114 @@ export const personal = {
   location: "India",
 };
 
-export const skills = [
-  // AI/ML
-  { name: "Python", category: "AI/ML", icon: "🐍" },
-  { name: "TensorFlow", category: "AI/ML", icon: "🤖" },
-  { name: "PyTorch", category: "AI/ML", icon: "🔥" },
-  { name: "scikit-learn", category: "AI/ML", icon: "📊" },
-  { name: "OpenCV", category: "AI/ML", icon: "👁️" },
-  { name: "NLP", category: "AI/ML", icon: "💬" },
-  { name: "LangChain", category: "AI/ML", icon: "🔗" },
-  { name: "Hugging Face", category: "AI/ML", icon: "🤗" },
-  // Full-Stack
-  { name: "React", category: "Frontend", icon: "⚛️" },
-  { name: "Next.js", category: "Frontend", icon: "▲" },
-  { name: "TypeScript", category: "Frontend", icon: "📘" },
-  { name: "Tailwind CSS", category: "Frontend", icon: "🎨" },
-  // Backend
-  { name: "FastAPI", category: "Backend", icon: "⚡" },
-  { name: "Django", category: "Backend", icon: "🎸" },
-  { name: "Node.js", category: "Backend", icon: "🟢" },
-  { name: "PostgreSQL", category: "Backend", icon: "🐘" },
-  // Tools
-  { name: "Docker", category: "Tools", icon: "🐳" },
-  { name: "Git", category: "Tools", icon: "📦" },
-  { name: "AWS", category: "Tools", icon: "☁️" },
-  { name: "Linux", category: "Tools", icon: "🐧" },
+export interface SkillItem {
+  name: string;
+  category: string;
+  role?: string;
+}
+
+export interface SkillDomain {
+  id: string;
+  category: string;
+  title: string;
+  badge: string;
+  description: string;
+  skills: { name: string; role: string }[];
+}
+
+export const skillDomains: SkillDomain[] = [
+  {
+    id: "frontend",
+    category: "Frontend",
+    title: "Frontend Engineering",
+    badge: "🎨 Client-Side & UI",
+    description:
+      "Modern component architecture, reactive user interfaces, semantic markup and styling.",
+    skills: [
+      { name: "JavaScript", role: "Core Language" },
+      { name: "TypeScript", role: "Typed JS" },
+      { name: "React", role: "UI Library" },
+      { name: "Next.js", role: "Full-Stack Framework" },
+      { name: "HTML5", role: "Semantic Markup" },
+      { name: "CSS3", role: "Modern Styling" },
+      { name: "Tailwind CSS", role: "Utility CSS" },
+    ],
+  },
+  {
+    id: "backend",
+    category: "Backend",
+    title: "Backend & APIs",
+    badge: "⚡ Server & Architecture",
+    description:
+      "Scalable server architectures, high-speed asynchronous services, and robust RESTful APIs.",
+    skills: [
+      { name: "Node.js", role: "JS Runtime" },
+      { name: "Express.js", role: "API Framework" },
+      { name: "FastAPI", role: "High-Speed Async API" },
+      { name: "Django", role: "Python Web Framework" },
+    ],
+  },
+  {
+    id: "database",
+    category: "Databases",
+    title: "Databases & Cloud",
+    badge: "🗄️ Storage & Cloud",
+    description:
+      "Relational and document data modeling, query optimization, and cloud storage systems.",
+    skills: [
+      { name: "MongoDB", role: "NoSQL Document DB" },
+      { name: "MySQL", role: "Relational SQL" },
+      { name: "PostgreSQL", role: "Advanced SQL DB" },
+      { name: "AWS", role: "Cloud Services" },
+    ],
+  },
+  {
+    id: "ai-ml",
+    category: "AI/ML",
+    title: "Artificial Intelligence & ML",
+    badge: "🧠 Intelligence & Models",
+    description:
+      "Deep neural networks, computer vision algorithms, and agentic LLM pipelines.",
+    skills: [
+      { name: "Python", role: "Core Language" },
+      { name: "TensorFlow", role: "Deep Learning" },
+      { name: "PyTorch", role: "Neural Framework" },
+      { name: "scikit-learn", role: "Statistical ML" },
+      { name: "OpenCV", role: "Computer Vision" },
+      { name: "LangChain", role: "LLM Orchestration" },
+      { name: "Hugging Face", role: "Transformers & NLP" },
+    ],
+  },
+  {
+    id: "devops",
+    category: "DevOps",
+    title: "DevOps & Developer Tools",
+    badge: "🛠️ Workflow & Systems",
+    description:
+      "Container orchestration, reproducible environments, version control, and Linux systems.",
+    skills: [
+      { name: "Docker", role: "Container Platform" },
+      { name: "Git", role: "Version Control" },
+      { name: "Linux", role: "OS & Server Env" },
+    ],
+  },
 ];
 
-export const skillCategories = ["AI/ML", "Frontend", "Backend", "Tools"];
+export const skills: SkillItem[] = skillDomains.flatMap((domain) =>
+  domain.skills.map((s) => ({
+    name: s.name,
+    category: domain.category,
+    role: s.role,
+  }))
+);
+
+export const skillCategories = [
+  "Frontend",
+  "Backend",
+  "Databases",
+  "AI/ML",
+  "DevOps",
+];
 
 export const projects = [
   {

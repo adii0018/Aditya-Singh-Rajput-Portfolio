@@ -13,37 +13,71 @@ export default function Certifications() {
     () => {
       if (isReducedMotion()) return;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
-        },
-        defaults: { ease: "power3.out" },
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            once: true,
+          },
+          defaults: { ease: "power3.out" },
+        });
+
+        tl.from(".cert-badge", {
+          x: -30,
+          opacity: 0,
+          duration: 0.6,
+        })
+        .from(".cert-heading", {
+          x: -40,
+          opacity: 0,
+          duration: 0.75,
+        }, "-=0.35")
+        // Reveal cards from the right
+        .from(".cert-card", {
+          x: 60,
+          opacity: 0,
+          stagger: 0.12,
+          duration: 0.8,
+          ease: "power3.out",
+        }, "-=0.3");
       });
 
-      tl.from(".cert-badge", {
-        y: -15,
-        opacity: 0,
-        duration: 0.6,
-      })
-      .from(".cert-heading", {
-        y: 30,
-        opacity: 0,
-        duration: 0.75,
-      }, "-=0.35")
-      .from(".cert-card", {
-        y: 35,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.75,
-      }, "-=0.3");
+      mm.add("(max-width: 767px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 82%",
+            once: true,
+          },
+          defaults: { ease: "power3.out" },
+        });
+
+        tl.from(".cert-badge", {
+          x: -15,
+          opacity: 0,
+          duration: 0.5,
+        })
+        .from(".cert-heading", {
+          x: -20,
+          opacity: 0,
+          duration: 0.6,
+        }, "-=0.35")
+        .from(".cert-card", {
+          x: 25,
+          opacity: 0,
+          stagger: 0.08,
+          duration: 0.65,
+        }, "-=0.2");
+      });
     },
     { scope: sectionRef }
   );
 
   return (
-    <section id="certifications" ref={sectionRef} className="section-padding bg-[#242426]">
+    <section id="certifications" ref={sectionRef} className="section-padding bg-[#242426] overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">

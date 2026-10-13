@@ -40,47 +40,91 @@ export default function Contact() {
     () => {
       if (isReducedMotion()) return;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 78%",
-          once: true,
-        },
-        defaults: { ease: "power3.out" },
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 78%",
+            once: true,
+          },
+          defaults: { ease: "power3.out" },
+        });
+
+        // Left side-entry for heading and CTA
+        tl.from(".contact-badge", {
+          x: -35,
+          opacity: 0,
+          duration: 0.6,
+        })
+        .from(".contact-title", {
+          x: -50,
+          opacity: 0,
+          duration: 0.85,
+        }, "-=0.35")
+        .from(".contact-sub", {
+          x: -35,
+          opacity: 0,
+          duration: 0.7,
+        }, "-=0.55")
+        .from(".contact-cta-btn", {
+          x: -25,
+          scale: 0.96,
+          opacity: 0,
+          duration: 0.65,
+        }, "-=0.45")
+        // Controlled side-entry overlap for contact cards from the right
+        .from(".contact-card", {
+          x: 50,
+          opacity: 0,
+          stagger: 0.12,
+          duration: 0.8,
+        }, "-=0.4")
+        .from(".contact-status-pill", {
+          scale: 0.92,
+          opacity: 0,
+          duration: 0.55,
+        }, "-=0.2");
       });
 
-      tl.from(".contact-badge", {
-        y: -15,
-        opacity: 0,
-        duration: 0.6,
-      })
-      .from(".contact-title", {
-        y: 40,
-        opacity: 0,
-        duration: 0.85,
-      }, "-=0.35")
-      .from(".contact-sub", {
-        y: 20,
-        opacity: 0,
-        duration: 0.75,
-      }, "-=0.55")
-      .from(".contact-cta-btn", {
-        y: 20,
-        scale: 0.96,
-        opacity: 0,
-        duration: 0.7,
-      }, "-=0.45")
-      .from(".contact-card", {
-        y: 35,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.75,
-      }, "-=0.3")
-      .from(".contact-status-pill", {
-        y: 15,
-        opacity: 0,
-        duration: 0.6,
-      }, "-=0.2");
+      mm.add("(max-width: 767px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            once: true,
+          },
+          defaults: { ease: "power3.out" },
+        });
+
+        tl.from(".contact-badge", {
+          x: -20,
+          opacity: 0,
+          duration: 0.5,
+        })
+        .from(".contact-title", {
+          x: -25,
+          opacity: 0,
+          duration: 0.7,
+        }, "-=0.35")
+        .from(".contact-sub", {
+          x: -20,
+          opacity: 0,
+          duration: 0.6,
+        }, "-=0.45")
+        .from(".contact-cta-btn", {
+          scale: 0.96,
+          opacity: 0,
+          duration: 0.6,
+        }, "-=0.35")
+        .from(".contact-card", {
+          x: 25,
+          opacity: 0,
+          stagger: 0.08,
+          duration: 0.65,
+        }, "-=0.3");
+      });
     },
     { scope: sectionRef }
   );

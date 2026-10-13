@@ -17,55 +17,89 @@ export default function Hero() {
     () => {
       if (isReducedMotion()) return;
 
-      const tl = gsap.timeline({
-        defaults: { ease: "power3.out" },
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        const tl = gsap.timeline({
+          defaults: { ease: "power3.out" },
+        });
+
+        // 1. Text enters from the left
+        tl.from(".hero-badge", {
+          x: -40,
+          opacity: 0,
+          duration: 0.65,
+        })
+        .from(".hero-title-word", {
+          x: -50,
+          y: "30%",
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.04,
+          ease: "power4.out",
+        }, "-=0.35")
+        .from(".hero-subtitle", {
+          x: -35,
+          opacity: 0,
+          duration: 0.7,
+        }, "-=0.55")
+        .from(".hero-cta-wrap", {
+          x: -30,
+          opacity: 0,
+          duration: 0.65,
+        }, "-=0.45")
+        .from(".hero-social-row", {
+          x: -25,
+          opacity: 0,
+          duration: 0.5,
+        }, "-=0.35")
+        // 2. Right photo enters from the right
+        .from(imageWrapRef.current, {
+          x: 70,
+          scale: 1.04,
+          opacity: 0,
+          duration: 1.15,
+          ease: "power3.out",
+        }, 0.15)
+        .from(".hero-scroll-btn", {
+          opacity: 0,
+          y: 12,
+          duration: 0.6,
+        }, "-=0.2");
       });
 
-      // 1. Badge entrance
-      tl.from(".hero-badge", {
-        y: -18,
-        opacity: 0,
-        duration: 0.7,
-      })
-      // 2. Heading: Cinematic word mask reveal
-      .from(".hero-title-word", {
-        y: "115%",
-        opacity: 0,
-        duration: 0.95,
-        stagger: 0.05,
-        ease: "power4.out",
-      }, "-=0.35")
-      // 3. Subtitle: smooth rise
-      .from(".hero-subtitle", {
-        y: 22,
-        opacity: 0,
-        duration: 0.75,
-      }, "-=0.55")
-      // 4. CTA buttons & avatars row
-      .from(".hero-cta-wrap", {
-        y: 20,
-        opacity: 0,
-        duration: 0.7,
-      }, "-=0.45")
-      // 5. Social proof links
-      .from(".hero-social-row", {
-        y: 12,
-        opacity: 0,
-        duration: 0.5,
-      }, "-=0.35")
-      // 6. Right photo entrance: subtle scale from 1.05 to 1 & fade in
-      .from(imageWrapRef.current, {
-        scale: 1.05,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power2.out",
-      }, 0.15)
-      // 7. Scroll indicator
-      .from(".hero-scroll-btn", {
-        opacity: 0,
-        y: 12,
-        duration: 0.6,
-      }, "-=0.2");
+      mm.add("(max-width: 767px)", () => {
+        const tl = gsap.timeline({
+          defaults: { ease: "power3.out" },
+        });
+
+        tl.from(".hero-badge", {
+          x: -20,
+          opacity: 0,
+          duration: 0.6,
+        })
+        .from(".hero-title-word", {
+          x: -25,
+          opacity: 0,
+          duration: 0.75,
+          stagger: 0.03,
+        }, "-=0.3")
+        .from(".hero-subtitle", {
+          x: -20,
+          opacity: 0,
+          duration: 0.6,
+        }, "-=0.45")
+        .from(".hero-cta-wrap", {
+          x: -15,
+          opacity: 0,
+          duration: 0.6,
+        }, "-=0.4")
+        .from(imageWrapRef.current, {
+          x: 35,
+          opacity: 0,
+          duration: 0.9,
+        }, 0.2);
+      });
 
       // Subtle scroll parallax on hero photo
       if (imageWrapRef.current) {

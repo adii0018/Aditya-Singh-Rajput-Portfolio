@@ -15,23 +15,73 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // Active section detection
-      const sections = navLinks.map((l) => l.href.replace("#", ""));
-      for (const section of sections.reverse()) {
-        const el = document.getElementById(section);
-        if (el && window.scrollY >= el.offsetTop - 100) {
-          setActiveSection(section);
-          break;
+      // If at top of page, always highlight Home
+      if (window.scrollY < 120) {
+        setActiveSection("home");
+        return;
+      }
+
+      // Check bottom of page
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 60
+      ) {
+        setActiveSection("contact");
+        return;
+      }
+
+      const trackedSections = [
+        "contact",
+        "github",
+        "certifications",
+        "experience",
+        "projects",
+        "features",
+        "skills",
+        "about",
+      ];
+
+      for (const id of trackedSections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= 100) {
+            const navId =
+              id === "github" || id === "certifications"
+                ? "experience"
+                : id === "features"
+                ? "skills"
+                : id;
+            setActiveSection(navId);
+            return;
+          }
         }
       }
+
+      setActiveSection("home");
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
     const id = href.replace("#", "");
+    setActiveSection(id);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
