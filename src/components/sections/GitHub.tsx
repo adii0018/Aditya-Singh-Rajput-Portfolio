@@ -7,6 +7,7 @@ import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
 import { Star, GitFork, ExternalLink } from "lucide-react";
 import { GithubIcon } from "@/components/ui/GithubIcon";
+import GridCardLoader from "@/components/ui/GridCardLoader";
 
 const topRepos = [
   {
@@ -71,11 +72,17 @@ export default function GitHubActivity() {
         opacity: 0,
         duration: 0.6,
       })
+      .from(".gh-loader", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.7,
+        ease: "back.out(1.7)",
+      }, "-=0.35")
       .from(".gh-heading", {
         y: 30,
         opacity: 0,
         duration: 0.75,
-      }, "-=0.35")
+      }, "-=0.5")
       .from(".gh-profile-btn", {
         y: 15,
         opacity: 0,
@@ -111,14 +118,19 @@ export default function GitHubActivity() {
             <div className="gh-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
               ✦ GitHub Activity
             </div>
-            <h2
-              className="gh-heading font-black text-[#242426] leading-tight tracking-tight"
-              style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
-            >
-              Code I&apos;ve
-              <br />
-              <span className="italic text-[#4d4f57]">shipped</span>
-            </h2>
+            <div className="flex items-center gap-4 sm:gap-6">
+              <div className="gh-loader shrink-0 flex items-center justify-center">
+                <GridCardLoader />
+              </div>
+              <h2
+                className="gh-heading font-black text-[#242426] leading-tight tracking-tight"
+                style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
+              >
+                Code I&apos;ve
+                <br />
+                <span className="italic text-[#4d4f57]">shipped</span>
+              </h2>
+            </div>
           </div>
 
           <motion.a
