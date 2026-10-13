@@ -145,16 +145,16 @@ export default function Projects() {
         opacity: 0,
         duration: 0.6,
       })
-      .from(".projects-heading", {
-        y: 35,
-        opacity: 0,
-        duration: 0.8,
-      }, "-=0.35")
       .from(".projects-code-loader", {
         scale: 0.8,
         opacity: 0,
         duration: 0.7,
         ease: "back.out(1.7)",
+      }, "-=0.35")
+      .from(".projects-heading", {
+        y: 35,
+        opacity: 0,
+        duration: 0.8,
       }, "-=0.5")
       .from(".projects-all-btn", {
         y: 15,
@@ -181,6 +181,9 @@ export default function Projects() {
               ✦ Featured Projects
             </div>
             <div className="flex items-center gap-4 sm:gap-6">
+              <div className="projects-code-loader shrink-0 flex items-center">
+                <CodeLoader />
+              </div>
               <h2
                 className="projects-heading font-black text-[#242426] leading-tight tracking-tight"
                 style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
@@ -189,9 +192,6 @@ export default function Projects() {
                 <br />
                 <span className="italic text-[#4d4f57]">built</span>
               </h2>
-              <div className="projects-code-loader flex items-center">
-                <CodeLoader />
-              </div>
             </div>
           </div>
 
