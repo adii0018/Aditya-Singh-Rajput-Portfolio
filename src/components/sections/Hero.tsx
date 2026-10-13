@@ -2,7 +2,8 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { ArrowDown, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { ArrowDown } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { AnimatedHeading } from "@/components/ui/AnimatedText";
 import { personal } from "@/lib/data";
@@ -17,7 +18,7 @@ function TypewriterBadge({ text }: { text: string }) {
       const t = setTimeout(() => {
         setDisplayed((p) => p + text[idx]);
         setIdx((i) => i + 1);
-      }, 40);
+      }, 35);
       return () => clearTimeout(t);
     }
   }, [idx, text]);
@@ -37,8 +38,8 @@ function TypewriterBadge({ text }: { text: string }) {
 export default function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   const scrollToAbout = () => {
@@ -49,212 +50,235 @@ export default function Hero() {
     <section
       id="home"
       ref={ref}
-      className="relative min-h-screen flex flex-col overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #f0f3f9 0%, #ebeff5 50%, #e4eaf3 100%)" }}
+      className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#ebeff5]"
     >
-      {/* Background grid */}
+      {/* Subtle background grid pattern */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-25 pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(#24242210 1px, transparent 1px), linear-gradient(90deg, #24242210 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
 
-      {/* Floating blobs */}
-      <div className="absolute top-20 right-20 w-80 h-80 rounded-full bg-[#d9ff5c] opacity-10 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-40 left-10 w-64 h-64 rounded-full bg-[#c0adff] opacity-15 blur-3xl pointer-events-none" />
-
-      {/* Main content */}
-      <div className="relative flex-1 flex items-center max-w-6xl mx-auto w-full px-6 pt-28 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-6 items-center w-full">
-
-          {/* Left — Text */}
-          <motion.div style={{ y: textY, opacity }} className="flex flex-col gap-6 z-10">
-
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-flex items-center gap-2 self-start"
-            >
-              <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#d9ff5c] text-[#242426] font-semibold text-xs tracking-wider uppercase">
-                <Sparkles size={12} />
-                Available for opportunities
-              </span>
-            </motion.div>
-
-            {/* Typewriter role */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              <TypewriterBadge text={personal.badge} />
-            </motion.div>
-
-            {/* Main heading */}
-            <h1
-              className="font-black leading-[1.0] tracking-tight text-[#242426]"
-              style={{ fontSize: "clamp(44px, 6vw, 78px)" }}
-            >
-              <div>
-                <AnimatedHeading text={personal.heroLine1} />
-              </div>
-              <div>
-                <AnimatedHeading text={personal.heroLine2} />
-              </div>
-            </h1>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="text-[#4d4f57] text-base md:text-lg leading-relaxed max-w-md"
-            >
-              {personal.subtitle}
-            </motion.p>
-
-            {/* CTA buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              className="flex flex-wrap items-center gap-3 mt-2"
-            >
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={() =>
-                  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="flex items-center gap-2 px-6 py-3 bg-[#d9ff5c] text-[#242426] font-bold rounded-full text-sm hover:shadow-lg hover:shadow-[#d9ff5c40] transition-all border-0 cursor-pointer"
-              >
-                <span>→</span> Explore My Work
-              </motion.button>
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={() =>
-                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="flex items-center gap-2 px-6 py-3 bg-[#242426] text-white font-semibold rounded-full text-sm hover:bg-[#3a3a3c] transition-all border-0 cursor-pointer"
-              >
-                Let&apos;s Connect
-              </motion.button>
-            </motion.div>
-
-            {/* Social proof row */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.1 }}
-              className="flex items-center gap-4 mt-2"
-            >
-              <a
-                href={personal.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-[#4d4f57] text-xs hover:text-[#242426] transition-colors"
-              >
-                <GithubIcon size={13} /> GitHub
-              </a>
-              <span className="text-[#24242230]">·</span>
-              <a
-                href={personal.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-[#4d4f57] text-xs hover:text-[#242426] transition-colors"
-              >
-                <LinkedinIcon size={13} /> LinkedIn
-              </a>
-            </motion.div>
-          </motion.div>
-
-          {/* Right — Photo / Developer Portrait Card */}
+      {/* Main hero grid: Split layout matching reference website */}
+      <div className="relative flex-1 w-full grid grid-cols-1 lg:grid-cols-2 items-center pt-24 lg:pt-20">
+        
+        {/* LEFT COLUMN: Hero content */}
+        <motion.div
+          style={{ y: textY, opacity }}
+          className="flex flex-col justify-center px-6 sm:px-10 lg:pl-16 xl:pl-24 lg:pr-8 py-12 lg:py-16 z-10 max-w-2xl"
+        >
+          {/* Badge: AI-Powered Badge matching Makro pill */}
           <motion.div
-            style={{ y: imageY }}
-            className="relative flex justify-center lg:justify-end z-10"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs self-start mb-4"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, x: 40 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ duration: 0.9, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="relative"
+            <span className="w-2 h-2 rounded-full bg-[#d9ff5c]" />
+            <span className="text-[11px] font-mono font-medium text-[#242426] tracking-wider uppercase">
+              AI/ML ENGINEER · FULL-STACK DEVELOPER
+            </span>
+          </motion.div>
+
+          {/* Typewriter role */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mb-3"
+          >
+            <TypewriterBadge text="INNOVATOR · PROBLEM SOLVER" />
+          </motion.div>
+
+          {/* Main Heading: 2-line clean bold typography */}
+          <h1
+            className="font-black leading-[1.05] tracking-tight text-[#242426] mb-5"
+            style={{ fontSize: "clamp(42px, 5.5vw, 76px)" }}
+          >
+            <div>
+              <AnimatedHeading text={personal.heroLine1} />
+            </div>
+            <div>
+              <AnimatedHeading text={personal.heroLine2} />
+            </div>
+          </h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="text-[#4d4f57] text-base sm:text-lg leading-relaxed max-w-lg mb-8"
+          >
+            {personal.subtitle}
+          </motion.p>
+
+          {/* CTA Buttons & Social proof row matching Makro */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="flex flex-wrap items-center gap-4 mb-6"
+          >
+            {/* Primary button: Dark pill with inner green arrow circle (Exact Makro signature button) */}
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() =>
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="inline-flex items-center gap-3 pl-2 pr-6 py-2 bg-[#242426] text-white rounded-full text-sm font-semibold hover:bg-[#333336] transition-all shadow-lg shadow-[#242426]/10 cursor-pointer border-0"
             >
-              {/* Profile Card Frame */}
-              <div className="relative w-[300px] h-[380px] md:w-[360px] md:h-[460px] rounded-3xl overflow-hidden bg-gradient-to-b from-[#242426] via-[#2a2a2d] to-[#1c1c1e] border border-[#24242215] shadow-2xl p-6 flex flex-col justify-between select-none">
-                {/* Ambient glow backgrounds */}
-                <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#d9ff5c]/15 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-[#c0adff]/20 rounded-full blur-3xl pointer-events-none" />
+              <span className="w-8 h-8 rounded-full bg-[#d9ff5c] text-[#242426] flex items-center justify-center font-bold text-sm">
+                →
+              </span>
+              <span>Explore My Work</span>
+            </motion.button>
 
-                {/* Top card bar */}
-                <div className="relative z-10 flex items-center justify-between">
-                  <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white text-[11px] font-mono">
-                    <span className="w-2 h-2 rounded-full bg-[#d9ff5c] animate-pulse" />
-                    SYSTEM ONLINE
-                  </span>
-                  <span className="text-[#ffffff40] font-mono text-xs">AI · 2024</span>
+            {/* Social avatar proof: Matching exact reference layout */}
+            <div className="flex items-center gap-3">
+              <div className="flex -space-x-2">
+                <div className="w-8 h-8 rounded-full border-2 border-white bg-gradient-to-br from-[#c0adff] to-[#d9ff5c] flex items-center justify-center text-[10px] font-bold text-[#242426]">
+                  AI
                 </div>
-
-                {/* Center visual avatar */}
-                <div className="relative z-10 flex flex-col items-center justify-center py-6">
-                  <div className="relative w-28 h-28 rounded-full bg-gradient-to-tr from-[#d9ff5c]/30 via-[#c0adff]/30 to-white/10 p-1 mb-4 flex items-center justify-center shadow-inner">
-                    <div className="w-full h-full rounded-full bg-[#242426] border border-white/10 flex items-center justify-center">
-                      <span className="text-3xl font-black tracking-tight text-white font-mono">
-                        A<span className="text-[#d9ff5c]">/</span>
-                      </span>
-                    </div>
-                    {/* Orbiting accent dot */}
-                    <div className="absolute -top-1 right-2 w-3.5 h-3.5 rounded-full bg-[#d9ff5c] border-2 border-[#242426]" />
-                  </div>
-
-                  <h3 className="text-white font-bold text-lg tracking-tight mb-1">
-                    Aditya Singh Rajput
-                  </h3>
-                  <p className="text-[#ffffff60] text-xs font-mono tracking-wide">
-                    AI/ML Engineer & Full-Stack
-                  </p>
+                <div className="w-8 h-8 rounded-full border-2 border-white bg-[#242426] text-white flex items-center justify-center text-[10px] font-bold">
+                  ML
                 </div>
-
-                {/* Bottom card details */}
-                <div className="relative z-10 bg-white/5 backdrop-blur-md rounded-2xl p-3 border border-white/10 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-[#d9ff5c]" />
-                    <span className="text-white/80 text-xs font-medium">Neural Networks & Web</span>
-                  </div>
-                  <span className="text-[11px] font-mono text-[#d9ff5c] font-semibold">v1.0</span>
+                <div className="w-8 h-8 rounded-full border-2 border-white bg-[#d9ff5c] text-[#242426] flex items-center justify-center text-[10px] font-bold">
+                  TS
+                </div>
+                <div className="w-8 h-8 rounded-full border-2 border-white bg-[#b8deff] text-[#242426] flex items-center justify-center text-[10px] font-bold">
+                  PY
                 </div>
               </div>
-
-              {/* Floating cards */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                className="absolute -left-10 top-16 bg-white rounded-2xl px-4 py-3 shadow-lg border border-[#24242210]"
-              >
-                <p className="text-xs text-[#4d4f57] font-mono">AI/ML Engineer</p>
-                <p className="text-sm font-bold text-[#242426]">🤖 4 Projects</p>
-              </motion.div>
-
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 1 }}
-                className="absolute -right-8 bottom-20 bg-[#242426] rounded-2xl px-4 py-3 shadow-lg"
-              >
-                <p className="text-xs text-[#ffffff80] font-mono">Open to work</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="w-2 h-2 rounded-full bg-[#d9ff5c] animate-pulse" />
-                  <p className="text-sm font-bold text-white">Available ✓</p>
-                </div>
-              </motion.div>
-            </motion.div>
+              <span className="text-xs text-[#4d4f57] font-medium">
+                Trusted by solopreneurs
+              </span>
+            </div>
           </motion.div>
-        </div>
+
+          {/* Secondary links & Connect button */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.1 }}
+            className="flex items-center gap-4 text-xs"
+          >
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() =>
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="px-4 py-2 rounded-full font-semibold text-[#242426] bg-white border border-[#24242215] hover:border-[#242426] transition-all cursor-pointer"
+            >
+              Let&apos;s Connect
+            </motion.button>
+            <span className="text-[#24242230]">·</span>
+            <a
+              href={personal.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[#4d4f57] hover:text-[#242426] transition-colors"
+            >
+              <GithubIcon size={14} /> GitHub
+            </a>
+            <span className="text-[#24242230]">·</span>
+            <a
+              href={personal.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[#4d4f57] hover:text-[#242426] transition-colors"
+            >
+              <LinkedinIcon size={14} /> LinkedIn
+            </a>
+          </motion.div>
+        </motion.div>
+
+        {/* RIGHT COLUMN: Full Portrait Image with Floating Cards (Exact match to reference) */}
+        <motion.div
+          style={{ y: imageY }}
+          className="relative w-full h-[540px] sm:h-[640px] lg:h-full min-h-[540px] lg:min-h-[720px] flex items-end justify-center lg:justify-end overflow-hidden"
+        >
+          {/* Portrait Photo: Clean, high-res bleed */}
+          <div className="relative w-full h-full">
+            <Image
+              src="/profile.jpg"
+              alt="Aditya Singh Rajput"
+              priority
+              fill
+              className="object-cover object-top lg:object-[center_top]"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+
+          {/* Floating Card 1: Reduction +6% (Exact match to reference top card) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, rotate: 1 }}
+            animate={{ opacity: 1, y: 0, rotate: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            whileHover={{ y: -6, scale: 1.03, rotate: 0 }}
+            className="absolute bottom-28 right-6 sm:right-12 lg:right-16 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-2xl border border-white/60 w-44 sm:w-52 select-none"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[#242426] font-bold text-xs tracking-tight">Reduction</span>
+              <span className="text-[11px] font-mono font-semibold text-[#4d4f57] bg-[#24242208] px-2 py-0.5 rounded-full">
+                +6%
+              </span>
+            </div>
+            <div className="grid grid-cols-3 gap-1 my-2 py-2 border-y border-[#24242208] text-center">
+              <div>
+                <p className="text-[10px] font-mono text-[#4d4f57]/60">1</p>
+                <p className="text-[10px] font-semibold text-[#242426]">Mon</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-mono text-[#4d4f57]/60">2</p>
+                <p className="text-[10px] font-semibold text-[#242426]">Tue</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-mono text-[#4d4f57]/60">3</p>
+                <p className="text-[10px] font-semibold text-[#242426]">Wed</p>
+              </div>
+            </div>
+            <div className="flex items-baseline justify-between mt-2">
+              <span className="text-2xl sm:text-3xl font-black text-[#242426] tracking-tight">
+                96%
+              </span>
+              <span className="text-[#5a6e00] font-bold text-xs bg-[#d9ff5c] px-1.5 py-0.5 rounded-md">
+                ▲
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Floating Card 2: Liquidity +12% (Exact match to reference bottom-left card) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, rotate: -2 }}
+            animate={{ opacity: 1, y: 0, rotate: -2 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            whileHover={{ y: -6, scale: 1.03, rotate: 0 }}
+            className="absolute bottom-6 left-6 sm:left-12 lg:left-8 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-2xl border border-white/60 w-44 sm:w-52 select-none"
+          >
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[#242426] font-bold text-xs tracking-tight">Liquidity</span>
+              <span className="text-[11px] font-mono font-semibold text-[#4d4f57] bg-[#24242208] px-2 py-0.5 rounded-full">
+                +12%
+              </span>
+            </div>
+            <p className="text-[11px] text-[#4d4f57] mb-3">Safe cash buffer</p>
+            <div className="flex items-baseline justify-between">
+              <span className="text-2xl sm:text-3xl font-black text-[#242426] tracking-tight">
+                82%
+              </span>
+              <span className="text-[#5a6e00] font-bold text-xs bg-[#d9ff5c] px-1.5 py-0.5 rounded-md">
+                ▲
+              </span>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
@@ -264,14 +288,14 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#4d4f57] hover:text-[#242426] transition-colors border-0 bg-transparent cursor-pointer"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1.5 text-[#4d4f57] hover:text-[#242426] transition-colors border-0 bg-transparent cursor-pointer z-30"
       >
-        <span className="text-xs font-mono tracking-wider">SCROLL</span>
+        <span className="text-[10px] font-mono tracking-wider">SCROLL</span>
         <motion.div
-          animate={{ y: [0, 6, 0] }}
+          animate={{ y: [0, 4, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
-          <ArrowDown size={16} />
+          <ArrowDown size={14} />
         </motion.div>
       </motion.button>
     </section>
