@@ -19,8 +19,8 @@ export default function Home() {
         <Hero />
         <StackedSections>
           <About />
-          <BentoFeatures />
           <Skills />
+          <BentoFeatures />
           <Projects />
           <Experience />
           <Certifications />

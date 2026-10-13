@@ -24,20 +24,20 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-visible",
   },
-  // 1: BentoFeatures (Smart Engine) - dark #242426, slides over About
-  {
-    bgColor: "#242426",
-    roundedTop: true,
-    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.5)]",
-    borderClass: "border-t border-[#ffffff20]",
-    overflowClass: "overflow-hidden",
-  },
-  // 2: Skills (Tech Stack) - light #ebeff5, slides over BentoFeatures
+  // 1: Skills (Tech Stack) - light #ebeff5, slides over About
   {
     bgColor: "#ebeff5",
     roundedTop: true,
     shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
     borderClass: "border-t border-[#24242215]",
+    overflowClass: "overflow-hidden",
+  },
+  // 2: BentoFeatures (Smart Engine) - dark #242426, slides over Skills
+  {
+    bgColor: "#242426",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.5)]",
+    borderClass: "border-t border-[#ffffff20]",
     overflowClass: "overflow-hidden",
   },
   // 3: Projects (Featured Projects) - light #f5f7fc, slides over Skills
