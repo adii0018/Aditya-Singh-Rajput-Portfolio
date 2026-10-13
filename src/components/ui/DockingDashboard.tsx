@@ -227,11 +227,11 @@ export default function DockingDashboard() {
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
               <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                Projected balance
+                Beyond the Code
               </h3>
-              <p className="text-xs text-white/75 flex items-center gap-1.5 mt-0.5">
+              <p className="text-xs text-white/80 flex items-center gap-1.5 mt-0.5 font-mono tracking-wide">
                 <span className="w-2 h-2 rounded-full bg-[#40c463] animate-pulse" />
-                No negative cash days expected
+                NO LIMITS. JUST LOGIC.
               </p>
             </div>
 
