@@ -220,17 +220,17 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Anchor marker for DevPassCard initial position in Hero */}
+      {/* Anchor marker for DevPassCard initial position in Hero (Bottom Center to avoid face) */}
       <div
         id="hero-devpass-anchor"
-        className="absolute bottom-16 sm:bottom-20 right-6 sm:right-[10%] lg:right-[14%] xl:right-[16%] w-[220px] h-[330px] pointer-events-none opacity-0 z-30"
+        className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 w-[220px] h-[330px] pointer-events-none opacity-0 z-30"
       />
 
       {/* Scroll indicator */}
       <button
         type="button"
         onClick={scrollToAbout}
-        className="hero-scroll-btn absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1.5 text-[#4d4f57] hover:text-[#242426] transition-colors border-0 bg-transparent cursor-pointer z-30"
+        className="hero-scroll-btn absolute bottom-4 left-6 sm:left-12 lg:left-16 hidden md:flex items-center gap-1.5 text-[#4d4f57] hover:text-[#242426] transition-colors border-0 bg-transparent cursor-pointer z-30"
       >
         <span className="text-[10px] font-mono tracking-wider">SCROLL</span>
         <motion.div
