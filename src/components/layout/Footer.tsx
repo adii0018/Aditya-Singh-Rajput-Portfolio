@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Mail, ArrowUpRight } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
+import AstronautSocialCard from "@/components/ui/AstronautSocialCard";
 import { personal } from "@/lib/data";
 
 export default function Footer() {
@@ -35,42 +35,18 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6">
         {/* Links grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
-          {/* Brand */}
-          <div>
+          {/* Brand & Social Card */}
+          <div className="col-span-2 md:col-span-1">
             <div className="font-black text-2xl mb-4">
               <span className="font-mono">A/</span>dii
               <span className="text-[#d9ff5c]">.</span>
             </div>
-            <p className="text-[#ffffff80] text-sm leading-relaxed">
+            <p className="text-[#ffffff80] text-sm leading-relaxed mb-6">
               Building intelligence.<br />Shaping tomorrow.
             </p>
-            <div className="flex gap-3 mt-6">
-              <motion.a
-                href={personal.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
-                className="w-9 h-9 rounded-full bg-[#ffffff15] flex items-center justify-center hover:bg-[#d9ff5c] hover:text-[#242426] transition-all"
-              >
-                <GithubIcon size={15} />
-              </motion.a>
-              <motion.a
-                href={personal.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
-                className="w-9 h-9 rounded-full bg-[#ffffff15] flex items-center justify-center hover:bg-[#d9ff5c] hover:text-[#242426] transition-all"
-              >
-                <LinkedinIcon size={15} />
-              </motion.a>
-              <motion.a
-                href={`mailto:${personal.email}`}
-                whileHover={{ scale: 1.1, y: -2 }}
-                className="w-9 h-9 rounded-full bg-[#ffffff15] flex items-center justify-center hover:bg-[#d9ff5c] hover:text-[#242426] transition-all"
-              >
-                <Mail size={15} />
-              </motion.a>
-            </div>
+            
+            {/* Astronaut Social Media Card */}
+            <AstronautSocialCard />
           </div>
 
           {/* Links */}
