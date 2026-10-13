@@ -6,6 +6,7 @@ import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { experience } from "@/lib/data";
 import { Briefcase, Trophy, GraduationCap } from "lucide-react";
 import SharinganLoader from "@/components/ui/SharinganLoader";
+import PokeballLoader from "@/components/ui/PokeballLoader";
 
 const typeIcon = {
   work: <Briefcase size={14} />,
@@ -136,6 +137,18 @@ export default function Experience() {
           ease: "back.out(2)",
         });
       });
+
+      gsap.from(".pokeball-end", {
+        scrollTrigger: {
+          trigger: ".pokeball-end",
+          start: "top 92%",
+          once: true,
+        },
+        scale: 0.2,
+        opacity: 0,
+        duration: 0.8,
+        ease: "back.out(2)",
+      });
     },
     { scope: sectionRef }
   );
@@ -164,16 +177,16 @@ export default function Experience() {
         </div>
 
         {/* Timeline */}
-        <div className="timeline-container relative max-w-5xl mx-auto">
+        <div className="timeline-container relative max-w-5xl mx-auto pb-16">
           {/* Timeline background track line */}
           <div
-            className="absolute left-6 md:left-1/2 top-4 bottom-8 w-0.5 -translate-x-1/2 bg-[#24242215]"
+            className="absolute left-6 md:left-1/2 top-4 bottom-7 w-0.5 -translate-x-1/2 bg-[#24242215]"
           />
 
           {/* Vertical scrub line */}
           <div
             ref={lineRef}
-            className="absolute left-6 md:left-1/2 top-4 bottom-8 w-0.5 -translate-x-1/2 bg-gradient-to-b from-[#d9ff5c] via-[#242426] to-[#24242690] origin-top z-0"
+            className="absolute left-6 md:left-1/2 top-4 bottom-7 w-0.5 -translate-x-1/2 bg-gradient-to-b from-[#d9ff5c] via-[#242426] to-[#24242690] origin-top z-0"
           />
 
           <div className="space-y-8 md:space-y-12">
@@ -251,6 +264,11 @@ export default function Experience() {
                 </div>
               );
             })}
+          </div>
+
+          {/* Ending Pokéball at the finish of the center line */}
+          <div className="pokeball-end absolute left-6 md:left-1/2 bottom-0 -translate-x-1/2 z-20 flex flex-col items-center">
+            <PokeballLoader />
           </div>
         </div>
       </div>
