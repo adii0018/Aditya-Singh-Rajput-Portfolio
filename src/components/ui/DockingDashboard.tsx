@@ -17,58 +17,94 @@ import DevPassCard from "@/components/ui/DevPassCard";
 export default function DockingDashboard() {
   const containerRef = useRef<HTMLDivElement>(null);
   const devPassRef = useRef<HTMLDivElement>(null);
+  const devPassBerthRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       if (isReducedMotion()) return;
 
+      // Function to calculate exact vector from target berth back up to the Hero anchor
+      const getDelta = () => {
+        const heroAnchor = document.getElementById("hero-devpass-anchor");
+        const berth = devPassBerthRef.current;
+        if (!heroAnchor || !berth) return { deltaX: 0, deltaY: -750 };
+
+        const anchorRect = heroAnchor.getBoundingClientRect();
+        const berthRect = berth.getBoundingClientRect();
+
+        const deltaX =
+          anchorRect.left + anchorRect.width / 2 - (berthRect.left + berthRect.width / 2);
+        const deltaY =
+          anchorRect.top + anchorRect.height / 2 - (berthRect.top + berthRect.height / 2);
+
+        return { deltaX, deltaY };
+      };
+
       const mm = gsap.matchMedia();
 
-      // Desktop & Tablet: DevPassCard floats high and tilted, then docks into its slot
+      // Desktop & Tablet: starts in Hero section, travels down on scroll into the dashboard slot
       mm.add("(min-width: 768px)", () => {
-        gsap.fromTo(
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#home",
+            start: "top top",
+            endTrigger: devPassBerthRef.current,
+            end: "center 55%",
+            scrub: 1.2,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        tl.fromTo(
           devPassRef.current,
           {
-            y: -190,
-            rotate: 5,
+            x: () => getDelta().deltaX,
+            y: () => getDelta().deltaY,
+            rotate: 7,
+            scale: 0.95,
             boxShadow:
-              "0 35px 70px -15px rgba(0, 0, 0, 0.6), 0 0 35px rgba(124, 58, 237, 0.45)",
+              "0 35px 70px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(124, 58, 237, 0.45)",
           },
           {
+            x: 0,
             y: 0,
             rotate: 0,
+            scale: 1,
             boxShadow: "0 20px 40px rgba(0, 0, 0, 0.8)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 85%",
-              end: "top 35%",
-              scrub: 1.1,
-            },
+            ease: "power1.inOut",
           }
         );
       });
 
       // Mobile
       mm.add("(max-width: 767px)", () => {
-        gsap.fromTo(
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#home",
+            start: "top top",
+            endTrigger: devPassBerthRef.current,
+            end: "center 60%",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        tl.fromTo(
           devPassRef.current,
           {
-            y: -80,
-            rotate: 2.5,
-            boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.4)",
+            x: () => getDelta().deltaX,
+            y: () => getDelta().deltaY,
+            rotate: 3,
+            scale: 0.9,
+            boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)",
           },
           {
+            x: 0,
             y: 0,
             rotate: 0,
+            scale: 1,
             boxShadow: "0 10px 25px rgba(0, 0, 0, 0.5)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 90%",
-              end: "top 50%",
-              scrub: 1,
-            },
+            ease: "power1.inOut",
           }
         );
       });
@@ -306,9 +342,11 @@ export default function DockingDashboard() {
               </div>
             </div>
 
-            {/* COLUMN 2: DEV PASS DOCKING BERTH (Replaces Liquidity & Reduction) */}
-            <div className="lg:col-span-6 flex flex-col justify-center items-center relative min-h-[360px] p-2 overflow-visible">
-              
+            {/* COLUMN 2: DEV PASS DOCKING BERTH */}
+            <div
+              ref={devPassBerthRef}
+              className="lg:col-span-6 flex flex-col justify-center items-center relative min-h-[360px] p-2 overflow-visible"
+            >
               {/* Dashed Ghost Ticket Outline in the slot */}
               <div
                 className="absolute w-[22em] h-[32em] rounded-2xl border-2 border-dashed border-[#7c3aed40] bg-[#1e1e240a] flex flex-col items-center justify-center pointer-events-none text-center p-6"
@@ -328,7 +366,7 @@ export default function DockingDashboard() {
               {/* The Floating and Docking DevPassCard */}
               <div
                 ref={devPassRef}
-                className="relative z-20 cursor-pointer"
+                className="relative z-40 cursor-pointer"
                 style={{ willChange: "transform, box-shadow" }}
               >
                 <DevPassCard />

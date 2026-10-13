@@ -220,6 +220,12 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Anchor marker for DevPassCard initial position in Hero */}
+      <div
+        id="hero-devpass-anchor"
+        className="absolute bottom-16 sm:bottom-20 right-6 sm:right-[10%] lg:right-[14%] xl:right-[16%] w-[220px] h-[330px] pointer-events-none opacity-0 z-30"
+      />
+
       {/* Scroll indicator */}
       <button
         type="button"
