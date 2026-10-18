@@ -10,24 +10,26 @@ import { Menu, X, FileDown } from "lucide-react";
 const SECTION_TO_NAV_MAP: Record<string, string> = {
   home: "home",
   about: "about",
+  playground: "about",
   skills: "skills",
-  features: "skills",
   projects: "projects",
   experience: "experience",
-  certifications: "experience",
-  github: "experience",
+  features: "features",
+  certifications: "features",
+  github: "features",
   contact: "contact",
 };
 
 // Evaluated bottom-up for natural scroll flow
 const TRACKED_SECTIONS = [
   "contact",
-  "experience",
   "github",
   "certifications",
-  "projects",
   "features",
+  "experience",
+  "projects",
   "skills",
+  "playground",
   "about",
   "home",
 ];

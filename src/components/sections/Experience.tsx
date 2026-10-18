@@ -246,7 +246,7 @@ export default function Experience() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative w-full overflow-x-clip bg-gradient-to-b from-[#dde4ee] via-[#e6ebf3] to-[#ebeff5] z-20 -mt-12 sm:-mt-16 pt-3"
+      className="relative w-full overflow-x-clip bg-gradient-to-b from-[#dde4ee] via-[#e6ebf3] to-[#ebeff5] z-20"
     >
       <div
         ref={cardRef}

@@ -134,7 +134,7 @@ export default function DockingDashboard() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-5xl mx-auto pt-16 md:pt-24 pb-8 select-none overflow-visible"
+      className="relative w-full max-w-5xl mx-auto pt-4 sm:pt-6 pb-6 select-none overflow-visible"
     >
       {/* Outer Dashboard Shell with Live Video Background (overflow-visible so card can travel to Hero) */}
       <div className="relative rounded-[24px] sm:rounded-[32px] border border-white/20 shadow-2xl p-3 sm:p-6 lg:p-7 flex gap-4 sm:gap-6 overflow-visible bg-black text-white min-h-[520px] sm:min-h-[560px]">

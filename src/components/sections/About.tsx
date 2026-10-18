@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { Code2, Brain, Rocket, MapPin } from "lucide-react";
-import DockingDashboard from "@/components/ui/DockingDashboard";
 
 const highlights = [
   {
@@ -257,11 +256,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* Centerpiece: The Makro Scroll-Docking Dashboard Component */}
-        <DockingDashboard />
-
         {/* 4 Highlight Capability Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 mb-16">
           {highlights.map((item) => (
             <div key={item.label} className="about-highlight-card">
               <motion.div

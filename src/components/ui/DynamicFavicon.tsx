@@ -40,13 +40,13 @@ const SECTION_METAS: Record<string, SectionMeta> = {
     icon: FAVICONS.about,
     title: "About Me | Aditya Singh Rajput",
   },
+  playground: {
+    icon: FAVICONS.about,
+    title: "Dev Playground | Aditya Singh Rajput",
+  },
   skills: {
     icon: FAVICONS.skills,
     title: "Skills & Tech Stack | Aditya Singh Rajput",
-  },
-  features: {
-    icon: FAVICONS.features,
-    title: "AI Dev Lab & Features | Aditya Singh Rajput",
   },
   projects: {
     icon: FAVICONS.projects,
@@ -55,6 +55,10 @@ const SECTION_METAS: Record<string, SectionMeta> = {
   experience: {
     icon: FAVICONS.experience,
     title: "Experience & Journey | Aditya Singh Rajput",
+  },
+  features: {
+    icon: FAVICONS.features,
+    title: "AI Dev Lab & Features | Aditya Singh Rajput",
   },
   certifications: {
     icon: FAVICONS.certifications,
@@ -75,10 +79,11 @@ const SECTION_IDS = [
   "contact",
   "github",
   "certifications",
+  "features",
   "experience",
   "projects",
-  "features",
   "skills",
+  "playground",
   "about",
   "home",
 ];

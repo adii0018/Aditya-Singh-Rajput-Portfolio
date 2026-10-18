@@ -24,7 +24,15 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-visible",
   },
-  // 1: Skills (Tech Stack) - light #ebeff5, slides over About
+  // 1: Playground (Beyond The Code / DockingDashboard) - dark #242426, overflow-visible
+  {
+    bgColor: "#242426",
+    roundedTop: false,
+    shadowClass: "",
+    borderClass: "border-t border-[#ffffff10]",
+    overflowClass: "overflow-visible",
+  },
+  // 2: Skills (Tech Stack) - light #ebeff5, slides over Playground
   {
     bgColor: "#ebeff5",
     roundedTop: true,
@@ -32,15 +40,7 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#24242215]",
     overflowClass: "overflow-hidden",
   },
-  // 2: BentoFeatures (Smart Engine) - dark #242426, slides over Skills
-  {
-    bgColor: "#242426",
-    roundedTop: true,
-    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.5)]",
-    borderClass: "border-t border-[#ffffff20]",
-    overflowClass: "overflow-hidden",
-  },
-  // 3: Projects (Featured Projects) - light #f5f7fc, slides in from the left over Smart Engine
+  // 3: Projects (Featured Projects) - light #f5f7fc, pins itself internally for horizontal scrolling
   {
     bgColor: "#f5f7fc",
     roundedTop: true,
@@ -48,7 +48,23 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-r border-[#24242215]",
     overflowClass: "overflow-hidden",
   },
-  // 4: Certifications (What I've earned) - dark #0d1117 with cash video, slides over Projects
+  // 4: Experience (Journey & Achievements) - light #ebeff5, slides over Projects
+  {
+    bgColor: "#ebeff5",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
+    borderClass: "border-t border-[#24242215]",
+    overflowClass: "overflow-visible",
+  },
+  // 5: BentoFeatures (AI Dev Lab) - dark #242426, slides over Experience
+  {
+    bgColor: "#242426",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.5)]",
+    borderClass: "border-t border-[#ffffff20]",
+    overflowClass: "overflow-hidden",
+  },
+  // 6: Certifications (What I've earned) - dark #0d1117 with cash video, slides over BentoFeatures
   {
     bgColor: "#0d1117",
     roundedTop: true,
@@ -56,7 +72,7 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-hidden",
   },
-  // 5: GitHubActivity (Code I've shipped) - light #ebeff5, slides over Certifications with wave curve top
+  // 7: GitHubActivity (Code I've shipped) - light #ebeff5, slides over Certifications with wave curve top
   {
     bgColor: "transparent",
     roundedTop: false,
@@ -85,16 +101,18 @@ export default function StackedSections({ children }: StackedSectionsProps) {
 
         // Pin each section so the next section slides over it
         for (let i = 0; i < cards.length - 1; i++) {
-          // Card 3 (Projects) pins itself internally for horizontal scrolling
-          if (i === 3) continue;
-
           const currentCard = cards[i];
           const nextCard = cards[i + 1];
 
+          // Skip pinning if current card contains Projects (which pins itself internally for horizontal scrolling)
+          const isProjects = currentCard.querySelector("#projects") !== null;
+          if (isProjects) continue;
+
           const isTall = (el: HTMLElement) => el.offsetHeight > window.innerHeight;
 
-          // BentoFeatures (i === 2) unpins when Projects hits top top
-          const endValue = i === 2 ? "top top" : (isTall(nextCard) ? "bottom bottom" : "top top");
+          // If the next card is Projects, unpin when Projects hits top top so horizontal scroll takes over smoothly
+          const nextIsProjects = nextCard.querySelector("#projects") !== null;
+          const endValue = nextIsProjects ? "top top" : (isTall(nextCard) ? "bottom bottom" : "top top");
 
           const st = ScrollTrigger.create({
             trigger: currentCard,

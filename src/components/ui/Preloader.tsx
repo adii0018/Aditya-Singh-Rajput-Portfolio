@@ -14,7 +14,7 @@ export default function Preloader() {
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const HOLD = 300; // Hold time after name finishes (ms)
+    const HOLD = 150; // Snappy hold after name finishes (ms)
 
     const finishPreloader = () => {
       if (timerRef.current) return;
@@ -23,7 +23,7 @@ export default function Preloader() {
         document.body.style.overflow = originalOverflow;
         setTimeout(() => {
           setIsRemoved(true);
-        }, 1000);
+        }, 850);
       }, HOLD);
     };
 
@@ -33,10 +33,10 @@ export default function Preloader() {
       nameEl.addEventListener("animationend", finishPreloader);
     }
 
-    // Safety fallback timer (max 3.2s) in case animationend doesn't fire
+    // Safety fallback timer (max 2.4s) in case animationend is skipped
     const fallback = setTimeout(() => {
       finishPreloader();
-    }, 3200);
+    }, 2400);
 
     return () => {
       if (nameEl) {
@@ -54,7 +54,7 @@ export default function Preloader() {
       document.body.style.overflow = "";
       setTimeout(() => {
         setIsRemoved(true);
-      }, 1000);
+      }, 850);
     }
   };
 
@@ -64,7 +64,7 @@ export default function Preloader() {
     <>
       <style>{`
         :root {
-          --pl-bg: #111111;
+          --pl-bg: #111113;
           --pl-ink: #ffffff;
         }
 
@@ -73,16 +73,23 @@ export default function Preloader() {
           inset: 0;
           z-index: 99999;
           user-select: none;
+          isolation: isolate;
+          contain: layout paint;
+          transform: translateZ(0);
+          cursor: pointer;
         }
 
         #preloader .half {
           position: absolute;
           left: 0;
           width: 100%;
-          height: 50%;
+          height: 50.5%;
           background: var(--pl-bg);
-          transition: transform .9s cubic-bezier(.77,0,.18,1);
+          transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+          transform: translate3d(0, 0, 0);
           will-change: transform;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
 
         #preloader .top {
@@ -94,11 +101,11 @@ export default function Preloader() {
         }
 
         #preloader.done .top {
-          transform: translateY(-100%);
+          transform: translate3d(0, -100%, 0);
         }
 
         #preloader.done .bottom {
-          transform: translateY(100%);
+          transform: translate3d(0, 100%, 0);
         }
 
         #preloader .content {
@@ -109,21 +116,25 @@ export default function Preloader() {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: clamp(14px, 2.5vw, 24px);
-          transition: opacity .4s ease, transform .6s ease;
+          gap: clamp(14px, 2.5vw, 22px);
+          transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
           pointer-events: none;
+          transform: translate3d(0, 0, 0);
+          will-change: opacity, transform;
         }
 
         #preloader.done .content {
           opacity: 0;
-          transform: scale(.94);
+          transform: translate3d(0, 0, 0) scale(0.94);
         }
 
         #preloader svg {
-          width: min(420px, 75vw);
-          max-height: 38vh;
+          width: min(400px, 72vw);
+          max-height: 36vh;
           height: auto;
           overflow: visible;
+          filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.15)) drop-shadow(0 0 30px rgba(217, 255, 92, 0.12));
+          transform: translateZ(0);
         }
 
         #preloader .logo {
@@ -132,38 +143,83 @@ export default function Preloader() {
           stroke-width: 9;
           stroke-linecap: round;
           stroke-linejoin: round;
-          stroke-dasharray: 1 2;
-          stroke-dashoffset: 1.02;
-          animation: pl-draw .9s cubic-bezier(.65,0,.35,1) .1s forwards;
+          stroke-dasharray: 1000 1005;
+          stroke-dashoffset: 1002;
+          will-change: stroke-dashoffset;
+          animation: pl-draw 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
         }
 
         #preloader .l2 {
-          animation-duration: .8s;
-          animation-delay: .75s;
+          animation-duration: 0.65s;
+          animation-delay: 0.55s;
         }
 
         #preloader .l3 {
-          animation-duration: .85s;
-          animation-delay: 1.4s;
+          animation-duration: 0.7s;
+          animation-delay: 1.05s;
         }
 
         #preloader .name {
           margin: 0;
           color: var(--pl-ink);
-          font: 500 clamp(0.85rem, 2.2vw, 1.2rem)/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
-          letter-spacing: .32em;
-          text-indent: .32em;
+          font: 500 clamp(0.85rem, 2.2vw, 1.15rem)/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+          letter-spacing: 0.36em;
+          text-indent: 0.36em;
           text-transform: uppercase;
           opacity: 0;
-          transform: translateY(12px);
-          animation: pl-name .6s ease 2.0s forwards;
+          transform: translate3d(0, 10px, 0);
+          will-change: opacity, transform;
+          animation: pl-name 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.55s forwards;
           text-align: center;
+        }
+
+        #preloader .progress-track {
+          width: 84px;
+          height: 1.5px;
+          background: rgba(255, 255, 255, 0.12);
+          border-radius: 999px;
+          overflow: hidden;
+          position: relative;
+          opacity: 0;
+          animation: pl-fade 0.4s ease 0.15s forwards;
+        }
+
+        #preloader .progress-bar {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 0%;
+          background: linear-gradient(90deg, #d9ff5c, #ffffff);
+          border-radius: 999px;
+          animation: pl-progress 1.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+        }
+
+        @keyframes pl-fade {
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes pl-progress {
+          0% {
+            width: 0%;
+          }
+          40% {
+            width: 45%;
+          }
+          75% {
+            width: 82%;
+          }
+          100% {
+            width: 100%;
+          }
         }
 
         @keyframes pl-name {
           to {
             opacity: 1;
-            transform: none;
+            transform: translate3d(0, 0, 0);
           }
         }
 
@@ -174,12 +230,12 @@ export default function Preloader() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          #preloader .logo, #preloader .name {
-            animation-duration: .01s;
-            animation-delay: 0s;
+          #preloader .logo, #preloader .name, #preloader .progress-bar {
+            animation-duration: 0.01s !important;
+            animation-delay: 0s !important;
           }
           #preloader .half, #preloader .content {
-            transition-duration: .01s;
+            transition-duration: 0.01s !important;
           }
         }
       `}</style>
@@ -197,23 +253,26 @@ export default function Preloader() {
           <svg viewBox="320 125 930 370" role="img" aria-label="ASR">
             <path
               className="logo l1"
-              pathLength={1}
+              pathLength={1000}
               d="M487 147 C 472 151, 466 158, 461 170 L 410 296 L 447 311 L 500 183 L 590 420 L 498 385 C 486 381, 472 380, 458 382 C 432 384, 418 398, 408 422 L 388 467 L 345 467 C 356 436, 364 410, 384 384 C 404 358, 432 343, 460 343 C 490 343, 515 358, 545 380 L 582 458 C 590 468, 606 472, 620 464 C 636 454, 642 438, 636 418 L 541 172"
             />
             <path
               className="logo l2"
-              pathLength={1}
+              pathLength={1000}
               d="M924.3 213.7 L917.6 200.4 L909.2 188.6 L900.0 178.9 L889.2 170.1 L877.6 163.0 L865.4 157.3 L852.8 153.2 L839.4 150.3 L823.7 148.9 L810.2 149.2 L793.5 151.2 L781.0 154.1 L766.7 159.2 L755.6 164.7 L743.6 173.0 L734.6 181.5 L725.8 192.8 L719.9 204.1 L715.5 218.1 L713.8 230.1 L713.8 243.5 L715.9 256.5 L719.9 268.0 L723.0 274.0 L727.2 280.5 L734.5 289.1 L742.6 296.6 L751.6 303.3 L763.0 310.3 L774.9 316.3 L786.6 321.5 L836.3 341.0 L850.2 347.7 L859.3 353.2 L867.9 360.1 L873.5 366.7 L875.6 370.5 L877.0 374.5 L877.9 382.5 L876.5 391.2 L873.2 398.6 L867.3 405.5 L860.5 410.3 L851.8 414.3 L841.6 417.1 L830.1 418.8 L815.6 419.1 L803.1 418.1 L791.4 415.9 L780.7 412.5 L771.0 408.1 L760.6 401.3 L753.0 394.6 L746.2 386.7 L740.2 377.5 L703.8 398.5 L709.0 406.9 L714.8 414.7 L721.1 422.0 L727.9 428.7 L737.4 436.4 L745.8 442.0 L756.6 447.8 L768.4 452.7 L778.2 455.8 L791.1 458.7 L803.9 460.5 L817.2 461.2 L830.7 460.9 L843.3 459.5 L853.6 457.5 L865.7 453.9 L875.6 449.8 L884.5 444.9 L892.9 438.9 L900.5 431.7 L908.6 421.1 L913.8 411.4 L917.8 399.6 L919.7 386.9 L919.6 374.9 L917.6 363.5 L913.7 352.8 L906.8 341.0 L899.8 332.6 L891.8 325.2 L882.6 318.3 L870.5 310.9 L849.5 300.9 L795.3 279.4 L783.4 273.6 L773.1 267.1 L765.0 260.2 L761.4 256.0 L758.7 251.8 L756.9 247.3 L755.9 242.4 L755.8 231.3 L757.4 223.7 L760.3 217.0 L765.7 209.7 L771.5 204.5 L778.8 199.9 L787.7 196.0 L798.0 193.2 L806.6 191.7 L820.3 190.8 L833.1 191.8 L845.8 194.9 L855.7 199.0 L866.6 205.6 L874.3 212.4 L880.6 220.5 L885.7 230.3 L924.3 213.7Z"
             />
             <path
               className="logo l3"
-              pathLength={1}
+              pathLength={1000}
               d="M1075.7 194.3 L1091.6 193.8 L1107.8 194.5 L1123.4 196.6 L1137.7 200.2 L1147.1 203.9 L1157.6 209.9 L1165.3 217.0 L1168.2 221.0 L1170.6 225.5 L1173.1 233.3 L1174.0 239.4 L1174.0 245.1 L1173.0 252.4 L1171.7 256.5 L1169.1 261.8 L1165.5 266.4 L1160.9 270.6 L1154.9 274.4 L1147.8 277.8 L1139.5 280.8 L1130.2 283.1 L1109.7 286.1 L1087.9 287.0 L1088.1 329.0 L1102.5 328.7 L1191.0 450.4 L1225.0 425.6 L1149.3 321.6 L1159.4 318.4 L1167.3 315.2 L1175.0 311.3 L1182.4 306.8 L1189.3 301.6 L1195.8 295.5 L1201.6 288.5 L1205.0 283.6 L1209.4 275.3 L1212.3 267.6 L1215.5 253.1 L1216.1 242.8 L1215.9 235.7 L1213.0 219.7 L1208.7 207.7 L1204.2 199.3 L1200.4 193.6 L1190.7 182.9 L1178.5 173.3 L1165.1 165.9 L1150.2 160.2 L1131.4 155.4 L1111.2 152.7 L1096.9 151.9 L1082.5 151.9 L1055.4 154.2 L1051.2 155.1 L1047.2 157.0 L1043.8 159.6 L1040.9 162.8 L1038.8 166.6 L1037.4 170.7 L982.4 433.7 L1023.6 442.3 L1075.7 194.3Z"
             />
           </svg>
           <p ref={nameRef} className="name">
             Aditya Singh Rajput
           </p>
+          <div className="progress-track">
+            <div className="progress-bar" />
+          </div>
         </div>
       </div>
     </>
