@@ -181,7 +181,7 @@ export default function Projects() {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#10b981]" />
                 </div>
                 <a
-                  href="https://github.com/adii0018"
+                  href={projects[0]?.github || "https://github.com/adii0018/Alice-exam-proctor"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#242426] text-white text-xs font-semibold hover:bg-black transition-all cursor-pointer"
@@ -271,7 +271,7 @@ export default function Projects() {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#c0adff]" />
                 </div>
                 <a
-                  href="https://github.com/adii0018"
+                  href={projects[1]?.github || "https://github.com/adii0018/Alice-mandi"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#242426] text-xs font-semibold hover:bg-[#e0e0e0] transition-all cursor-pointer"
@@ -359,7 +359,7 @@ export default function Projects() {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#0284c7]" />
                 </div>
                 <a
-                  href="https://github.com/adii0018"
+                  href={projects[2]?.github || "https://github.com/adii0018/JanSetu-AI"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#242426] text-white text-xs font-semibold hover:bg-black transition-all cursor-pointer"
@@ -449,7 +449,7 @@ export default function Projects() {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#d9ff5c]" />
                 </div>
                 <a
-                  href="https://github.com/adii0018"
+                  href={projects[3]?.github || "https://github.com/adii0018/FFZONE"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#d9ff5c] text-[#242426] text-xs font-bold hover:bg-[#cbf544] transition-all cursor-pointer"

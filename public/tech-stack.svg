@@ -1,0 +1,400 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="522" viewBox="0 0 900 522" role="img" aria-label="Tech stack: Python, NumPy, Pandas, Matplotlib, Seaborn, Pygame, TensorFlow, PyTorch, scikit-learn, JavaScript, Django, React, Tailwind CSS, MongoDB, SQL, Google Cloud, AWS, Azure, Linux, C++, Git, Docker">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0d1117"/>
+    <stop offset="1" stop-color="#0b1a12"/>
+  </linearGradient>
+  <linearGradient id="sw" x1="0" x2="1">
+    <stop offset="0" stop-color="#22c55e" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#22c55e" stop-opacity=".16"/>
+    <stop offset="1" stop-color="#22c55e" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sw_blue" x1="0" x2="1">
+    <stop offset="0" stop-color="#38bdf8" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#38bdf8" stop-opacity=".16"/>
+    <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sw_amber" x1="0" x2="1">
+    <stop offset="0" stop-color="#f59e0b" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#f59e0b" stop-opacity=".16"/>
+    <stop offset="1" stop-color="#f59e0b" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sw_purple" x1="0" x2="1">
+    <stop offset="0" stop-color="#a855f7" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#a855f7" stop-opacity=".16"/>
+    <stop offset="1" stop-color="#a855f7" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="top" x1="0" x2="1">
+    <stop offset="0" stop-color="#22c55e" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#22c55e"/>
+    <stop offset="1" stop-color="#22c55e" stop-opacity="0"/>
+  </linearGradient>
+  <clipPath id="c0"><rect x="10" y="58" width="880" height="100" rx="14"/></clipPath>
+  <clipPath id="c1"><rect x="10" y="172" width="880" height="100" rx="14"/></clipPath>
+  <clipPath id="c2"><rect x="10" y="286" width="880" height="100" rx="14"/></clipPath>
+  <clipPath id="c3"><rect x="10" y="400" width="880" height="100" rx="14"/></clipPath>
+</defs>
+<style>
+  .m{font-family:'Fira Code','JetBrains Mono','SF Mono',Consolas,'Courier New',monospace}
+  .ic{animation:bob 3.2s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  .glow{animation:glow 3.2s ease-in-out infinite}
+  @keyframes glow{0%,100%{opacity:.25}50%{opacity:1}}
+  .sweep{animation:sweep 6s linear infinite}
+  @keyframes sweep{0%{transform:translateX(-200px)}100%{transform:translateX(1100px)}}
+  .dot{animation:blink 1.2s steps(2,start) infinite}
+  @keyframes blink{to{opacity:0}}
+  .top{animation:topmove 5s ease-in-out infinite alternate}
+  @keyframes topmove{from{transform:translateX(-120px)}to{transform:translateX(120px)}}
+</style>
+
+<!-- Background Frame -->
+<rect x="1" y="1" width="898" height="520" rx="18" fill="url(#bg)" stroke="#22c55e" stroke-opacity=".28"/>
+<rect class="top" x="200" y="1" width="500" height="2" fill="url(#top)"/>
+
+<!-- Header -->
+<circle class="dot" cx="34" cy="30" r="5" fill="#22c55e"/>
+<text class="m" x="50" y="35" font-size="15" font-weight="700" fill="#22c55e">tech_stack --live</text>
+<text class="m" x="870" y="35" font-size="12" fill="#8b949e" text-anchor="end">22 technologies / 4 domains</text>
+
+<!-- ==================== ROW 1: AI / ML ==================== -->
+<rect x="10" y="58" width="880" height="100" rx="14" fill="#161b22" fill-opacity=".72" stroke="#30363d"/>
+<g clip-path="url(#c0)"><rect class="sweep" style="animation-delay:0.0s" x="0" y="58" width="200" height="100" fill="url(#sw)"/></g>
+<rect x="28" y="88" width="4" height="40" rx="2" fill="#22c55e"/>
+<text class="m" x="44" y="107" font-size="16" font-weight="700" fill="#e6edf3">AI / ML</text>
+<text class="m" x="44" y="126" font-size="11" fill="#8b949e">9 tools &#183; models &amp; data</text>
+
+<!-- Python -->
+<g class="ic" style="animation-delay:0.00s">
+  <rect class="glow" style="animation-delay:0.00s" x="213" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="215" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(224, 83) scale(0.265)">
+    <path fill="#3776AB" d="M63.3 3c-30.8 0-28.9 13.4-28.9 13.4l.1 13.9h29.4v4.2H20.7S3 32.5 3 63.7c0 31.2 15.5 30.1 15.5 30.1h9.2v-13s-.5-15.5 15.2-15.5h29.1s14.4.2 14.4-14.1V20.4S84.7 3 63.3 3zM49.6 12.3a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4z"/>
+    <path fill="#FFD438" d="M64.7 125c30.8 0 28.9-13.4 28.9-13.4l-.1-13.9H64.1v-4.2h43.2s17.7 2 17.7-29.2c0-31.2-15.5-30.1-15.5-30.1h-9.2v13s.5 15.5-15.2 15.5H36.8s-14.4-.2-14.4 14.1v30.8s-1.4 17.4 22.3 17.4zm13.7-9.3a4.7 4.7 0 1 1 0-9.4 4.7 4.7 0 0 1 0 9.4z"/>
+  </g>
+  <text class="m" x="241" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Python</text>
+</g>
+
+<!-- NumPy -->
+<g class="ic" style="animation-delay:0.22s">
+  <rect class="glow" style="animation-delay:0.22s" x="289" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="291" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(300, 83) scale(0.265)">
+    <path fill="#4DABCF" d="m55.012 26.006-21.38-10.789L10.154 26.93l21.969 11.027Zzm9.808 4.951L87.241 42.28 63.982 53.955l-22-11.043Zm29.948-15.581 23.037 11.552L97.2 37.272 74.735 25.938ZM84.853 10.4 64.113 0 43.598 10.24 64.97 21.014ZM68.64 99.702V128l25.122-12.537-.023-28.31ZM93.727 77.27l-.028-28.012-25.06 12.458V89.74Zm30.158-5.246v28.41l-21.43 10.69-.017-28.279Zzm0-9.935V34.25l-21.47 10.673.016 28.068Z"/>
+    <path fill="#4c75cf" d="m59.77 61.716-16.918-8.512V89.97s-20.7-44.033-22.612-47.99c-.246-.513-1.263-1.07-1.522-1.209-3.731-1.947-14.603-7.45-14.603-7.45v64.977l15.04 8.063V72.382s20.478 39.346 20.689 39.78c.214.429 2.257 4.57 4.459 6.028 2.92 1.939 15.458 9.477 15.458 9.477z"/>
+  </g>
+  <text class="m" x="317" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">NumPy</text>
+</g>
+
+<!-- Pandas -->
+<g class="ic" style="animation-delay:0.44s">
+  <rect class="glow" style="animation-delay:0.44s" x="365" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="367" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(376, 83) scale(0.265)">
+    <path fill="#130754" d="M46.236 7.567h13.99v29.047h-13.99Zm0 59.668h13.99V96.28h-13.99Z"/>
+    <path fill="#ffca00" d="M46.236 45.092h13.99v13.705h-13.99Z"/>
+    <path fill="#130754" d="M23.763 31.446h13.989V128h-13.99ZM68.245 91.2h13.99v29.046h-13.99Zm0-59.72h13.99v29.047h-13.99Z"/>
+    <path fill="#e70488" d="M68.245 69.011h13.99v13.705h-13.99Z"/>
+    <path fill="#130754" d="M90.248 0h13.99v96.554h-13.99Z"/>
+  </g>
+  <text class="m" x="393" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Pandas</text>
+</g>
+
+<!-- Matplotlib -->
+<g class="ic" style="animation-delay:0.66s">
+  <rect class="glow" style="animation-delay:0.66s" x="441" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="443" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(452, 83) scale(0.265)">
+    <path fill="#fff" d="M64 125c-33.7 0-61-27.3-61-61s27.3-61 61-61 61 27.3 61 61-27.3 61-61 61z"/>
+    <circle cx="64" cy="64" r="61" fill="none" stroke="#11557c" stroke-width="3"/>
+    <path fill="#004cff" opacity="0.75" d="M64 64l48-16c-4-12-12-22-22-28L64 64z"/>
+    <path fill="#ceff29" opacity="0.75" d="M64 64l14-46c-14-4-28-4-42 2L64 64z"/>
+    <path fill="#ff6800" opacity="0.75" d="M64 64l-38-34c-12 10-18 24-18 40L64 64z"/>
+    <path fill="#ffc400" opacity="0.75" d="M64 64l-48 16c4 14 14 26 28 32L64 64z"/>
+    <path fill="#29ffce" opacity="0.75" d="M64 64l-14 46c14 4 28 3 40-4L64 64z"/>
+    <path fill="#7dff7a" opacity="0.75" d="M64 64l40 34c10-12 14-26 12-42L64 64z"/>
+    <circle cx="64" cy="64" r="14" fill="#2c2c2c"/>
+    <path fill="#FFFFFF" d="M64 56a8 8 0 1 0 8 8 8 8 0 0 0-8-8z"/>
+  </g>
+  <text class="m" x="469" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Matplotlib</text>
+</g>
+
+<!-- Seaborn -->
+<g class="ic" style="animation-delay:0.88s">
+  <rect class="glow" style="animation-delay:0.88s" x="517" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="519" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(528, 83) scale(0.265)">
+    <path d="M64 64 L64.99 26.01 A38 38 0 0 1 82.13 30.60 Z" fill="#1d3557"/>
+    <path d="M64 64 L92.21 17.96 A54 54 0 0 1 110.04 35.79 Z" fill="#2a4d8f"/>
+    <path d="M64 64 L104.43 42.05 A46 46 0 0 1 109.98 62.80 Z" fill="#3a64a8"/>
+    <path d="M64 64 L123.98 65.57 A60 60 0 0 1 116.73 92.63 Z" fill="#4c72b0"/>
+    <path d="M64 64 L98.11 84.90 A40 40 0 0 1 84.90 98.11 Z" fill="#5f86bf"/>
+    <path d="M64 64 L90.72 113.21 A56 56 0 0 1 65.47 119.98 Z" fill="#7a9fcf"/>
+    <path d="M64 64 L63.11 97.99 A34 34 0 0 1 47.78 93.88 Z" fill="#1d3557"/>
+    <path d="M64 64 L33.70 113.45 A58 58 0 0 1 14.55 94.30 Z" fill="#2a4d8f"/>
+    <path d="M64 64 L21.82 86.90 A48 48 0 0 1 16.02 65.26 Z" fill="#3a64a8"/>
+    <path d="M64 64 L2.02 62.38 A62 62 0 0 1 9.51 34.42 Z" fill="#4c72b0"/>
+    <path d="M64 64 L28.19 42.06 A42 42 0 0 1 42.06 28.19 Z" fill="#5f86bf"/>
+    <path d="M64 64 L39.19 18.30 A52 52 0 0 1 62.64 12.02 Z" fill="#7a9fcf"/>
+    <circle cx="64" cy="64" r="14" fill="#f6f8fa"/>
+  </g>
+  <text class="m" x="545" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Seaborn</text>
+</g>
+
+<!-- Pygame -->
+<g class="ic" style="animation-delay:1.10s">
+  <rect class="glow" style="animation-delay:1.10s" x="593" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="595" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(604, 83) scale(0.265)">
+    <rect width="128" height="128" rx="28" fill="#1C1C1E"/>
+    <path fill="#2ECC71" d="M38 46h52c6.6 0 12 5.4 12 12v18c0 14-11 26-25 26h-2c-3.5 0-6.8-1.5-9-4l-4-5-4 5c-2.2 2.5-5.5 4-9 4h-2c-14 0-25-12-25-26V58c0-6.6 5.4-12 12-12z"/>
+    <rect x="36" y="58" width="6" height="16" rx="3" fill="#1C1C1E"/>
+    <rect x="31" y="63" width="16" height="6" rx="3" fill="#1C1C1E"/>
+    <circle cx="82" cy="62" r="4.5" fill="#E74C3C"/>
+    <circle cx="92" cy="72" r="4.5" fill="#F1C40F"/>
+    <circle cx="72" cy="72" r="4.5" fill="#3498DB"/>
+    <circle cx="82" cy="82" r="4.5" fill="#2ECC71"/>
+    <path d="M54 36c4-8 16-8 20 0" stroke="#2ECC71" stroke-width="4" stroke-linecap="round" fill="none"/>
+  </g>
+  <text class="m" x="621" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Pygame</text>
+</g>
+
+<!-- TensorFlow -->
+<g class="ic" style="animation-delay:1.32s">
+  <rect class="glow" style="animation-delay:1.32s" x="669" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="671" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(680, 83) scale(0.265)">
+    <path d="m61.55 128-21.84-12.68V40.55L6.81 59.56l.08-28.32L61.55 0zM66.46 0v128l21.84-12.68V79.31l16.49 9.53-.1-24.63-16.39-9.36v-14.3l32.89 19.01-.08-28.32z" fill="#ff6f00" />
+  </g>
+  <text class="m" x="697" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">TensorFlow</text>
+</g>
+
+<!-- PyTorch -->
+<g class="ic" style="animation-delay:1.54s">
+  <rect class="glow" style="animation-delay:1.54s" x="745" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="747" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(756, 83) scale(0.265)">
+    <path fill="#EE4C2C" d="M100.1 38.3l-9.2 9.2c15.1 15.1 15.1 39.4 0 54.3-15.1 15.1-39.4 15.1-54.3 0-15.1-15.1-15.1-39.4 0-54.3l24-24 3.4-3.4V2L27.8 38.2C7.7 58.3 7.7 90.8 27.8 111s52.6 20.1 72.4 0c20.1-20.2 20.1-52.5-.1-72.7z"/>
+    <circle fill="#EE4C2C" cx="82.1" cy="29.4" r="6.7"/>
+  </g>
+  <text class="m" x="773" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">PyTorch</text>
+</g>
+
+<!-- scikit-learn -->
+<g class="ic" style="animation-delay:1.76s">
+  <rect class="glow" style="animation-delay:1.76s" x="821" y="72" width="56" height="56" rx="15" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <rect x="823" y="74" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(832, 83) scale(0.265)">
+    <path fill="#f89939" d="M98.18 88.13c15.63-15.62 18.23-38.36 5.8-50.78-12.43-12.42-35.17-9.82-50.8 5.8-15.63 15.62-11.11 45.48-5.8 50.78 4.29 4.29 35.17 9.82 50.8-5.8Z"/>
+    <path fill="#3499cd" d="M34.04 65.56c-9.07-9.06-22.27-10.57-29.48-3.37-7.21 7.21-5.7 20.4 3.37 29.46 9.07 9.07 26.4 6.44 29.48 3.37 2.49-2.49 5.71-20.4-3.37-29.46Z"/>
+    <circle cx="88" cy="64" r="16" fill="#FFFFFF"/>
+    <path fill="#005C8A" d="M88 52c-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12-5.4-12-12-12zm0 18c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z"/>
+  </g>
+  <text class="m" x="849" y="143" font-size="10.5" fill="#c9d1d9" text-anchor="middle">scikit-learn</text>
+</g>
+
+<!-- ==================== ROW 2: Web & Backend ==================== -->
+<rect x="10" y="172" width="880" height="100" rx="14" fill="#161b22" fill-opacity=".72" stroke="#30363d"/>
+<g clip-path="url(#c1)"><rect class="sweep" style="animation-delay:-1.4s" x="0" y="172" width="200" height="100" fill="url(#sw_blue)"/></g>
+<rect x="28" y="202" width="4" height="40" rx="2" fill="#38bdf8"/>
+<text class="m" x="44" y="221" font-size="16" font-weight="700" fill="#e6edf3">Web &amp; Backend</text>
+<text class="m" x="44" y="240" font-size="11" fill="#8b949e">6 tools &#183; apps &amp; apis</text>
+
+<!-- JavaScript -->
+<g class="ic" style="animation-delay:0.10s">
+  <rect class="glow" style="animation-delay:0.10s" x="327" y="186" width="56" height="56" rx="15" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="329" y="188" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(338, 197) scale(0.265)">
+    <rect width="128" height="128" rx="24" fill="#F7DF1E"/>
+    <path fill="#000000" d="M68 84c0 13-8 18-19 18-9 0-15-4-18-9l10-6c2 3 4 5 8 5 4 0 7-2 7-7V48h12v36zm38-1c0 11-7 19-20 19-12 0-20-7-20-17l11-6c2 5 5 8 9 8 4 0 7-2 7-5 0-4-3-5-9-7-13-4-18-9-18-18 0-11 8-18 19-18 10 0 18 5 20 15l-11 5c-2-4-4-6-8-6-4 0-6 2-6 5 0 3 2 4 8 6 13 4 19 8 19 17z"/>
+  </g>
+  <text class="m" x="355" y="257" font-size="10.5" fill="#c9d1d9" text-anchor="middle">JavaScript</text>
+</g>
+
+<!-- Django -->
+<g class="ic" style="animation-delay:0.32s">
+  <rect class="glow" style="animation-delay:0.32s" x="403" y="186" width="56" height="56" rx="15" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="405" y="188" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(414, 197) scale(0.265)">
+    <rect width="128" height="128" rx="24" fill="#092E20"/>
+    <path fill="#44B78B" d="M62 30h14v44c0 14-8 22-22 22-5 0-9-1-12-2l3-12c2 1 5 2 8 2 7 0 9-4 9-11V30zm-24 24h14v22c0 8-3 12-8 12-3 0-5-1-6-2l-2 11c3 2 8 3 13 3 13 0 21-8 21-22V54H38v0z"/>
+    <circle cx="70" cy="98" r="5" fill="#44B78B"/>
+  </g>
+  <text class="m" x="431" y="257" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Django</text>
+</g>
+
+<!-- React -->
+<g class="ic" style="animation-delay:0.54s">
+  <rect class="glow" style="animation-delay:0.54s" x="479" y="186" width="56" height="56" rx="15" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="481" y="188" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(490, 197) scale(0.265)">
+    <g fill="#61DAFB">
+      <circle cx="64" cy="64" r="11.4"/>
+      <path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13.2-.2-22.5-6.6-26.1-1.9-1.1-4-1.6-6.4-1.6-7 0-15.9 5.2-24.9 13.9-9-8.7-17.9-13.9-24.9-13.9-2.4 0-4.5.5-6.4 1.6-6.4 3.7-8.7 13-6.6 26.1.4 2.3.9 4.7 1.5 7.1-2.4.7-4.7 1.4-6.9 2.3C8.2 50 1.4 56.6 1.4 64s6.9 14 19.3 18.8c2.2.8 4.5 1.6 6.9 2.3-.6 2.4-1.1 4.8-1.5 7.1-2.1 13.2.2 22.5 6.6 26.1 1.9 1.1 4 1.6 6.4 1.6 7 0 16-5.2 24.9-13.9 9 8.7 17.9 13.9 24.9 13.9 2.4 0 4.5-.5 6.4-1.6 6.4-3.7 8.7-13 6.6-26.1-.4-2.3-.9-4.7-1.5-7.1 2.4-.7 4.7-1.4 6.9-2.3 12.5-4.8 19.3-11.4 19.3-18.8s-6.8-14-19.3-18.8z"/>
+    </g>
+  </g>
+  <text class="m" x="507" y="257" font-size="10.5" fill="#c9d1d9" text-anchor="middle">React</text>
+</g>
+
+<!-- Tailwind CSS -->
+<g class="ic" style="animation-delay:0.76s">
+  <rect class="glow" style="animation-delay:0.76s" x="555" y="186" width="56" height="56" rx="15" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="557" y="188" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(566, 197) scale(0.265)">
+    <path d="M64.004 25.602c-17.067 0-27.73 8.53-32 25.597 6.398-8.531 13.867-11.73 22.398-9.597 4.871 1.214 8.352 4.746 12.207 8.66C72.883 56.629 80.145 64 96.004 64c17.066 0 27.73-8.531 32-25.602-6.399 8.536-13.867 11.735-22.399 9.602-4.87-1.215-8.347-4.746-12.207-8.66-6.27-6.367-13.53-13.738-29.394-13.738zM32.004 64c-17.066 0-27.73 8.531-32 25.602C6.402 81.066 13.87 77.867 22.402 80c4.871 1.215 8.352 4.746 12.207 8.66 6.274 6.367 13.536 13.738 29.395 13.738 17.066 0 27.73-8.53 32-25.597-6.399 8.531-13.867 11.73-22.399 9.597-4.87-1.214-8.347-4.746-12.207-8.66C55.128 71.371 47.868 64 32.004 64z" fill="#38bdf8"/>
+  </g>
+  <text class="m" x="583" y="257" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Tailwind CSS</text>
+</g>
+
+<!-- MongoDB -->
+<g class="ic" style="animation-delay:0.98s">
+  <rect class="glow" style="animation-delay:0.98s" x="631" y="186" width="56" height="56" rx="15" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="633" y="188" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(642, 197) scale(0.265)">
+    <path fill="#439934" d="M88.038 42.812c1.605 4.643 2.761 9.383 3.141 14.296.472 6.095.256 12.147-1.029 18.142-.035.165-.109.32-.164.48-.403.001-.814-.049-1.208.012-3.329.523-6.655 1.065-9.981 1.604-3.438.557-6.881 1.092-10.313 1.687-1.216.21-2.721-.041-3.212 1.641-.014.046-.154.054-.235.08l.166-10.051-.169-24.252 1.602-.275c2.62-.429 5.24-.864 7.862-1.281 3.129-.497 6.261-.98 9.392-1.465 1.381-.215 2.764-.412 4.148-.618z"/>
+    <path fill="#45A538" d="M61.729 110.054c-1.69-1.453-3.439-2.842-5.059-4.37-8.717-8.222-15.093-17.899-18.233-29.566-.865-3.211-1.442-6.474-1.627-9.792-.13-2.322-.318-4.665-.154-6.975.437-6.144 1.325-12.229 3.127-18.147l.099-.138c.175.233.427.439.516.702 1.759 5.18 3.505 10.364 5.242 15.551 5.458 16.3 10.909 32.604 16.376 48.9.107.318.384.579.583.866l-.87 2.969z"/>
+    <path fill="#46A037" d="M88.038 42.812c-1.384.206-2.768.403-4.149.616-3.131.485-6.263.968-9.392 1.465-2.622.417-5.242.852-7.862 1.281l-1.602.275-.012-1.045c-.053-.859-.144-1.717-.154-2.576-.069-5.478-.112-10.956-.18-16.434-.042-3.429-.105-6.857-.175-10.285-.043-2.13-.089-4.261-.185-6.388-.052-1.143-.236-2.28-.311-3.423-.042-.657.016-1.319.029-1.979.817 1.583 1.616 3.178 2.456 4.749 1.327 2.484 3.441 4.314 5.344 6.311 7.523 7.892 12.864 17.068 16.193 27.433z"/>
+    <path fill="#409433" d="M65.036 80.753c.081-.026.222-.034.235-.08.491-1.682 1.996-1.431 3.212-1.641 3.432-.594 6.875-1.13 10.313-1.687 3.326-.539 6.652-1.081 9.981-1.604.394-.062.805-.011 1.208-.012-.622 2.22-1.112 4.488-1.901 6.647-.896 2.449-1.98 4.839-3.131 7.182a49.142 49.142 0 01-6.353 9.763c-1.919 2.308-4.058 4.441-6.202 6.548-1.185 1.165-2.582 2.114-3.882 3.161l-.337-.23-1.214-1.038-1.256-2.753a41.402 41.402 0 01-1.394-9.838l.023-.561.171-2.426c.057-.828.133-1.655.168-2.485.129-2.982.241-5.964.359-8.946z"/>
+    <path fill="#B6B598" d="M62.476 112.621c.196-.246.475-.464.574-.744.731-2.05 1.417-4.115 2.143-6.166.093-.262.341-.469.518-.701l1.255 2.754c-.248.352-.59.669-.728 1.061l-2.404 7.059c-.099.283-.437.483-.663.722l-.695-3.985z"/>
+  </g>
+  <text class="m" x="659" y="257" font-size="10.5" fill="#c9d1d9" text-anchor="middle">MongoDB</text>
+</g>
+
+<!-- SQL -->
+<g class="ic" style="animation-delay:1.20s">
+  <rect class="glow" style="animation-delay:1.20s" x="707" y="186" width="56" height="56" rx="15" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="709" y="188" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(718, 197) scale(0.265)">
+    <ellipse cx="64" cy="28" rx="46" ry="18" fill="#00758F"/>
+    <path d="M18 28v34c0 10 20.6 18 46 18s46-8 46-18V28" fill="none" stroke="#00758F" stroke-width="8"/>
+    <ellipse cx="64" cy="62" rx="46" ry="18" fill="#F29111" opacity="0.3"/>
+    <path d="M18 62v34c0 10 20.6 18 46 18s46-8 46-18V62" fill="none" stroke="#F29111" stroke-width="8"/>
+    <ellipse cx="64" cy="96" rx="46" ry="18" fill="#F29111"/>
+    <text x="64" y="69" font-family="monospace" font-size="22" font-weight="bold" fill="#FFFFFF" text-anchor="middle">SQL</text>
+  </g>
+  <text class="m" x="735" y="257" font-size="10.5" fill="#c9d1d9" text-anchor="middle">SQL</text>
+</g>
+
+<!-- ==================== ROW 3: Cloud & DevOps ==================== -->
+<rect x="10" y="286" width="880" height="100" rx="14" fill="#161b22" fill-opacity=".72" stroke="#30363d"/>
+<g clip-path="url(#c2)"><rect class="sweep" style="animation-delay:-2.8s" x="0" y="286" width="200" height="100" fill="url(#sw_amber)"/></g>
+<rect x="28" y="316" width="4" height="40" rx="2" fill="#f59e0b"/>
+<text class="m" x="44" y="335" font-size="16" font-weight="700" fill="#e6edf3">Cloud &amp; DevOps</text>
+<text class="m" x="44" y="354" font-size="11" fill="#8b949e">4 tools &#183; ship it</text>
+
+<!-- Google Cloud -->
+<g class="ic" style="animation-delay:0.20s">
+  <rect class="glow" style="animation-delay:0.20s" x="403" y="300" width="56" height="56" rx="15" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <rect x="405" y="302" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(414, 311) scale(0.265)">
+    <path fill="#ea4535" d="M80.6 40.3h.4l-.2-.2 14-14v-.3c-11.8-10.4-28.1-14-43.2-9.5C36.5 20.8 24.9 32.8 20.7 48c.2-.1.5-.2.8-.2 5.2-3.4 11.4-5.4 17.9-5.4 2.2 0 4.3.2 6.4.6.1-.1.2-.1.3-.1 9-9.9 24.2-11.1 34.6-2.6h-.1z"/>
+    <path fill="#557ebf" d="M108.1 47.8c-2.3-8.5-7.1-16.2-13.8-22.1L80 39.9c6 4.9 9.5 12.3 9.3 20v2.5c16.9 0 16.9 25.2 0 25.2H63.9v20h-.1l.1.2h25.4c14.6.1 27.5-9.3 31.8-23.1 4.3-13.8-1-28.8-13-36.9z"/>
+    <path fill="#36a852" d="M39 107.9h26.3V87.7H39c-1.9 0-3.7-.4-5.4-1.1l-15.2 14.6v.2c6 4.3 13.2 6.6 20.7 6.6z"/>
+    <path fill="#f9bc15" d="M40.2 41.9c-14.9.1-28.1 9.3-32.9 22.8-4.8 13.6 0 28.5 11.8 37.3l15.6-14.9c-8.6-3.7-10.6-14.5-4-20.8 6.6-6.4 17.8-4.4 21.7 3.8L68 55.2C61.4 46.9 51.1 42 40.2 42.1z"/>
+  </g>
+  <text class="m" x="431" y="371" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Google Cloud</text>
+</g>
+
+<!-- AWS -->
+<g class="ic" style="animation-delay:0.42s">
+  <rect class="glow" style="animation-delay:0.42s" x="479" y="300" width="56" height="56" rx="15" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <rect x="481" y="302" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(490, 311) scale(0.265)">
+    <path fill="#252f3e" d="M36.379 53.64c0 1.56.168 2.825.465 3.75.336.926.758 1.938 1.347 3.032.207.336.293.672.293.969 0 .418-.254.84-.8 1.261l-2.653 1.77c-.379.25-.758.379-1.093.379-.422 0-.844-.211-1.266-.59a13.28 13.28 0 0 1-1.516-1.98 34.153 34.153 0 0 1-1.304-2.485c-3.282 3.875-7.41 5.813-12.38 5.813-3.535 0-6.355-1.012-8.421-3.032-2.063-2.023-3.114-4.718-3.114-8.086 0-3.578 1.262-6.484 3.833-8.671 2.566-2.192 5.976-3.286 10.316-3.286 1.43 0 2.902.125 4.46.336 1.56.211 3.161.547 4.845.926vi-3.074c0-3.2-.676-5.43-1.98-6.734C26.061 32.633 23.788 32 20.546 32c-1.473 0-2.988.168-4.547.547a33.416 33.416 0 0 0-4.547 1.433c-.676.293-1.18.461-1.473.547-.296.082-.507.125-.675.125-.59 0-.883-.422-.883-1.304v-2.063c0-.676.082-1.18.293-1.476.21-.293.59-.586 1.18-.883 1.472-.758 3.242-1.39 5.304-1.895 2.063-.547 4.254-.8 6.57-.8 5.008 0 8.672 1.136 11.032 3.41 2.316 2.273 3.492 5.726 3.492 10.359v13.64Z"/>
+    <path fill="#f90" d="M118 73.348c-4.432.063-9.664 1.052-13.621 3.832-1.223.883-1.012 2.062.336 1.894 4.508-.547 14.44-1.726 16.21.547 1.77 2.23-1.976 11.62-3.663 15.79-.504 1.26.59 1.769 1.726.8 7.41-6.231 9.348-19.242 7.832-21.137-.757-.925-4.388-1.79-8.82-1.726zM1.63 75.859c-.927.116-1.347 1.236-.368 2.121 16.508 14.902 38.359 23.872 62.613 23.872 17.305 0 37.43-5.43 51.281-15.66 2.273-1.688.297-4.254-2.02-3.204-15.534 6.57-32.421 9.77-47.788 9.77-22.778 0-44.8-6.273-62.653-16.633-.39-.231-.755-.304-1.064-.266z"/>
+  </g>
+  <text class="m" x="507" y="371" font-size="10.5" fill="#c9d1d9" text-anchor="middle">AWS</text>
+</g>
+
+<!-- Azure -->
+<g class="ic" style="animation-delay:0.64s">
+  <rect class="glow" style="animation-delay:0.64s" x="555" y="300" width="56" height="56" rx="15" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <rect x="557" y="302" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(566, 311) scale(0.265)">
+    <path d="M42.8 4h37.4L41.4 119a6 6 0 0 1-5.6 4H6.6a6 6 0 0 1-5.6-7.8L37.2 8a6 6 0 0 1 5.6-4z" fill="#0669BC"/>
+    <path d="M89.8 79H35.3a2.5 2.5 0 0 0-1.7 4.3l35 32.7a5.5 5.5 0 0 0 3.7 1.5h30.8z" fill="#0078D4"/>
+    <path d="M90.6 8a6 6 0 0 0-5.6-4H43.2a6 6 0 0 1 5.6 4l36.2 107.2a6 6 0 0 1-5.6 7.8h41.7a6 6 0 0 0 5.6-7.8z" fill="#3CCBF4"/>
+  </g>
+  <text class="m" x="583" y="371" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Azure</text>
+</g>
+
+<!-- Linux -->
+<g class="ic" style="animation-delay:0.86s">
+  <rect class="glow" style="animation-delay:0.86s" x="631" y="300" width="56" height="56" rx="15" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <rect x="633" y="302" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(642, 311) scale(0.265)">
+    <ellipse cx="64" cy="74" rx="40" ry="46" fill="#000000" />
+    <ellipse cx="64" cy="82" rx="26" ry="32" fill="#FFFFFF" />
+    <ellipse cx="64" cy="40" rx="26" ry="28" fill="#000000" />
+    <ellipse cx="54" cy="34" rx="7" ry="10" fill="#FFFFFF" />
+    <ellipse cx="74" cy="34" rx="7" ry="10" fill="#FFFFFF" />
+    <circle cx="56" cy="34" r="4" fill="#000000" />
+    <circle cx="72" cy="34" r="4" fill="#000000" />
+    <path d="M52 44 Q64 56 76 44 Q64 48 52 44 Z" fill="#FFA500" stroke="#E67E22" stroke-width="2" />
+    <ellipse cx="44" cy="118" rx="16" ry="7" fill="#FFA500" />
+    <ellipse cx="84" cy="118" rx="16" ry="7" fill="#FFA500" />
+  </g>
+  <text class="m" x="659" y="371" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Linux</text>
+</g>
+
+<!-- ==================== ROW 4: Core & Systems ==================== -->
+<rect x="10" y="400" width="880" height="100" rx="14" fill="#161b22" fill-opacity=".72" stroke="#30363d"/>
+<g clip-path="url(#c3)"><rect class="sweep" style="animation-delay:-4.2s" x="0" y="400" width="200" height="100" fill="url(#sw_purple)"/></g>
+<rect x="28" y="430" width="4" height="40" rx="2" fill="#a855f7"/>
+<text class="m" x="44" y="449" font-size="16" font-weight="700" fill="#e6edf3">Core &amp; Systems</text>
+<text class="m" x="44" y="468" font-size="11" fill="#8b949e">3 tools &#183; code &amp; containers</text>
+
+<!-- C++ -->
+<g class="ic" style="animation-delay:0.25s">
+  <rect class="glow" style="animation-delay:0.25s" x="441" y="414" width="56" height="56" rx="15" fill="none" stroke="#a855f7" stroke-width="1.5"/>
+  <rect x="443" y="416" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(452, 425) scale(0.265)">
+    <path fill="#00599C" d="M64 8l48.5 28v56L64 120 15.5 92V36L64 8z"/>
+    <path fill="#004482" d="M64 16l41.5 24v48L64 112 22.5 88V40L64 16z"/>
+    <path fill="#FFFFFF" d="M60 48c-10 0-16 6-16 16s6 16 16 16c6 0 11-3 13-7l-8-4c-1 3-3 4-5 4-5 0-7-4-7-9s2-9 7-9c2 0 4 1 5 4l8-4c-2-4-7-7-13-7z"/>
+    <path fill="#659AD2" d="M82 58h4v6h6v4h-6v6h-4v-6h-6v-4h6v-6zm16 0h4v6h6v4h-6v6h-4v-6h-6v-4h6v-6z"/>
+  </g>
+  <text class="m" x="469" y="485" font-size="10.5" fill="#c9d1d9" text-anchor="middle">C++</text>
+</g>
+
+<!-- Git -->
+<g class="ic" style="animation-delay:0.50s">
+  <rect class="glow" style="animation-delay:0.50s" x="517" y="414" width="56" height="56" rx="15" fill="none" stroke="#a855f7" stroke-width="1.5"/>
+  <rect x="519" y="416" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(528, 425) scale(0.265)">
+    <rect x="18" y="18" width="92" height="92" rx="18" fill="#F05032" transform="rotate(45 64 64)"/>
+    <g stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M42 64h22l20 20"/>
+      <path d="M64 42v44"/>
+    </g>
+    <circle cx="42" cy="64" r="8" fill="#FFFFFF"/>
+    <circle cx="64" cy="42" r="8" fill="#FFFFFF"/>
+    <circle cx="84" cy="84" r="8" fill="#FFFFFF"/>
+    <circle cx="64" cy="86" r="8" fill="#FFFFFF"/>
+  </g>
+  <text class="m" x="545" y="485" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Git</text>
+</g>
+
+<!-- Docker -->
+<g class="ic" style="animation-delay:0.75s">
+  <rect class="glow" style="animation-delay:0.75s" x="593" y="414" width="56" height="56" rx="15" fill="none" stroke="#a855f7" stroke-width="1.5"/>
+  <rect x="595" y="416" width="52" height="52" rx="13" fill="#f0f6fc"/>
+  <g transform="translate(604, 425) scale(0.265)">
+    <path fill="#2496ED" d="M124.6 57.8c-2.4-1.7-8-1.5-12.2.3-.9-7.4-6.4-13.2-14.8-13.2-1.3 0-2.6.2-3.8.5-4.5-9.3-13.8-15.7-24.8-15.7h-3v14.4h-9.8v-9.6H46.4v9.6h-9.8V34H26.8v9.8H17v9.8H7.2V63H2v10.5c0 19.3 15.7 35 35 35 25.5 0 46.8-16 57.6-38.4 10.6.5 22.8-5.3 27-12.3z"/>
+    <g fill="#FFFFFF">
+      <rect x="29" y="36" width="7" height="6.5" rx="1" />
+      <rect x="39" y="36" width="7" height="6.5" rx="1" />
+      <rect x="49" y="36" width="7" height="6.5" rx="1" />
+      <rect x="39" y="26" width="7" height="6.5" rx="1" />
+      <rect x="49" y="26" width="7" height="6.5" rx="1" />
+      <rect x="59" y="26" width="7" height="6.5" rx="1" />
+      <rect x="59" y="36" width="7" height="6.5" rx="1" />
+      <rect x="69" y="36" width="7" height="6.5" rx="1" />
+      <rect x="69" y="26" width="7" height="6.5" rx="1" />
+      <circle cx="28" cy="80" r="3" fill="#FFFFFF" />
+    </g>
+  </g>
+  <text class="m" x="621" y="485" font-size="10.5" fill="#c9d1d9" text-anchor="middle">Docker</text>
+</g>
+
+</svg>

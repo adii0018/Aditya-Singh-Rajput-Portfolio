@@ -5,14 +5,53 @@ import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { skills, skillCategories } from "@/lib/data";
 import AbstergoLoader from "@/components/ui/AbstergoLoader";
+import TechIcon from "@/components/ui/TechIcon";
+import { Badge } from "@/components/ui/Badge";
+import { Sparkles, Terminal, Cpu, Globe, Cloud, Layers } from "lucide-react";
+
+interface CategoryMeta {
+  title: string;
+  subtitle: string;
+  icon: typeof Cpu;
+  accent: string;
+  badgeBg: string;
+}
+
+const CATEGORY_META: Record<string, CategoryMeta> = {
+  "AI / ML": {
+    title: "AI & Machine Learning",
+    subtitle: "Models, Computer Vision, Data Science & Deep Learning",
+    icon: Cpu,
+    accent: "#16a34a",
+    badgeBg: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  },
+  "Web & Backend": {
+    title: "Web & Backend Architecture",
+    subtitle: "Full-Stack Frameworks, Reactive UIs & Scalable Databases",
+    icon: Globe,
+    accent: "#0284c7",
+    badgeBg: "bg-sky-50 text-sky-700 border-sky-200",
+  },
+  "Cloud & DevOps": {
+    title: "Cloud & Distributed Systems",
+    subtitle: "Multi-Cloud Deployments, Infrastructure & Linux Servers",
+    icon: Cloud,
+    accent: "#d97706",
+    badgeBg: "bg-amber-50 text-amber-700 border-amber-200",
+  },
+  "Core & Systems": {
+    title: "Core Languages & Systems",
+    subtitle: "Algorithmic Performance, Version Control & Containerization",
+    icon: Layers,
+    accent: "#7c3aed",
+    badgeBg: "bg-purple-50 text-purple-700 border-purple-200",
+  },
+};
 
 export default function Skills() {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeTab, setActiveTab] = useState<string>("All");
   const sectionRef = useRef<HTMLDivElement>(null);
   const categories = ["All", ...skillCategories];
-
-  const filtered =
-    activeCategory === "All" ? skills : skills.filter((s) => s.category === activeCategory);
 
   useGSAP(
     () => {
@@ -46,9 +85,14 @@ export default function Skills() {
       .from(".skills-filter-btn", {
         y: 15,
         opacity: 0,
-        stagger: 0.05,
+        stagger: 0.04,
         duration: 0.5,
       }, "-=0.45")
+      .from(".skills-grid-wrapper", {
+        y: 25,
+        opacity: 0,
+        duration: 0.7,
+      }, "-=0.3")
       .from(".skills-marquee", {
         opacity: 0,
         y: 20,
@@ -62,10 +106,13 @@ export default function Skills() {
     <section id="skills" ref={sectionRef} className="section-padding bg-[#ebeff5]">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
-            <div className="skills-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
-              ✦ Tech Stack
+            <div className="skills-badge mb-4">
+              <Badge variant="outline" className="bg-white/80 border-[#24242220] shadow-xs text-[#242426]">
+                <Sparkles size={13} className="text-[#16a34a]" />
+                <span>Tech Stack · {skills.length} Technologies</span>
+              </Badge>
             </div>
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="skills-loader shrink-0 flex items-center justify-center">
@@ -77,75 +124,228 @@ export default function Skills() {
               >
                 Tools I work
                 <br />
-                <span className="italic text-[#4d4f57]">with</span>
+                <span className="italic text-[#4d4f57] font-serif font-normal">with</span>
               </h2>
             </div>
           </div>
 
-          {/* Category filter */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <motion.button
-                key={cat}
-                type="button"
-                onClick={() => setActiveCategory(cat)}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                className={`skills-filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
-                  activeCategory === cat
-                    ? "bg-[#242426] text-white border-0"
-                    : "bg-white border border-[#24242220] text-[#4d4f57] hover:border-[#24242240]"
-                }`}
-              >
-                {cat}
-              </motion.button>
-            ))}
+          {/* Clean Category Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-2">
+            {categories.map((cat) => {
+              const count =
+                cat === "All"
+                  ? skills.length
+                  : skills.filter((s) => s.category === cat).length;
+              const isSelected = activeTab === cat;
+
+              return (
+                <motion.button
+                  key={cat}
+                  type="button"
+                  onClick={() => setActiveTab(cat)}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className={`skills-filter-btn px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
+                    isSelected
+                      ? "bg-[#242426] text-white shadow-md shadow-[#242426]/10 border border-transparent font-medium"
+                      : "bg-white/80 hover:bg-white border border-[#24242215] text-[#4d4f57] hover:border-[#24242230]"
+                  }`}
+                >
+                  <span>{cat}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                      isSelected
+                        ? "bg-white/20 text-white"
+                        : "bg-[#242426]/5 text-[#4d4f57]/80"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </motion.button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Skills grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
-          >
-            {filtered.map((skill, i) => (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.92, y: 12 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: i * 0.035, ease: [0.21, 0.47, 0.32, 0.98] }}
-                whileHover={{ scale: 1.05, y: -3 }}
-                className="flex flex-col items-center gap-2 p-4 bg-white rounded-2xl border border-[#24242210] hover:border-[#d9ff5c] hover:shadow-md hover:shadow-[#d9ff5c20] transition-all cursor-default group"
-              >
-                <span className="text-2xl group-hover:scale-110 transition-transform">{skill.icon}</span>
-                <span className="text-[#242426] font-semibold text-xs text-center">{skill.name}</span>
-                <span className="text-[#4d4f57] text-[10px] font-mono opacity-60">{skill.category}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {/* ================= LIGHTWEIGHT TECH STACK SHOWCASE ================= */}
+        <div className="skills-grid-wrapper">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="space-y-8"
+            >
+              {/* If "All" is active, display in clean categorized domain sections */}
+              {activeTab === "All" ? (
+                skillCategories.map((cat) => {
+                  const meta = CATEGORY_META[cat] || {
+                    title: cat,
+                    subtitle: "Technologies & tools",
+                    icon: Terminal,
+                    accent: "#242426",
+                    badgeBg: "bg-gray-100 text-gray-700 border-gray-200",
+                  };
+                  const CatIcon = meta.icon;
+                  const catSkills = skills.filter((s) => s.category === cat);
+
+                  return (
+                    <div key={cat} className="space-y-3.5">
+                      {/* Domain Section Header */}
+                      <div className="flex items-center justify-between pb-1 border-b border-[#24242210]">
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className="w-7 h-7 rounded-lg flex items-center justify-center text-white"
+                            style={{ backgroundColor: meta.accent }}
+                          >
+                            <CatIcon size={15} />
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-sm sm:text-base text-[#242426] tracking-tight">
+                              {meta.title}
+                            </h3>
+                            <p className="text-[11px] text-[#4d4f57]/80 font-mono hidden sm:block">
+                              {meta.subtitle}
+                            </p>
+                          </div>
+                        </div>
+
+                        <span
+                          className={`text-[11px] font-mono font-medium px-2.5 py-0.5 rounded-full border ${meta.badgeBg}`}
+                        >
+                          {catSkills.length} tools
+                        </span>
+                      </div>
+
+                      {/* Tool Cards Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        {catSkills.map((skill, idx) => (
+                          <motion.div
+                            key={skill.name}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.25, delay: idx * 0.025 }}
+                            whileHover={{ y: -3, scale: 1.015 }}
+                            className="group flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#24242212] hover:border-[#24242630] hover:shadow-md hover:shadow-[#242426]/5 transition-all cursor-default"
+                          >
+                            <div className="flex items-center gap-3 min-w-0">
+                              {/* Real Brand Icon */}
+                              <div className="w-11 h-11 shrink-0 rounded-xl bg-[#f4f6fa] border border-[#24242208] flex items-center justify-center p-2 group-hover:scale-110 group-hover:bg-white group-hover:shadow-sm transition-all">
+                                <TechIcon name={skill.name} size={28} />
+                              </div>
+
+                              {/* Tool Info */}
+                              <div className="min-w-0">
+                                <h4 className="font-bold text-sm text-[#242426] group-hover:text-black tracking-tight truncate">
+                                  {skill.name}
+                                </h4>
+                                <p className="text-[11px] text-[#4d4f57]/80 font-mono truncate">
+                                  {skill.desc || skill.category}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Level Pill */}
+                            <span className="shrink-0 text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#242426]/5 text-[#4d4f57] border border-[#24242210] group-hover:border-[#242426]/20 transition-colors">
+                              {skill.level}
+                            </span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                /* Filtered view for a single domain */
+                <div className="space-y-4">
+                  {(() => {
+                    const meta = CATEGORY_META[activeTab] || {
+                      title: activeTab,
+                      subtitle: "Specialized tools",
+                      icon: Terminal,
+                      accent: "#242426",
+                      badgeBg: "bg-gray-100 text-gray-700 border-gray-200",
+                    };
+                    const CatIcon = meta.icon;
+                    const catSkills = skills.filter((s) => s.category === activeTab);
+
+                    return (
+                      <>
+                        <div className="flex items-center gap-2.5 pb-2 border-b border-[#24242210]">
+                          <div
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
+                            style={{ backgroundColor: meta.accent }}
+                          >
+                            <CatIcon size={16} />
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-base text-[#242426]">
+                              {meta.title}
+                            </h3>
+                            <p className="text-xs text-[#4d4f57]/80 font-mono">
+                              {meta.subtitle}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                          {catSkills.map((skill, idx) => (
+                            <motion.div
+                              key={skill.name}
+                              initial={{ opacity: 0, scale: 0.96 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.2, delay: idx * 0.03 }}
+                              whileHover={{ y: -3, scale: 1.015 }}
+                              className="group flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#24242212] hover:border-[#24242630] hover:shadow-md hover:shadow-[#242426]/5 transition-all cursor-default"
+                            >
+                              <div className="flex items-center gap-3 min-w-0">
+                                <div className="w-11 h-11 shrink-0 rounded-xl bg-[#f4f6fa] border border-[#24242208] flex items-center justify-center p-2 group-hover:scale-110 group-hover:bg-white group-hover:shadow-sm transition-all">
+                                  <TechIcon name={skill.name} size={28} />
+                                </div>
+                                <div className="min-w-0">
+                                  <h4 className="font-bold text-sm text-[#242426] group-hover:text-black tracking-tight truncate">
+                                    {skill.name}
+                                  </h4>
+                                  <p className="text-[11px] text-[#4d4f57]/80 font-mono truncate">
+                                    {skill.desc || skill.category}
+                                  </p>
+                                </div>
+                              </div>
+
+                              <span className="shrink-0 text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#242426]/5 text-[#4d4f57] border border-[#24242210]">
+                                {skill.level}
+                              </span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Marquee strip */}
-        <div className="skills-marquee mt-16 overflow-hidden relative">
+        <div className="skills-marquee mt-14 overflow-hidden relative">
           <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#ebeff5] to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#ebeff5] to-transparent z-10 pointer-events-none" />
           <motion.div
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, duration: 22, ease: "linear" }}
-            className="flex gap-4 w-max"
+            transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
+            className="flex gap-3.5 w-max"
           >
             {[...skills, ...skills].map((skill, i) => (
               <span
                 key={i}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#24242210] text-[#4d4f57] text-xs font-medium whitespace-nowrap"
+                className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-[#24242210] text-[#4d4f57] text-xs font-medium whitespace-nowrap shadow-sm hover:border-[#24242630] transition-colors"
               >
-                <span>{skill.icon}</span>
-                {skill.name}
+                <TechIcon name={skill.name} size={18} />
+                <span className="font-mono text-xs text-[#242426] font-semibold">{skill.name}</span>
+                <span className="text-[10px] text-[#8b949e] font-mono">· {skill.category}</span>
               </span>
             ))}
           </motion.div>

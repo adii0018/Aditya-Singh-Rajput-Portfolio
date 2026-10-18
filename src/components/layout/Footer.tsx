@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Mail, ArrowUpRight } from "lucide-react";
 import AstronautSocialCard from "@/components/ui/AstronautSocialCard";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { personal } from "@/lib/data";
 
 export default function Footer() {
@@ -34,12 +35,15 @@ export default function Footer() {
     <footer className="bg-[#242426] text-white pt-20 pb-0 relative overflow-visible">
       <div className="max-w-6xl mx-auto px-6 overflow-visible">
         {/* Links grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16 overflow-visible">
+        <ScrollReveal direction="up" delay={0.05}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16 overflow-visible">
           {/* Brand & Social Card */}
           <div className="col-span-2 md:col-span-1 overflow-visible">
-            <div className="font-black text-2xl mb-4">
-              <span className="font-mono">ꫝ 𝚂 𐍂</span>
-              <span className="text-[#d9ff5c]"></span>
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-white">
+                <span className="font-mono font-black text-xs text-[#d9ff5c]">ASR</span>
+              </div>
+              <span className="font-bold text-lg text-white">Aditya Singh Rajput</span>
             </div>
             <p className="text-[#ffffff80] text-sm leading-relaxed mb-6">
               Building intelligence.<br />Shaping tomorrow.
@@ -86,14 +90,15 @@ export default function Footer() {
             </div>
           ))}
         </div>
+      </ScrollReveal>
 
         {/* Divider */}
         <div className="border-t border-[#ffffff15] py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[#ffffff40] text-xs">
-            © 2024 Aditya Singh Rajput. All rights reserved.
+            Crafted with curiosity. Engineered with intelligence🤍 
           </p>
           <p className="text-[#ffffff40] text-xs">
-            Built with Next.js · Tailwind · Framer Motion
+            Code » Learn » Innovate » Repeat  © 2026 
           </p>
         </div>
 
@@ -115,7 +120,7 @@ export default function Footer() {
               paddingBottom: "0",
             }}
           >
-            ADII.
+            A D I T Y A
           </motion.div>
         </div>
       </div>

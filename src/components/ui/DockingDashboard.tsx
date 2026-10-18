@@ -154,7 +154,7 @@ export default function DockingDashboard() {
         >
           <video
             ref={videoRef}
-            src="/video%202.mp4"
+            src="/about-bg.mp4"
             autoPlay
             loop
             muted

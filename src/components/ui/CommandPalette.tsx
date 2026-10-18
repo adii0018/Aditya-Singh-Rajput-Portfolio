@@ -191,7 +191,7 @@ export default function CommandPalette() {
         break;
 
       case "resume":
-      case "cv":
+      case "cv": {
         outputNode = (
           <div className="space-y-2 text-xs">
             <p className="text-[#2da44e] font-bold font-mono">📄 Triggering Resume Download...</p>
@@ -213,6 +213,7 @@ export default function CommandPalette() {
         a.click();
         document.body.removeChild(a);
         break;
+      }
 
       case "sudo hire":
       case "hire":

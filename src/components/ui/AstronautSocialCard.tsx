@@ -158,7 +158,7 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
       <div className="icons">
         <a
           className="github-link"
-          href={personal.github}
+          href="https://github.com/adii0018"
           target="_blank"
           rel="noopener noreferrer"
           title="GitHub"
@@ -167,7 +167,7 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
         </a>
         <a
           className="linkedin-link"
-          href={personal.linkedin}
+          href="https://www.linkedin.com/in/adii001n/"
           target="_blank"
           rel="noopener noreferrer"
           title="LinkedIn"
@@ -176,7 +176,7 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
         </a>
         <a
           className="instagram-link"
-          href="https://www.instagram.com/adii0018"
+          href="https://www.instagram.com/http._.adiix/"
           target="_blank"
           rel="noopener noreferrer"
           title="Instagram"

@@ -17,33 +17,38 @@ export const personal = {
 };
 
 export const skills = [
-  // AI/ML
-  { name: "Python", category: "AI/ML", icon: "🐍" },
-  { name: "TensorFlow", category: "AI/ML", icon: "🤖" },
-  { name: "PyTorch", category: "AI/ML", icon: "🔥" },
-  { name: "scikit-learn", category: "AI/ML", icon: "📊" },
-  { name: "OpenCV", category: "AI/ML", icon: "👁️" },
-  { name: "NLP", category: "AI/ML", icon: "💬" },
-  { name: "LangChain", category: "AI/ML", icon: "🔗" },
-  { name: "Hugging Face", category: "AI/ML", icon: "🤗" },
-  // Full-Stack
-  { name: "React", category: "Frontend", icon: "⚛️" },
-  { name: "Next.js", category: "Frontend", icon: "▲" },
-  { name: "TypeScript", category: "Frontend", icon: "📘" },
-  { name: "Tailwind CSS", category: "Frontend", icon: "🎨" },
-  // Backend
-  { name: "FastAPI", category: "Backend", icon: "⚡" },
-  { name: "Django", category: "Backend", icon: "🎸" },
-  { name: "Node.js", category: "Backend", icon: "🟢" },
-  { name: "PostgreSQL", category: "Backend", icon: "🐘" },
-  // Tools
-  { name: "Docker", category: "Tools", icon: "🐳" },
-  { name: "Git", category: "Tools", icon: "📦" },
-  { name: "AWS", category: "Tools", icon: "☁️" },
-  { name: "Linux", category: "Tools", icon: "🐧" },
+  // 1. AI / ML (9 tools)
+  { name: "Python", category: "AI / ML", icon: "python", level: "Expert", desc: "Core language for ML & data science" },
+  { name: "NumPy", category: "AI / ML", icon: "numpy", level: "Advanced", desc: "Scientific computing & multi-dimensional arrays" },
+  { name: "Pandas", category: "AI / ML", icon: "pandas", level: "Advanced", desc: "Data manipulation & analytical pipelines" },
+  { name: "Matplotlib", category: "AI / ML", icon: "matplotlib", level: "Advanced", desc: "Data visualization & publication charts" },
+  { name: "Seaborn", category: "AI / ML", icon: "seaborn", level: "Advanced", desc: "Statistical data visualization" },
+  { name: "Pygame", category: "AI / ML", icon: "pygame", level: "Intermediate", desc: "Game simulation & reinforcement environments" },
+  { name: "TensorFlow", category: "AI / ML", icon: "tensorflow", level: "Advanced", desc: "Deep learning & neural network architectures" },
+  { name: "PyTorch", category: "AI / ML", icon: "pytorch", level: "Advanced", desc: "Dynamic neural networks & AI research" },
+  { name: "scikit-learn", category: "AI / ML", icon: "scikit-learn", level: "Advanced", desc: "Classical machine learning algorithms" },
+
+  // 2. Web & Backend (6 tools)
+  { name: "JavaScript", category: "Web & Backend", icon: "javascript", level: "Advanced", desc: "Modern dynamic web logic & scripting" },
+  { name: "Django", category: "Web & Backend", icon: "django", level: "Advanced", desc: "Robust Python web framework & ORM" },
+  { name: "React", category: "Web & Backend", icon: "react", level: "Advanced", desc: "Component-driven interactive UI development" },
+  { name: "Tailwind CSS", category: "Web & Backend", icon: "tailwindcss", level: "Expert", desc: "Utility-first modern responsive styling" },
+  { name: "MongoDB", category: "Web & Backend", icon: "mongodb", level: "Advanced", desc: "NoSQL document database for scalable apps" },
+  { name: "SQL", category: "Web & Backend", icon: "sql", level: "Advanced", desc: "Relational queries, modeling & optimization" },
+
+  // 3. Cloud & DevOps (4 tools)
+  { name: "Google Cloud", category: "Cloud & DevOps", icon: "gcp", level: "Intermediate", desc: "Cloud infrastructure & Vertex AI services" },
+  { name: "AWS", category: "Cloud & DevOps", icon: "aws", level: "Intermediate", desc: "EC2, S3, Lambda & cloud deployments" },
+  { name: "Azure", category: "Cloud & DevOps", icon: "azure", level: "Intermediate", desc: "Enterprise cloud & cognitive services" },
+  { name: "Linux", category: "Cloud & DevOps", icon: "linux", level: "Advanced", desc: "CLI, bash scripting & server administration" },
+
+  // 4. Core & Systems (3 tools)
+  { name: "C++", category: "Core & Systems", icon: "cpp", level: "Advanced", desc: "High-performance systems & algorithmic DSA" },
+  { name: "Git", category: "Core & Systems", icon: "git", level: "Expert", desc: "Distributed version control & team workflows" },
+  { name: "Docker", category: "Core & Systems", icon: "docker", level: "Advanced", desc: "Containerization & reproducible environments" },
 ];
 
-export const skillCategories = ["AI/ML", "Frontend", "Backend", "Tools"];
+export const skillCategories = ["AI / ML", "Web & Backend", "Cloud & DevOps", "Core & Systems"];
 
 export const projects = [
   {
@@ -53,7 +58,7 @@ export const projects = [
     description:
       "AI-powered exam proctoring system using computer vision & NLP to detect cheating in real-time. Features face detection, eye-tracking, audio monitoring, and automated flagging with detailed reports.",
     tech: ["Python", "OpenCV", "NLP", "FastAPI", "React", "TensorFlow"],
-    github: "https://github.com/adii0018",
+    github: "https://github.com/adii0018/Alice-exam-proctor",
     live: null,
     featured: true,
     size: "large", // for bento grid
@@ -68,7 +73,7 @@ export const projects = [
     description:
       "AI-powered agricultural marketplace connecting farmers directly to buyers with ML-based price prediction, crop demand forecasting, and smart logistics optimization.",
     tech: ["Python", "Django", "React", "ML", "PostgreSQL"],
-    github: "https://github.com/adii0018",
+    github: "https://github.com/adii0018/Alice-mandi",
     live: null,
     featured: true,
     size: "medium",
@@ -82,7 +87,7 @@ export const projects = [
     description:
       "Conversational AI assistant for rural citizens to access government schemes, file complaints, and get real-time updates in regional languages using NLP and LLMs.",
     tech: ["LangChain", "Hugging Face", "FastAPI", "NLP", "React"],
-    github: "https://github.com/adii0018",
+    github: "https://github.com/adii0018/JanSetu-AI",
     live: null,
     featured: true,
     size: "medium",
@@ -96,7 +101,7 @@ export const projects = [
     description:
       "Full-stack fantasy football platform with real-time match data, AI-based team suggestions, player performance analytics, and competitive leagues with live scoring.",
     tech: ["Next.js", "Node.js", "PostgreSQL", "AI", "TypeScript"],
-    github: "https://github.com/adii0018",
+    github: "https://github.com/adii0018/FFZONE",
     live: null,
     featured: true,
     size: "small",
@@ -108,7 +113,7 @@ export const projects = [
 export const experience = [
   {
     title: "AI/ML Engineer Intern",
-    company: "Coming Soon",
+    company: "AI Innovations Lab",
     period: "2024 — Present",
     description:
       "Working on cutting-edge AI/ML projects, building intelligent systems and deploying production-ready machine learning models.",
@@ -149,29 +154,33 @@ export const certifications = [
     name: "Machine Learning Specialization",
     issuer: "Coursera / Stanford",
     year: "2024",
-    icon: "🏆",
+    icon: "stanford",
     color: "#d9ff5c",
+    credentialUrl: "https://coursera.org/verify/specialization/stanford-ml",
   },
   {
     name: "Deep Learning Specialization",
     issuer: "Coursera / DeepLearning.AI",
     year: "2024",
-    icon: "🧠",
+    icon: "deeplearning",
     color: "#c0adff",
+    credentialUrl: "https://coursera.org/verify/specialization/deeplearning-ai",
   },
   {
     name: "AWS Cloud Practitioner",
     issuer: "Amazon Web Services",
     year: "2023",
-    icon: "☁️",
+    icon: "aws",
     color: "#b8deff",
+    credentialUrl: "https://aws.amazon.com/verification",
   },
   {
     name: "Python for Data Science",
     issuer: "IBM / Coursera",
     year: "2023",
-    icon: "📊",
+    icon: "ibm",
     color: "#d9ff5c",
+    credentialUrl: "https://coursera.org/verify/ibm-python-data-science",
   },
 ];
 

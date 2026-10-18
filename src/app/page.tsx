@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Preloader from "@/components/ui/Preloader";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import BentoFeatures from "@/components/sections/BentoFeatures";
@@ -14,6 +15,7 @@ import StackedSections from "@/components/layout/StackedSections";
 export default function Home() {
   return (
     <>
+      <Preloader />
       <Navbar />
       <main>
         <Hero />

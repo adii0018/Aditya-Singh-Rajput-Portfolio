@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
@@ -126,6 +126,10 @@ export default function GitHubActivity() {
     contributionsCount: 1080,
     isLive: false,
   });
+
+  const handleTotalChange = useCallback((total: number) => {
+    setStats((prev) => ({ ...prev, contributionsCount: total }));
+  }, []);
 
   useEffect(() => {
     // 1. Fetch user public profile
@@ -396,9 +400,7 @@ export default function GitHubActivity() {
         <div className="gh-chart-card bg-[#0d1117] rounded-3xl border border-[#30363d] p-6 md:p-8 mb-8 overflow-hidden shadow-2xl shadow-black/30">
           <GitHubContributionCalendar
             username={personal.githubUsername}
-            onTotalChange={(total) =>
-              setStats((prev) => ({ ...prev, contributionsCount: total }))
-            }
+            onTotalChange={handleTotalChange}
           />
 
           {/* Languages Segmented Progress Bar */}

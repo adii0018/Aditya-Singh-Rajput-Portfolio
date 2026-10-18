@@ -22,9 +22,12 @@ export const metadata: Metadata = {
   description:
     "I build AI-powered products that transform complex ideas into intelligent, real-world solutions. Computer Vision, NLP, and scalable architectures.",
   icons: {
-    icon: "/favicons/a-minimal.png",
-    shortcut: "/favicons/a-minimal.png",
-    apple: "/favicons/a-minimal.png",
+    icon: [
+      { url: "/favicons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/favicons/favicon-32x32.png",
+    apple: "/favicons/favicon-32x32.png",
   },
   keywords: [
     "AI Engineer",

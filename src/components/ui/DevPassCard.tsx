@@ -38,7 +38,7 @@ export const DevPassCard = forwardRef<HTMLDivElement, DevPassCardProps>(
               <div className="t-details">
                 <div className="t-detail-item">
                   <span className="t-label">Name</span>
-                  <span className="t-value">ꫝ 𝚂 𐍂</span>
+                  <span className="t-value">Aditya Singh Rajput</span>
                 </div>
                 <div className="t-detail-item">
                   <span className="t-label">Date</span>

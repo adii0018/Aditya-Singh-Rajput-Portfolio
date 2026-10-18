@@ -134,13 +134,25 @@ export default function Navbar() {
           }`}
           style={{ padding: scrolled ? "12px 24px" : "0 24px" }}
         >
-          {/* Logo */}
+          {/* Brand Logo */}
           <Link
             href="#home"
             onClick={() => handleNavClick("#home")}
-            className="font-black text-xl tracking-tight text-[#242426] hover:text-[#242426] transition-colors"
+            className="flex items-center gap-2.5 group cursor-pointer"
           >
-            <span className="font-mono text-[#242426]">ꫝ 𝚂 𐍂</span>
+            <div className="w-9 h-9 rounded-xl bg-[#242426] border border-black/10 flex items-center justify-center text-white shadow-sm group-hover:scale-105 group-hover:bg-black transition-all">
+              <span className="font-mono font-black text-sm tracking-tighter text-[#d9ff5c]">
+                A<span className="text-white">SR</span>
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-sm tracking-tight text-[#242426] leading-none group-hover:text-black transition-colors">
+                Aditya Singh
+              </span>
+              <span className="font-mono text-[10px] text-[#4d4f57] leading-none mt-1">
+                AI/ML Engineer
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}

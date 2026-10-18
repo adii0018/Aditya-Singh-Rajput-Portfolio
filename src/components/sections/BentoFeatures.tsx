@@ -197,11 +197,39 @@ export default function BentoFeatures() {
             onClick={() => setMetricMode(metricMode === "vision" ? "nlp" : "vision")}
             className="bento-grid-card relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between overflow-hidden border border-[#ffffff15] shadow-xl min-h-[380px] bg-gradient-to-b from-[#4b6075] via-[#a2b5c7] to-[#f4f7fa] cursor-pointer group"
           >
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffffff20] backdrop-blur-md border border-[#ffffff25] text-white text-[11px] font-medium mb-5">
-                <Cpu className="w-3.5 h-3.5 text-[#d9ff5c]" />
-                Inference Benchmarks
+            <div className="relative z-10 flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffffff20] backdrop-blur-md border border-[#ffffff25] text-white text-[11px] font-medium">
+                  <Cpu className="w-3.5 h-3.5 text-[#d9ff5c]" />
+                  Inference Benchmarks
+                </div>
+                {/* Visual Mode Pill Switcher */}
+                <div className="flex items-center bg-black/25 backdrop-blur-md p-0.5 rounded-full border border-white/20">
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); setMetricMode("vision"); }}
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold transition-all ${
+                      metricMode === "vision"
+                        ? "bg-[#d9ff5c] text-[#242426] shadow-sm"
+                        : "text-white/70 hover:text-white"
+                    }`}
+                  >
+                    VISION
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); setMetricMode("nlp"); }}
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold transition-all ${
+                      metricMode === "nlp"
+                        ? "bg-[#d9ff5c] text-[#242426] shadow-sm"
+                        : "text-white/70 hover:text-white"
+                    }`}
+                  >
+                    NLP
+                  </button>
+                </div>
               </div>
+
               <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2">
                 Live AI Metrics
               </h3>
@@ -275,9 +303,18 @@ export default function BentoFeatures() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-                <div className="text-[10px] text-[#24242660] mt-1 group-hover:text-[#242426] font-mono">
-                  Click to switch metric ⟳
-                </div>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMetricMode(metricMode === "vision" ? "nlp" : "vision");
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 mt-2.5 rounded-full bg-white/90 hover:bg-[#d9ff5c] text-[#242426] text-[11px] font-bold font-sans shadow-md hover:scale-105 transition-all cursor-pointer"
+                >
+                  <RotateCcw className="w-3 h-3 text-[#242426]" />
+                  <span>Switch to {metricMode === "vision" ? "NLP (ms)" : "Vision (FPS)"}</span>
+                </button>
               </div>
             </div>
           </div>

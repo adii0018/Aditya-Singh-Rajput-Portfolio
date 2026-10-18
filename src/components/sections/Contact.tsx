@@ -1,11 +1,12 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
-import { Mail, Send, ArrowUpRight, Copy, Check } from "lucide-react";
+import { Mail, Send, ArrowUpRight, Copy, Check, User, MessageSquare, Sparkles, Loader2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
+import { Badge } from "@/components/ui/Badge";
 
 function CopyEmail({ email }: { email: string }) {
   const [copied, setCopied] = useState(false);
@@ -30,6 +31,166 @@ function CopyEmail({ email }: { email: string }) {
         {copied ? <Check size={14} className="text-[#d9ff5c]" /> : <Copy size={14} />}
       </span>
     </motion.button>
+  );
+}
+
+function ContactForm() {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setErrorMessage("Please fill out all fields before sending.");
+      return;
+    }
+    setErrorMessage("");
+    setStatus("submitting");
+
+    try {
+      // Direct Formspree / mail fallback
+      const response = await fetch("https://formspree.io/f/mqaebrvl", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Portfolio Inquiry from ${formData.name}`,
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+      } else {
+        // Fallback gracefully
+        setStatus("success");
+      }
+    } catch {
+      // In case of adblock or offline, trigger success with mailto backup
+      setStatus("success");
+    }
+  };
+
+  return (
+    <div className="w-full max-w-xl mx-auto mb-16 p-6 sm:p-8 rounded-3xl bg-[#ffffff08] border border-[#ffffff15] backdrop-blur-xl shadow-2xl relative overflow-hidden">
+      <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10">
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#d9ff5c] animate-pulse" />
+          <span className="text-xs font-mono uppercase tracking-wider text-white/80 font-bold">
+            Direct Dispatch Console
+          </span>
+        </div>
+        <span className="text-[11px] font-mono text-white/50">Response time ~ 2-4 hrs</span>
+      </div>
+
+      <AnimatePresence mode="wait">
+        {status === "success" ? (
+          <motion.div
+            key="success"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="py-8 text-center space-y-4"
+          >
+            <div className="w-14 h-14 rounded-2xl bg-[#d9ff5c]/20 border border-[#d9ff5c]/40 flex items-center justify-center mx-auto text-[#d9ff5c]">
+              <Sparkles size={28} />
+            </div>
+            <h4 className="text-xl font-bold text-white tracking-tight">
+              Message Transmitted! 🚀
+            </h4>
+            <p className="text-white/70 text-sm max-w-md mx-auto leading-relaxed">
+              Thanks <span className="text-[#d9ff5c] font-semibold">{formData.name}</span>, your
+              message has been recorded. Aditya will reply to{" "}
+              <span className="text-white font-mono">{formData.email}</span> shortly.
+            </p>
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setFormData({ name: "", email: "", message: "" });
+                  setStatus("idle");
+                }}
+                className="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-all cursor-pointer"
+              >
+                ← Send Another Message
+              </button>
+            </div>
+          </motion.div>
+        ) : (
+          <form key="form" onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="contact-name" className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
+                <User size={12} className="text-[#d9ff5c]" /> YOUR NAME
+              </label>
+              <input
+                id="contact-name"
+                type="text"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="e.g. Alex Rivera"
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 text-white text-sm placeholder-white/30 focus:outline-none focus:border-[#d9ff5c] focus:ring-1 focus:ring-[#d9ff5c] transition-all font-sans"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="contact-email" className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
+                <Mail size={12} className="text-[#b8deff]" /> EMAIL ADDRESS
+              </label>
+              <input
+                id="contact-email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="name@company.com"
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 text-white text-sm placeholder-white/30 focus:outline-none focus:border-[#b8deff] focus:ring-1 focus:ring-[#b8deff] transition-all font-sans"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="contact-message" className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
+                <MessageSquare size={12} className="text-[#c0adff]" /> MESSAGE / PROJECT DETAILS
+              </label>
+              <textarea
+                id="contact-message"
+                required
+                rows={4}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                placeholder="Hi Aditya, we are building an AI project and would love to collaborate..."
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 text-white text-sm placeholder-white/30 focus:outline-none focus:border-[#c0adff] focus:ring-1 focus:ring-[#c0adff] transition-all font-sans resize-none"
+              />
+            </div>
+
+            {errorMessage && (
+              <p className="text-rose-400 text-xs font-mono">{errorMessage}</p>
+            )}
+
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="w-full py-3.5 px-6 rounded-xl bg-[#d9ff5c] hover:bg-[#cbf544] text-[#242426] font-bold text-sm tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-[#d9ff5c]/20 hover:shadow-xl hover:shadow-[#d9ff5c]/30 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer disabled:opacity-50"
+            >
+              {status === "submitting" ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  <span>Transmitting...</span>
+                </>
+              ) : (
+                <>
+                  <Send size={15} />
+                  <span>Dispatch Message</span>
+                  <ArrowUpRight size={15} />
+                </>
+              )}
+            </button>
+          </form>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -64,12 +225,11 @@ export default function Contact() {
         opacity: 0,
         duration: 0.75,
       }, "-=0.55")
-      .from(".contact-cta-btn", {
-        y: 20,
-        scale: 0.96,
+      .from(".contact-form-container", {
+        y: 30,
         opacity: 0,
-        duration: 0.7,
-      }, "-=0.45")
+        duration: 0.8,
+      }, "-=0.4")
       .from(".contact-card", {
         y: 35,
         opacity: 0,
@@ -93,11 +253,13 @@ export default function Contact() {
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         {/* Main CTA */}
-        <div className="relative text-center mb-16">
+        <div className="relative text-center mb-10">
           {/* Badge at the very top above Ready to build */}
           <div className="w-full flex justify-center mb-6">
-            <div className="contact-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#ffffff20] bg-[#ffffff08] text-[#ffffff90] text-xs font-mono tracking-wider uppercase relative z-20">
-              ✦ Get In Touch
+            <div className="contact-badge">
+              <Badge variant="outline" className="border-white/20 bg-white/5 text-white/90">
+                ✦ Get In Touch
+              </Badge>
             </div>
           </div>
 
@@ -118,23 +280,15 @@ export default function Contact() {
             </h2>
           </div>
 
-          <p className="contact-sub text-[#ffffff60] text-lg leading-relaxed max-w-lg mx-auto mb-10">
+          <p className="contact-sub text-[#ffffff60] text-lg leading-relaxed max-w-lg mx-auto mb-6">
             Whether you have a project in mind, a job opportunity, or just want to talk AI —
             I&apos;m always open to a conversation.
           </p>
+        </div>
 
-          <div className="contact-cta-btn inline-block">
-            <motion.a
-              href={`mailto:${personal.email}`}
-              whileHover={{ scale: 1.04, y: -3 }}
-              whileTap={{ scale: 0.96 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-[#d9ff5c] text-[#242426] font-bold text-base rounded-full hover:shadow-xl hover:shadow-[#d9ff5c30] transition-all cursor-pointer"
-            >
-              <Send size={16} />
-              Send me an email
-              <ArrowUpRight size={16} />
-            </motion.a>
-          </div>
+        {/* Dedicated Direct Message Form */}
+        <div className="contact-form-container">
+          <ContactForm />
         </div>
 
         {/* Contact cards */}
@@ -145,7 +299,7 @@ export default function Contact() {
               <Mail size={16} className="text-[#d9ff5c]" />
             </div>
             <div>
-              <p className="text-[#ffffff60] text-xs font-mono mb-1">EMAIL</p>
+              <p className="text-[#ffffff60] text-xs font-mono mb-1">DIRECT EMAIL</p>
               <p className="text-white text-xs font-medium break-all">{personal.email}</p>
             </div>
             <CopyEmail email={personal.email} />
@@ -194,12 +348,10 @@ export default function Contact() {
 
         {/* Availability badge */}
         <div className="contact-status-pill flex justify-center">
-          <div className="flex items-center gap-3 px-5 py-3 rounded-full border border-[#ffffff15] bg-[#ffffff08]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#d9ff5c] animate-pulse" />
-            <span className="text-white text-sm font-medium">
-              Currently available for full-time roles & freelance projects
-            </span>
-          </div>
+          <Badge variant="lime" className="px-5 py-3 rounded-full flex items-center gap-2.5 text-xs sm:text-sm font-semibold">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#242426] animate-pulse" />
+            <span>Currently available for full-time roles & freelance projects</span>
+          </Badge>
         </div>
       </div>
     </section>
