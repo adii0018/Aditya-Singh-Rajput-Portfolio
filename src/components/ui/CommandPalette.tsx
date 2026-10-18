@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, X, CornerDownLeft, Sparkles, Download, Mail } from "lucide-react";
 import { personal, skills, projects, experience } from "@/lib/data";
+import { copyToClipboard } from "@/lib/clipboard";
 
 interface HistoryItem {
   id: string;
@@ -49,9 +50,18 @@ export default function CommandPalette() {
   // Global shortcut (Ctrl+K or Cmd+K) & custom event listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't intercept if user is typing in another input/textarea
+      const target = e.target as HTMLElement;
+      const isOtherInput =
+        target &&
+        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) &&
+        target !== inputRef.current;
+
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        setIsOpen((prev) => !prev);
+        if (!isOtherInput || isOpen) {
+          e.preventDefault();
+          setIsOpen((prev) => !prev);
+        }
       } else if (e.key === "Escape" && isOpen) {
         setIsOpen(false);
       }
@@ -218,20 +228,43 @@ export default function CommandPalette() {
       case "sudo hire":
       case "hire":
         setIsHired(true);
+        copyToClipboard(personal.email);
         outputNode = (
-          <div className="p-3 rounded-xl bg-gradient-to-r from-[#d9ff5c]/20 to-[#40c463]/20 border border-[#d9ff5c]/40 text-xs space-y-1.5">
-            <p className="text-[#d9ff5c] font-bold text-sm flex items-center gap-2">
-              <Sparkles size={16} /> OFFER ACCEPTED! 🎉
-            </p>
+          <div className="p-3.5 rounded-xl bg-gradient-to-r from-[#d9ff5c]/20 via-[#40c463]/15 to-[#242426] border border-[#d9ff5c]/40 text-xs space-y-2">
+            <div className="flex items-center justify-between">
+              <p className="text-[#d9ff5c] font-bold text-sm flex items-center gap-2">
+                <Sparkles size={16} /> OFFER ACCEPTED! 🎉
+              </p>
+              <span className="px-2 py-0.5 rounded-full bg-[#d9ff5c] text-[#242426] font-mono text-[10px] font-bold">
+                ROOT ACCESS
+              </span>
+            </div>
             <p className="text-white leading-relaxed">
-              Permission granted: Root level access unlocked. Let&apos;s build intelligent systems together!
+              Permission granted: Root level developer access unlocked. Let&apos;s build intelligent systems together!
             </p>
-            <p className="text-[#d9ff5c] font-mono text-[11px] pt-1">
-              Email sent to clipboard: {personal.email}
+            <p className="text-white/60 font-mono text-[11px]">
+              Direct email copied: <span className="text-[#d9ff5c]">{personal.email}</span>
             </p>
+            <div className="flex flex-wrap gap-2 pt-1">
+              <a
+                href={`mailto:${personal.email}?subject=Collaboration%20/%20Role%20Inquiry&body=Hi%20Aditya,%20we%20reviewed%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity.`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#d9ff5c] text-[#242426] font-semibold text-xs hover:bg-[#cbf544] transition-colors"
+              >
+                <Mail size={13} /> Send Email Directly
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-colors cursor-pointer"
+              >
+                Fill Contact Form →
+              </button>
+            </div>
           </div>
         );
-        navigator.clipboard?.writeText(personal.email).catch(() => {});
         break;
 
       case "clear":
@@ -278,7 +311,7 @@ export default function CommandPalette() {
         whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-[90] hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#242426] text-white border border-[#ffffff20] shadow-xl hover:border-[#d9ff5c] transition-all cursor-pointer group backdrop-blur-md"
+        className="fixed bottom-6 right-4 sm:right-6 z-[90] flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-[#242426] text-white border border-[#ffffff20] shadow-xl hover:border-[#d9ff5c] transition-all cursor-pointer group backdrop-blur-md"
         title="Open Developer Terminal (Ctrl+K)"
       >
         <div className="w-2 h-2 rounded-full bg-[#d9ff5c] animate-pulse" />
@@ -318,6 +351,11 @@ export default function CommandPalette() {
                   <span className="text-xs font-mono text-[#ffffff60] ml-2">
                     aditya@terminal:~ (zsh)
                   </span>
+                  {isHired && (
+                    <span className="ml-2 px-2 py-0.5 rounded-full bg-[#d9ff5c] text-[#242426] font-mono text-[9px] font-bold">
+                      ROOT ACTIVE
+                    </span>
+                  )}
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-[10px] font-mono text-[#ffffff40] hidden sm:inline">

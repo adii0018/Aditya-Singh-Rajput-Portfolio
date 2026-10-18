@@ -9,6 +9,8 @@ import { GithubIcon } from "@/components/ui/GithubIcon";
 import WavingOctocat from "@/components/ui/WavingOctocat";
 import GitHubContributionCalendar from "@/components/ui/GitHubContributionCalendar";
 
+import { copyToClipboard } from "@/lib/clipboard";
+
 interface GitHubRepo {
   name: string;
   description: string;
@@ -34,40 +36,40 @@ interface LatestCommit {
 
 const defaultRepos: GitHubRepo[] = [
   {
-    name: "alice-exam-proctor",
+    name: "Alice-exam-proctor",
     description: "AI-powered exam proctoring with computer vision & NLP",
     stars: 12,
     forks: 4,
     language: "Python",
     color: "#3572A5",
-    html_url: `${personal.github}/alice-exam-proctor`,
+    html_url: `${personal.github}/Alice-exam-proctor`,
   },
   {
-    name: "alice-mandi",
+    name: "Alice-mandi",
     description: "Agricultural marketplace with ML price prediction",
     stars: 8,
     forks: 2,
     language: "Python",
     color: "#3572A5",
-    html_url: `${personal.github}/alice-mandi`,
+    html_url: `${personal.github}/Alice-mandi`,
   },
   {
-    name: "janSetu-ai",
+    name: "JanSetu-AI",
     description: "Conversational AI for government scheme access",
     stars: 15,
     forks: 6,
     language: "TypeScript",
     color: "#3178c6",
-    html_url: `${personal.github}/janSetu-ai`,
+    html_url: `${personal.github}/JanSetu-AI`,
   },
   {
-    name: "ffzone",
+    name: "FFZONE",
     description: "Full-stack fantasy football with AI team suggestions",
     stars: 7,
     forks: 1,
     language: "TypeScript",
     color: "#3178c6",
-    html_url: `${personal.github}/ffzone`,
+    html_url: `${personal.github}/FFZONE`,
   },
 ];
 
@@ -491,13 +493,15 @@ export default function GitHubActivity() {
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={(e) => {
+                      onClick={async (e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         const cloneCmd = `git clone ${repo.html_url || `${personal.github}/${repo.name}`}.git`;
-                        navigator.clipboard.writeText(cloneCmd);
-                        setCopiedRepo(repo.name);
-                        setTimeout(() => setCopiedRepo(null), 2000);
+                        const ok = await copyToClipboard(cloneCmd);
+                        if (ok) {
+                          setCopiedRepo(repo.name);
+                          setTimeout(() => setCopiedRepo(null), 2000);
+                        }
                       }}
                       title="Copy git clone command"
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#161b22] border border-[#30363d] hover:bg-[#21262d] text-[#7d8590] hover:text-[#e6edf3] transition-all cursor-pointer"

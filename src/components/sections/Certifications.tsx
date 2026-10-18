@@ -166,7 +166,7 @@ export default function Certifications() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs font-medium text-white/80 hover:text-[#d9ff5c] transition-colors cursor-pointer group/link"
                   >
-                    <span>Verify Credential</span>
+                    <span>{(cert as { linkLabel?: string }).linkLabel ? `View ${cert.linkLabel}` : "View Program & Details"}</span>
                     <ExternalLink size={12} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
                   </a>
                   <Award

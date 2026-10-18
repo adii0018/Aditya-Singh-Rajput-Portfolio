@@ -4,7 +4,8 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
-import { Mail, Send, ArrowUpRight, Copy, Check, User, MessageSquare, Sparkles, Loader2 } from "lucide-react";
+import { copyToClipboard } from "@/lib/clipboard";
+import { Mail, Send, ArrowUpRight, Copy, Check, User, MessageSquare, Sparkles, Loader2, AlertCircle } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { Badge } from "@/components/ui/Badge";
 
@@ -12,9 +13,11 @@ function CopyEmail({ email }: { email: string }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    await navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    const success = await copyToClipboard(email);
+    if (success) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   return (
@@ -42,6 +45,7 @@ function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setStatus("error");
       setErrorMessage("Please fill out all fields before sending.");
       return;
     }
@@ -49,7 +53,6 @@ function ContactForm() {
     setStatus("submitting");
 
     try {
-      // Direct Formspree / mail fallback
       const response = await fetch("https://formspree.io/f/mqaebrvl", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -57,19 +60,25 @@ function ContactForm() {
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          _subject: `New Portfolio Inquiry from ${formData.name}`,
+          _subject: `Portfolio Inquiry from ${formData.name}`,
         }),
       });
 
       if (response.ok) {
         setStatus("success");
       } else {
-        // Fallback gracefully
-        setStatus("success");
+        const errorData = await response.json().catch(() => null);
+        setStatus("error");
+        setErrorMessage(
+          errorData?.errors?.[0]?.message ||
+          "Could not send via direct dispatch. Please use the direct email option below."
+        );
       }
     } catch {
-      // In case of adblock or offline, trigger success with mailto backup
-      setStatus("success");
+      setStatus("error");
+      setErrorMessage(
+        "Network connection interrupted or blocked by ad-blocker. You can dispatch directly via your email client."
+      );
     }
   };
 
@@ -166,7 +175,19 @@ function ContactForm() {
             </div>
 
             {errorMessage && (
-              <p className="text-rose-400 text-xs font-mono">{errorMessage}</p>
+              <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300 space-y-2">
+                <div className="flex items-start gap-2">
+                  <AlertCircle size={15} className="text-rose-400 shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">{errorMessage}</p>
+                </div>
+                <a
+                  href={`mailto:${personal.email}?subject=${encodeURIComponent("Portfolio Inquiry from " + (formData.name || "Visitor"))}&body=${encodeURIComponent((formData.message || "") + "\n\n— Sent from portfolio by " + formData.name + " (" + formData.email + ")")}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-400/20 hover:bg-rose-400/30 text-rose-200 text-[11px] font-mono transition-colors"
+                >
+                  <Mail size={12} />
+                  <span>Click here to send directly via Email app →</span>
+                </a>
+              </div>
             )}
 
             <button

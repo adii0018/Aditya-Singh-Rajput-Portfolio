@@ -50,100 +50,187 @@ export const skills = [
 
 export const skillCategories = ["AI / ML", "Web & Backend", "Cloud & DevOps", "Core & Systems"];
 
-export const projects = [
+export type ProjectHud = {
+  eyebrow: string;
+  meta: string;
+  bodyKind: "rows" | "quote";
+  rows?: { label: string; value: string }[];
+  quote?: string;
+  quoteNote?: string;
+  footerLeft: string;
+  footerRight: string;
+};
+
+export type Project = {
+  id: number;
+  title: string;
+  accentLine: string;
+  subtitle: string;
+  description: string;
+  shortDescription: string;
+  tech: string[];
+  github: string;
+  live: string | null;
+  featured: boolean;
+  size: "large" | "medium" | "small";
+  tag: string;
+  color: string;
+  theme: "light" | "dark";
+  kicker: string;
+  headerMeta: string;
+  image?: string;
+  hud?: ProjectHud;
+};
+
+export const projects: Project[] = [
   {
     id: 1,
-    title: "Alice Exam Proctor",
-    subtitle: "AI-Powered Exam Proctoring",
+    title: "Alice Exam",
+    accentLine: "Proctor",
+    subtitle: "AI-Powered Real-Time Integrity & Autonomous Proctoring",
     description:
       "AI-powered exam proctoring system using computer vision & NLP to detect cheating in real-time. Features face detection, eye-tracking, audio monitoring, and automated flagging with detailed reports.",
-    tech: ["Python", "OpenCV", "NLP", "FastAPI", "React", "TensorFlow"],
+    shortDescription:
+      "Detects cheating in real-time with automated gaze tracking, face recognition, and audio monitoring.",
+    tech: ["Python", "OpenCV", "FastAPI", "React", "TensorFlow"],
     github: "https://github.com/adii0018/Alice-exam-proctor",
     live: null,
     featured: true,
-    size: "large", // for bento grid
-    tag: "Computer Vision",
-    color: "#d9ff5c",
+    size: "large",
+    tag: "Computer Vision · AI",
+    color: "#10b981",
+    theme: "light",
+    kicker: "with real-time computer vision",
+    headerMeta: "Autonomous Proctoring",
     image: "/alice-exam-proctor.jpg",
   },
   {
     id: 2,
-    title: "Alice Mandi",
-    subtitle: "AI Agricultural Marketplace",
+    title: "Alice",
+    accentLine: "Mandi",
+    subtitle: "AI-Powered Agricultural Marketplace & Logistics Optimization",
     description:
       "AI-powered agricultural marketplace connecting farmers directly to buyers with ML-based price prediction, crop demand forecasting, and smart logistics optimization.",
+    shortDescription:
+      "Connecting farmers directly to buyers with ML price prediction and smart logistics optimization.",
     tech: ["Python", "Django", "React", "ML", "PostgreSQL"],
     github: "https://github.com/adii0018/Alice-mandi",
     live: null,
     featured: true,
     size: "medium",
-    tag: "ML · AgriTech",
+    tag: "Machine Learning · AgriTech",
     color: "#c0adff",
+    theme: "dark",
+    kicker: "with ML price forecasting",
+    headerMeta: "Price Prediction Engine",
+    hud: {
+      eyebrow: "MANDI TICKER",
+      meta: "MODEL R² FOCUS",
+      bodyKind: "rows",
+      rows: [
+        { label: "Wheat (Indore)", value: "Demand + harvest window" },
+        { label: "Soybean (Ujjain)", value: "Logistics route score" },
+      ],
+      footerLeft: "PIPELINE: FORECAST",
+      footerRight: "STATUS: IN BUILD",
+    },
   },
   {
     id: 3,
-    title: "JanSetu AI",
-    subtitle: "AI Governance Assistant",
+    title: "JanSetu",
+    accentLine: "AI",
+    subtitle: "Multilingual Citizen Governance & Welfare Scheme Assistant",
     description:
       "Conversational AI assistant for rural citizens to access government schemes, file complaints, and get real-time updates in regional languages using NLP and LLMs.",
+    shortDescription:
+      "Conversational AI assistant for rural citizens to access government schemes and file complaints in regional languages.",
     tech: ["LangChain", "Hugging Face", "FastAPI", "NLP", "React"],
     github: "https://github.com/adii0018/JanSetu-AI",
     live: null,
     featured: true,
     size: "medium",
-    tag: "NLP · GovTech",
-    color: "#b8deff",
+    tag: "NLP · GovTech · Social Impact",
+    color: "#0284c7",
+    theme: "light",
+    kicker: "with regional-language NLP",
+    headerMeta: "GovTech Prototype",
+    hud: {
+      eyebrow: "LLM PIPELINE",
+      meta: "LANGCHAIN",
+      bodyKind: "quote",
+      quote: "किसान क्रेडिट कार्ड की पात्रता क्या है?",
+      quoteNote: "Intent parse → scheme lookup in regional language.",
+      footerLeft: "SPEECH-TO-TEXT",
+      footerRight: "MULTI-DIALECT",
+    },
   },
   {
     id: 4,
     title: "FFZone",
-    subtitle: "Fantasy Football Platform",
+    accentLine: "Arena",
+    subtitle: "Full-Stack Fantasy Football with Live Analytics & AI Tactics",
     description:
       "Full-stack fantasy football platform with real-time match data, AI-based team suggestions, player performance analytics, and competitive leagues with live scoring.",
+    shortDescription:
+      "Full-stack fantasy platform with real-time match data, AI team suggestions, and competitive leagues with live scoring.",
     tech: ["Next.js", "Node.js", "PostgreSQL", "AI", "TypeScript"],
     github: "https://github.com/adii0018/FFZONE",
     live: null,
     featured: true,
     size: "small",
-    tag: "Full-Stack",
+    tag: "Full-Stack · Real-Time AI",
     color: "#d9ff5c",
+    theme: "dark",
+    kicker: "with AI lineup suggestions",
+    headerMeta: "Competitive Leagues",
+    hud: {
+      eyebrow: "MATCHDAY",
+      meta: "AI OPTIMIZED",
+      bodyKind: "rows",
+      rows: [
+        { label: "AI Captain Pick", value: "Form + fixture model" },
+        { label: "League Engine", value: "Live scoring pipeline" },
+      ],
+      footerLeft: "LIVE SCORING",
+      footerRight: "IN DEVELOPMENT",
+    },
   },
 ];
 
 export const experience = [
   {
-    title: "AI/ML Engineer Intern",
-    company: "AI Innovations Lab",
+    title: "Independent AI/ML Engineer",
+    company: "Personal products · Alice / JanSetu",
     period: "2024 — Present",
     description:
-      "Working on cutting-edge AI/ML projects, building intelligent systems and deploying production-ready machine learning models.",
+      "Building and iterating on shipped AI products: computer-vision exam proctoring, agri price-forecast tooling, and a multilingual citizen-scheme assistant. Focus is end-to-end — model work, APIs, and product UI.",
     tech: ["Python", "TensorFlow", "FastAPI"],
     type: "work",
   },
   {
     title: "Full-Stack Developer",
-    company: "Freelance",
+    company: "Freelance & self-initiated builds",
     period: "2023 — Present",
     description:
-      "Building scalable web applications and AI-integrated products for clients across various domains.",
+      "Designing web apps and AI-integrated product surfaces for client work and personal platforms, including FFZone. Stack centers on React/Next.js with Python backends.",
     tech: ["React", "Next.js", "Django", "PostgreSQL"],
     type: "work",
   },
   {
-    title: "Hackathon Winner",
-    company: "Multiple Events",
+    title: "Hackathon builder",
+    company: "National AI / GovTech events",
     period: "2023 — 2024",
     description:
-      "Won and placed top 3 in multiple national-level hackathons focused on AI/ML, govtech, and social impact solutions.",
+      "Prototyped social-impact tools around AI/ML and citizen services at national-level hackathons. Happy to walk through specific events and outcomes in conversation.",
     tech: ["AI", "ML", "Problem Solving"],
     type: "achievement",
   },
   {
     title: "B.Tech Computer Science",
-    company: "University",
+    company: "AI/ML specialization · India",
     period: "2022 — 2026",
     description:
-      "Specializing in Artificial Intelligence and Machine Learning with focus on real-world application development.",
+      "Undergraduate CS with an AI/ML focus, applied through product work rather than coursework-only demos.",
     tech: ["AI/ML", "DSA", "Systems"],
     type: "education",
   },
@@ -156,7 +243,8 @@ export const certifications = [
     year: "2024",
     icon: "stanford",
     color: "#d9ff5c",
-    credentialUrl: "https://coursera.org/verify/specialization/stanford-ml",
+    credentialUrl: "https://www.coursera.org/specializations/machine-learning-introduction",
+    linkLabel: "Course page",
   },
   {
     name: "Deep Learning Specialization",
@@ -164,7 +252,8 @@ export const certifications = [
     year: "2024",
     icon: "deeplearning",
     color: "#c0adff",
-    credentialUrl: "https://coursera.org/verify/specialization/deeplearning-ai",
+    credentialUrl: "https://www.coursera.org/specializations/deep-learning",
+    linkLabel: "Course page",
   },
   {
     name: "AWS Cloud Practitioner",
@@ -172,7 +261,8 @@ export const certifications = [
     year: "2023",
     icon: "aws",
     color: "#b8deff",
-    credentialUrl: "https://aws.amazon.com/verification",
+    credentialUrl: "https://aws.amazon.com/certification/certified-cloud-practitioner/",
+    linkLabel: "Certification page",
   },
   {
     name: "Python for Data Science",
@@ -180,7 +270,8 @@ export const certifications = [
     year: "2023",
     icon: "ibm",
     color: "#d9ff5c",
-    credentialUrl: "https://coursera.org/verify/ibm-python-data-science",
+    credentialUrl: "https://www.coursera.org/learn/python-for-applied-data-science-ai",
+    linkLabel: "Course page",
   },
 ];
 
