@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import DynamicFavicon from "@/components/ui/DynamicFavicon";
 import CommandPalette from "@/components/ui/CommandPalette";
+import JsonLd from "@/components/JsonLd";
 import { SITE_URL, NAME, ROLE, DESCRIPTION, SOCIAL_LINKS } from "@/lib/site";
 
 const geist = Geist({
@@ -101,6 +102,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable}`}>
       <body className={`${geist.className} noise-bg`}>
+        <JsonLd />
         <DynamicFavicon />
         <CommandPalette />
         {children}
