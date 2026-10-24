@@ -227,7 +227,7 @@ export default function DockingDashboard() {
           <div className="w-8 h-8 rounded-full overflow-hidden border border-white/40 shadow-xs">
             <Image
               src="/profile.jpg"
-              alt="User"
+              alt="Portrait of Aditya Singh Rajput"
               width={32}
               height={32}
               className="w-full h-full object-cover"

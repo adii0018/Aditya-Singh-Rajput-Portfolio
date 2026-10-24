@@ -65,24 +65,29 @@ export default function Footer() {
                     {"external" in link && link.external ? (
                       <a
                         href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                        rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
                         className="text-[#ffffff80] text-sm hover:text-white transition-colors flex items-center gap-1 group"
                       >
                         {link.label}
-                        <ArrowUpRight
-                          size={12}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity"
-                        />
+                        {!link.href.startsWith("mailto:") && (
+                          <ArrowUpRight
+                            size={12}
+                            className="opacity-0 group-hover:opacity-100 transition-opacity"
+                          />
+                        )}
                       </a>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() => scrollTo(link.href)}
-                        className="text-[#ffffff80] text-sm hover:text-white transition-colors text-left border-0 bg-transparent cursor-pointer p-0"
+                      <a
+                        href={link.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollTo(link.href);
+                        }}
+                        className="text-[#ffffff80] text-sm hover:text-white transition-colors block text-left"
                       >
                         {link.label}
-                      </button>
+                      </a>
                     )}
                   </li>
                 ))}

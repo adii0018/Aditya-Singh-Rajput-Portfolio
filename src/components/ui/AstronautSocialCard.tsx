@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { useGSAP, gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
+import { SOCIAL_LINKS } from "@/lib/site";
 import "./astronaut-card.css";
 
 function InstagramIcon({ size = 18 }: { size?: number }) {
@@ -143,7 +144,8 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
         {/* Inner element: keeps ambient continuous floating bob/tilt animation */}
         <Image
           className="image"
-          alt="Baby Astronaut"
+          alt="Decorative floating 3D astronaut mascot"
+          aria-hidden="true"
           src="/astronaut.png"
           width={160}
           height={190}
@@ -153,11 +155,11 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
         />
       </div>
 
-      <div className="heading">We&apos;re on Social Media</div>
+      <div className="heading">Connect With Me</div>
       <div className="icons">
         <a
           className="github-link"
-          href="https://github.com/adii0018"
+          href={SOCIAL_LINKS.github}
           target="_blank"
           rel="noopener noreferrer"
           title="GitHub"
@@ -166,7 +168,7 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
         </a>
         <a
           className="linkedin-link"
-          href="https://www.linkedin.com/in/adii001n/"
+          href={SOCIAL_LINKS.linkedin}
           target="_blank"
           rel="noopener noreferrer"
           title="LinkedIn"
@@ -175,7 +177,7 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
         </a>
         <a
           className="instagram-link"
-          href="https://www.instagram.com/http._.adiix/"
+          href={SOCIAL_LINKS.instagram}
           target="_blank"
           rel="noopener noreferrer"
           title="Instagram"

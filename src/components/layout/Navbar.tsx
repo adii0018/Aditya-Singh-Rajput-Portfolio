@@ -168,13 +168,16 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
             {navLinks.map((link) => (
-              <button
+              <a
                 key={link.href}
-                type="button"
-                onClick={() => handleNavClick(link.href)}
-                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 border-0 bg-transparent cursor-pointer select-none ${
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.href);
+                }}
+                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 select-none ${
                   activeSection === link.href.replace("#", "")
                     ? "text-[#242426]"
                     : "text-[#4d4f57] hover:text-[#242426]"
@@ -188,7 +191,7 @@ export default function Navbar() {
                   />
                 )}
                 <span className="relative z-10">{link.label}</span>
-              </button>
+              </a>
             ))}
           </nav>
 
@@ -242,18 +245,21 @@ export default function Navbar() {
           >
             <nav aria-label="Mobile navigation" className="flex flex-col gap-1">
               {navLinks.map((link) => (
-                <button
+                <a
                   key={link.href}
-                  type="button"
-                  onClick={() => handleNavClick(link.href)}
-                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all border-0 cursor-pointer ${
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(link.href);
+                  }}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer ${
                     activeSection === link.href.replace("#", "")
                       ? "bg-[#d9ff5c] text-[#242426]"
                       : "bg-transparent text-[#4d4f57] hover:bg-[#24242210]"
                   }`}
                 >
                   {link.label}
-                </button>
+                </a>
               ))}
               <div className="flex gap-2 mt-3 pt-3 border-t border-[#24242210]">
                 <a

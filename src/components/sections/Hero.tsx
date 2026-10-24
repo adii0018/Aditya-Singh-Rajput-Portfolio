@@ -137,13 +137,20 @@ export default function Hero() {
           <h1
             className="font-medium tracking-[-0.035em] leading-[1.08] text-[#1f2022] mb-6"
             style={{ fontSize: "clamp(44px, 5.8vw, 80px)" }}
+            aria-label={`${personal.name}, ${personal.role}`}
           >
-            <div className="overflow-hidden">
-              <AnimatedHeading text={personal.heroLine1} />
-            </div>
-            <div className="overflow-hidden">
-              <AnimatedHeading text={personal.heroLine2} />
-            </div>
+            {/* Server-rendered accessible identity heading for search engines and crawlers */}
+            <span className="sr-only">
+              {personal.name}, {personal.role}
+            </span>
+            <span aria-hidden="true" className="block">
+              <div className="overflow-hidden">
+                <AnimatedHeading text={personal.heroLine1} />
+              </div>
+              <div className="overflow-hidden">
+                <AnimatedHeading text={personal.heroLine2} />
+              </div>
+            </span>
           </h1>
 
           {/* Subtitle */}
@@ -237,7 +244,7 @@ export default function Hero() {
           <div className="relative w-full h-full">
             <Image
               src="/profile.jpg"
-              alt="Aditya Singh Rajput"
+              alt="Portrait of Aditya Singh Rajput"
               priority
               fill
               className="object-cover object-top lg:object-[center_top]"

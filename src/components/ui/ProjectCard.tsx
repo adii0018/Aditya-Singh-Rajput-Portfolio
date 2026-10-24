@@ -93,7 +93,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#24242215] shadow-xl group bg-[#0e0e11] aspect-[16/9] w-full">
                 <Image
                   src={project.image}
-                  alt={project.title}
+                  alt={`${project.title} - ${project.subtitle}`}
                   fill
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 1024px) 100vw, 50vw"
