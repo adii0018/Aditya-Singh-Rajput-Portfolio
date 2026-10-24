@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="16" fill="#111110"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="#D9FF5C" stroke-width="2.5" stroke-opacity="0.4"/>
+  <text x="32" y="41" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="900" text-anchor="middle">
+    <tspan fill="#D9FF5C">A</tspan><tspan fill="#FAFAF8">SR</tspan>
+  </text>
+</svg>

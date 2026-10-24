@@ -18,7 +18,7 @@ const createSvgFavicon = (borderColor: string, text: string, isEmoji = false): s
 };
 
 const FAVICONS = {
-  home: createSvgFavicon("#22c55e", "A"),
+  home: "/favicon.svg",
   about: createSvgFavicon("#14b8a6", "ℹ"),
   skills: createSvgFavicon("#c0adff", "⚡", true),
   features: createSvgFavicon("#d9ff5c", "✦"),
@@ -34,7 +34,7 @@ const FAVICONS = {
 const SECTION_METAS: Record<string, SectionMeta> = {
   home: {
     icon: FAVICONS.home,
-    title: "Aditya Singh Rajput — AI/ML Engineer",
+    title: "Aditya Singh Rajput | AI/ML Engineer and Full-Stack Developer",
   },
   about: {
     icon: FAVICONS.about,
@@ -87,17 +87,18 @@ const SECTION_IDS = [
 function setDocumentFavicon(iconUrl: string) {
   if (typeof document === "undefined") return;
 
-  // Update all existing link[rel*='icon']
   const existingLinks = document.querySelectorAll<HTMLLinkElement>("link[rel*='icon']");
   if (existingLinks.length > 0) {
     existingLinks.forEach((link) => {
-      link.type = "image/svg+xml";
+      if (iconUrl.endsWith(".svg") || iconUrl.startsWith("data:image/svg+xml")) {
+        link.type = "image/svg+xml";
+      }
       link.href = iconUrl;
     });
   } else {
     const newLink = document.createElement("link");
-    newLink.rel = "shortcut icon";
-    newLink.type = "image/svg+xml";
+    newLink.rel = "icon";
+    newLink.type = iconUrl.endsWith(".svg") ? "image/svg+xml" : "image/png";
     newLink.href = iconUrl;
     document.head.appendChild(newLink);
   }
