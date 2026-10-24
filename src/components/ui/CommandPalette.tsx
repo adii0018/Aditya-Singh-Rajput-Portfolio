@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, X, CornerDownLeft, Sparkles, Download, Mail } from "lucide-react";
-import { personal, skills, projects, experience } from "@/lib/data";
+import { personal, projects } from "@/lib/data";
 
 interface HistoryItem {
   id: string;
@@ -41,7 +41,6 @@ export default function CommandPalette() {
       ),
     },
   ]);
-  const [isHired, setIsHired] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -217,7 +216,6 @@ export default function CommandPalette() {
 
       case "sudo hire":
       case "hire":
-        setIsHired(true);
         outputNode = (
           <div className="p-3 rounded-xl bg-gradient-to-r from-[#d9ff5c]/20 to-[#40c463]/20 border border-[#d9ff5c]/40 text-xs space-y-1.5">
             <p className="text-[#d9ff5c] font-bold text-sm flex items-center gap-2">

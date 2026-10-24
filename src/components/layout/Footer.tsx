@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import AstronautSocialCard from "@/components/ui/AstronautSocialCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { personal } from "@/lib/data";

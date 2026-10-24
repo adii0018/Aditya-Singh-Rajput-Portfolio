@@ -3,10 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGSAP, gsap, isReducedMotion } from "@/lib/gsap";
-import {
-  Sliders,
-  Sparkles,
-  Shield,
+import {  Shield,
   AlertCircle,
   Check,
   FolderTree,
@@ -14,9 +11,7 @@ import {
   CreditCard as CreditCardIcon,
   Cpu,
   Zap,
-  Terminal,
-  Play,
-  RotateCcw,
+  Terminal,  RotateCcw,
 } from "lucide-react";
 import FileTreeCard from "@/components/ui/FileTreeCard";
 import SpotifyCard from "@/components/ui/SpotifyCard";
@@ -67,10 +62,13 @@ export default function BentoFeatures() {
 
   useEffect(() => {
     let index = 0;
-    setStreamedText("");
-    setIsStreaming(true);
-
     const fullText = selectedPrompt.response;
+
+    const timer = setTimeout(() => {
+      setStreamedText("");
+      setIsStreaming(true);
+    }, 0);
+
     const interval = setInterval(() => {
       index++;
       setStreamedText(fullText.slice(0, index));
@@ -80,7 +78,10 @@ export default function BentoFeatures() {
       }
     }, 22);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, [selectedPrompt]);
 
   // Card 6: AI Proctoring Alert state

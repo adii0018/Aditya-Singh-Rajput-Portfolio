@@ -4,7 +4,6 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { useGSAP, gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
-import { personal } from "@/lib/data";
 import "./astronaut-card.css";
 
 function InstagramIcon({ size = 18 }: { size?: number }) {

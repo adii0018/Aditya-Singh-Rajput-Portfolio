@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight, ChevronRight, Sparkles, Activity, Layers, Terminal } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 import CodeLoader from "@/components/ui/CodeLoader";
@@ -43,7 +43,7 @@ export default function Projects() {
                 Math.floor(self.progress * projects.length),
                 projects.length - 1
               );
-              setActiveCardIndex(idx);
+              setActiveCardIndex((prev) => (prev === idx ? prev : idx));
             },
           },
         });
@@ -155,10 +155,12 @@ export default function Projects() {
 
               {/* Graphic/Visual Showcase: Real 16:9 Banner Image */}
               <div className="lg:col-span-6 relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#24242215] shadow-xl group bg-[#0e0e11] aspect-[16/9] w-full">
-                <img
+                <Image
                   src="/alice-exam-proctor.jpg"
                   alt="Alice Exam Proctor - AI-Powered Real-Time Integrity & Autonomous Proctoring"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
 

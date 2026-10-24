@@ -37,7 +37,7 @@ export default function Experience() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 85%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
           },
         });
 
@@ -87,7 +87,7 @@ export default function Experience() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 88%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
           },
         });
 
