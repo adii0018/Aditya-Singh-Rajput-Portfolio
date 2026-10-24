@@ -1,0 +1,17 @@
+# Aditya Singh Rajput
+
+> AI/ML Engineer and Full-Stack Developer specializing in computer vision, NLP, and scalable architectures. 4 shipped products, based in India.
+
+## Links
+
+- Website: https://www.adityasinghrajput.me
+- GitHub: https://github.com/adii0018
+- LinkedIn: https://www.linkedin.com/in/adii001n/
+- Instagram: https://www.instagram.com/http._.adiix/
+
+## Projects
+
+- [Alice Exam Proctor](https://github.com/adii0018/Alice-exam-proctor): Automated exam integrity monitoring detecting gaze deviation, multiple faces, and acoustic anomalies in real-time without human supervision.
+- [Alice Mandi](https://github.com/adii0018/Alice-mandi): Direct farmer-to-buyer marketplace featuring ML price forecasting on regional mandi data and smart harvest logistics optimization.
+- [JanSetu AI](https://github.com/adii0018/JanSetu-AI): Conversational welfare scheme assistant processing 12 regional dialects via retrieval-augmented LLM architecture and speech-to-text models.
+- [FFZone Arena](https://github.com/adii0018/FFZONE): High-concurrency fantasy sports arena featuring live matchday data feeds, predictive AI lineup suggestions, and competitive leagues.
