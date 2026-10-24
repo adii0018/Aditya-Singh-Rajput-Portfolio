@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowDown, FileDown, Terminal } from "lucide-react";
 import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
+import { DURATION, EASE } from "@/lib/motion";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { AnimatedHeading } from "@/components/ui/AnimatedText";
 import { personal } from "@/lib/data";
@@ -17,23 +18,37 @@ export default function Hero() {
     () => {
       if (isReducedMotion()) return;
 
+      // Check if hero intro already played in this session to respect user time [A03]
+      const hasPlayed = typeof window !== "undefined" && sessionStorage.getItem("hero-intro-played");
+      if (hasPlayed) {
+        gsap.set([".hero-badge", ".hero-title-word", ".hero-subtitle", ".hero-cta-wrap", ".hero-social-row", ".hero-scroll-btn"], {
+          opacity: 1,
+          y: 0,
+        });
+        if (imageWrapRef.current) {
+          gsap.set(imageWrapRef.current, { opacity: 1, scale: 1 });
+        }
+      } else {
+        sessionStorage.setItem("hero-intro-played", "true");
+      }
+
       const tl = gsap.timeline({
-        defaults: { ease: "power3.out" },
+        defaults: { ease: EASE.out },
       });
 
       // 1. Badge entrance
       tl.from(".hero-badge", {
         y: -18,
         opacity: 0,
-        duration: 0.7,
+        duration: DURATION.base,
       })
       // 2. Heading: Cinematic word mask reveal
       .from(".hero-title-word", {
         y: "115%",
         opacity: 0,
-        duration: 0.95,
+        duration: DURATION.slow,
         stagger: 0.05,
-        ease: "power4.out",
+        ease: EASE.outExtreme,
       }, "-=0.35")
       // 3. Subtitle: smooth rise
       .from(".hero-subtitle", {
@@ -45,7 +60,7 @@ export default function Hero() {
       .from(".hero-cta-wrap", {
         y: 20,
         opacity: 0,
-        duration: 0.7,
+        duration: DURATION.base,
       }, "-=0.45")
       // 5. Social proof links
       .from(".hero-social-row", {
@@ -57,7 +72,7 @@ export default function Hero() {
       .from(imageWrapRef.current, {
         scale: 1.05,
         opacity: 0,
-        duration: 1.2,
+        duration: DURATION.cinematic,
         ease: "power2.out",
       }, 0.15)
       // 7. Scroll indicator

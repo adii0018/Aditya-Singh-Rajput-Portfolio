@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { skills, skillCategories } from "@/lib/data";
@@ -51,7 +51,21 @@ const CATEGORY_META: Record<string, CategoryMeta> = {
 export default function Skills() {
   const [activeTab, setActiveTab] = useState<string>("All");
   const sectionRef = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const [isMarqueeInView, setIsMarqueeInView] = useState(true);
   const categories = ["All", ...skillCategories];
+  // Pause marquee when offscreen to preserve GPU/battery [P02]
+  useEffect(() => {
+    const el = marqueeRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsMarqueeInView(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
 
   useGSAP(
     () => {
@@ -330,11 +344,11 @@ export default function Skills() {
         </div>
 
         {/* Marquee strip */}
-        <div className="skills-marquee mt-14 overflow-hidden relative">
+        <div ref={marqueeRef} className="skills-marquee mt-14 overflow-hidden relative">
           <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#ebeff5] to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#ebeff5] to-transparent z-10 pointer-events-none" />
           <motion.div
-            animate={{ x: ["0%", "-50%"] }}
+            animate={isMarqueeInView ? { x: ["0%", "-50%"] } : undefined}
             transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
             className="flex gap-3.5 w-max"
           >
