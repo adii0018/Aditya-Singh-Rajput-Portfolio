@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
+import { validateContactForm, sanitizeInput } from "@/lib/validation";
 import { Mail, Send, ArrowUpRight, Copy, Check, User, MessageSquare, Sparkles, Loader2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { Badge } from "@/components/ui/Badge";
@@ -43,8 +44,11 @@ function ContactForm() {
     e.preventDefault();
     // Honeypot bot protection: if hidden field is filled, silently discard
     if (formData.hp) { setStatus("success"); return; }
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setErrorMessage("Please fill out all fields before sending.");
+
+    const validation = validateContactForm(formData);
+    if (!validation.valid) {
+      const firstError = Object.values(validation.errors)[0] || "Please check your inputs.";
+      setErrorMessage(firstError);
       return;
     }
     setErrorMessage("");
@@ -56,10 +60,10 @@ function ContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          _subject: `New Portfolio Inquiry from ${formData.name}`,
+          name: sanitizeInput(formData.name),
+          email: sanitizeInput(formData.email),
+          message: sanitizeInput(formData.message),
+          _subject: `New Portfolio Inquiry from ${sanitizeInput(formData.name)}`,
         }),
       });
 
