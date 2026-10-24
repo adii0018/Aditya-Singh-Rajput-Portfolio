@@ -178,7 +178,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-[#242426] bg-white border border-[#24242220] hover:border-[#242426] hover:shadow-xs transition-all cursor-pointer"
             >
               <FileDown size={16} className="text-[#2da44e]" />
-              <span>Download CV</span>
+              <span>Download Resume</span>
             </motion.a>
 
             {/* Terminal quick-launch pill */}

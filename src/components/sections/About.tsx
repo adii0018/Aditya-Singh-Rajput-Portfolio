@@ -231,14 +231,14 @@ export default function About() {
 
           <p className="about-paragraph text-[#ffffff85] text-base sm:text-lg leading-relaxed mb-4">
             {renderWords(
-              "I'm Aditya Singh Rajput — an AI/ML Engineer and Full-Stack Developer passionate about building products that matter. I specialize in bridging the gap between cutting-edge AI research and real-world applications.",
+              "I'm Aditya Singh Rajput — an AI engineer and full-stack developer based in India. I build real-time computer vision systems and language model applications that solve concrete problems, from automated online exam proctoring to multilingual governance assistants.",
               { boldWords: ["Aditya", "Singh", "Rajput"], targetColor: "#ffffff" }
             )}
           </p>
 
           <p className="about-paragraph text-[#ffffff60] text-sm sm:text-base leading-relaxed mb-6">
             {renderWords(
-              "From AI exam proctoring systems to conversational government assistants, I thrive at the intersection of machine intelligence and human-centered design — creating products that are not just smart, but truly useful.",
+              "My focus is taking machine learning models out of notebooks and into production: optimizing inference latency, building responsive user interfaces, and ensuring reliable data pipelines.",
               { targetColor: "rgba(255, 255, 255, 0.85)" }
             )}
           </p>

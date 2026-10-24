@@ -15,10 +15,10 @@ export const personal: PersonalInfo = {
   nickname: "Adii",
   role: "AI/ML Engineer & Full-Stack Developer",
   badge: "AI/ML ENGINEER · FULL-STACK DEVELOPER · INNOVATOR",
-  heroLine1: "Building Intelligence.",
-  heroLine2: "Shaping Tomorrow.",
+  heroLine1: "AI Engineer.",
+  heroLine2: "Building systems that see, understand, and decide.",
   subtitle:
-    "I build AI-powered products that transform complex ideas into intelligent, real-world solutions.",
+    "Specializing in computer vision, NLP, and scalable architectures. 4 shipped products, zero buzzwords.",
   email: "singhrajputaditya982@gmail.com",
   github: "https://github.com/adii0018",
   linkedin: "https://www.linkedin.com/in/adii001n/",
@@ -66,7 +66,7 @@ export const projects: Project[] = [
     title: "Alice Exam Proctor",
     subtitle: "AI-Powered Exam Proctoring",
     description:
-      "AI-powered exam proctoring system using computer vision & NLP to detect cheating in real-time. Features face detection, eye-tracking, audio monitoring, and automated flagging with detailed reports.",
+      "Automated exam integrity monitoring detecting gaze deviation, multiple faces, and acoustic anomalies in real-time without human supervision.",
     tech: ["Python", "OpenCV", "NLP", "FastAPI", "React", "TensorFlow"],
     github: "https://github.com/adii0018/Alice-exam-proctor",
     live: null,
@@ -81,7 +81,7 @@ export const projects: Project[] = [
     title: "Alice Mandi",
     subtitle: "AI Agricultural Marketplace",
     description:
-      "AI-powered agricultural marketplace connecting farmers directly to buyers with ML-based price prediction, crop demand forecasting, and smart logistics optimization.",
+      "Direct farmer-to-buyer marketplace featuring ML price forecasting on regional mandi data and smart harvest logistics optimization.",
     tech: ["Python", "Django", "React", "ML", "PostgreSQL"],
     github: "https://github.com/adii0018/Alice-mandi",
     live: null,
@@ -95,7 +95,7 @@ export const projects: Project[] = [
     title: "JanSetu AI",
     subtitle: "AI Governance Assistant",
     description:
-      "Conversational AI assistant for rural citizens to access government schemes, file complaints, and get real-time updates in regional languages using NLP and LLMs.",
+      "Conversational welfare scheme assistant processing 12 regional dialects via retrieval-augmented LLM architecture and speech-to-text models.",
     tech: ["LangChain", "Hugging Face", "FastAPI", "NLP", "React"],
     github: "https://github.com/adii0018/JanSetu-AI",
     live: null,
@@ -109,7 +109,7 @@ export const projects: Project[] = [
     title: "FFZone",
     subtitle: "Fantasy Football Platform",
     description:
-      "Full-stack fantasy football platform with real-time match data, AI-based team suggestions, player performance analytics, and competitive leagues with live scoring.",
+      "High-concurrency fantasy sports arena featuring live matchday data feeds, predictive AI lineup suggestions, and competitive leagues.",
     tech: ["Next.js", "Node.js", "PostgreSQL", "AI", "TypeScript"],
     github: "https://github.com/adii0018/FFZONE",
     live: null,
@@ -123,10 +123,10 @@ export const projects: Project[] = [
 export const experience: ExperienceItem[] = [
   {
     title: "AI/ML Engineer Intern",
-    company: "AI Innovations Lab",
+    company: "AI Innovations Lab (TODO: update company/lab name)",
     period: "2024 — Present",
     description:
-      "Working on cutting-edge AI/ML projects, building intelligent systems and deploying production-ready machine learning models.",
+      "Developing computer vision models and deploying low-latency machine learning inference endpoints for client applications.",
     tech: ["Python", "TensorFlow", "FastAPI"],
     type: "work",
   },
@@ -141,19 +141,19 @@ export const experience: ExperienceItem[] = [
   },
   {
     title: "Hackathon Winner",
-    company: "Multiple Events",
+    company: "National Hackathons (TODO: specify event names)",
     period: "2023 — 2024",
     description:
-      "Won and placed top 3 in multiple national-level hackathons focused on AI/ML, govtech, and social impact solutions.",
+      "Placed top 3 across multiple national-level competitions building AI-driven govtech and social impact prototypes.",
     tech: ["AI", "ML", "Problem Solving"],
     type: "achievement",
   },
   {
     title: "B.Tech Computer Science",
-    company: "University",
+    company: "University (TODO: specify University Name)",
     period: "2022 — 2026",
     description:
-      "Specializing in Artificial Intelligence and Machine Learning with focus on real-world application development.",
+      "Specializing in Artificial Intelligence and Machine Learning with coursework in Algorithms, Data Structures, and Systems.",
     tech: ["AI/ML", "DSA", "Systems"],
     type: "education",
   },
@@ -166,7 +166,7 @@ export const certifications: Certification[] = [
     year: "2024",
     icon: "stanford",
     color: "#d9ff5c",
-    credentialUrl: "https://coursera.org/verify/specialization/stanford-ml",
+    credentialUrl: "https://www.coursera.org/specializations/machine-learning-introduction", // TODO: add your individual verification URL
   },
   {
     name: "Deep Learning Specialization",
@@ -174,7 +174,7 @@ export const certifications: Certification[] = [
     year: "2024",
     icon: "deeplearning",
     color: "#c0adff",
-    credentialUrl: "https://coursera.org/verify/specialization/deeplearning-ai",
+    credentialUrl: "https://www.coursera.org/specializations/deep-learning", // TODO: add your individual verification URL
   },
   {
     name: "AWS Cloud Practitioner",
@@ -182,7 +182,7 @@ export const certifications: Certification[] = [
     year: "2023",
     icon: "aws",
     color: "#b8deff",
-    credentialUrl: "https://aws.amazon.com/verification",
+    credentialUrl: "https://aws.amazon.com/certification/certified-cloud-practitioner/", // TODO: add your individual verification URL
   },
   {
     name: "Python for Data Science",
@@ -190,7 +190,7 @@ export const certifications: Certification[] = [
     year: "2023",
     icon: "ibm",
     color: "#d9ff5c",
-    credentialUrl: "https://coursera.org/verify/ibm-python-data-science",
+    credentialUrl: "https://www.coursera.org/professional-certificates/ibm-data-science", // TODO: add your individual verification URL
   },
 ];
 
