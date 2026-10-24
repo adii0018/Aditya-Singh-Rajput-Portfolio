@@ -13,7 +13,7 @@ interface CreditCardProps {
 
 export const CreditCard: React.FC<CreditCardProps> = ({
   name = "DEVLOPER",
-  number = "•••• •••• •••• 0000",
+  number = "â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ 0000",
   expiry = "0 8 / 2 6",
   cvv = "***",
   className = "",
