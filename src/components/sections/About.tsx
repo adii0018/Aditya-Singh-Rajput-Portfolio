@@ -167,7 +167,7 @@ export default function About() {
         {/* Top Header Section with Scroll-Linked Word Reveal */}
         <div ref={textWrapRef} className="text-center max-w-3xl mx-auto mb-6">
           <div className="about-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff60] text-xs font-mono tracking-wider uppercase mb-6">
-            ✦ About Me
+            / about
           </div>
 
           <h2
@@ -244,7 +244,7 @@ export default function About() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-2">
-            {["Problem Solver", "AI Enthusiast", "Open Source", "Hackathon Winner"].map(
+            {["4 AI Products Shipped", "Computer Vision & LLMs", "Production Model Deployments", "National Hackathon Winner"].map(
               (tag) => (
                 <span
                   key={tag}

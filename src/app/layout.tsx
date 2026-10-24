@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, Fragment_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import DynamicFavicon from "@/components/ui/DynamicFavicon";
 import CommandPalette from "@/components/ui/CommandPalette";
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist",
   display: "swap",
 });
 
-const fragmentMono = Fragment_Mono({
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-fragment-mono",
+  style: "italic",
+  variable: "--font-instrument-serif",
   display: "swap",
 });
 
@@ -72,8 +79,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${fragmentMono.variable}`}>
-      <body className={`${inter.className} noise-bg`}>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable}`}>
+      <body className={`${geist.className} noise-bg`}>
         <DynamicFavicon />
         <CommandPalette />
         {children}

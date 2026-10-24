@@ -257,7 +257,7 @@ export default function Experience() {
           {/* Header */}
           <div className="mb-16">
             <div className="exp-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
-              ✦ Experience & Achievements
+              / timeline // track record
             </div>
             <div className="flex items-center gap-5 sm:gap-7">
               <div className="exp-loader shrink-0 flex items-center justify-center">

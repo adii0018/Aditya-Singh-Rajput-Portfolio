@@ -111,7 +111,7 @@ export default function Skills() {
             <div className="skills-badge mb-4">
               <Badge variant="outline" className="bg-white/80 border-[#24242220] shadow-xs text-[#242426]">
                 <Sparkles size={13} className="text-[#16a34a]" />
-                <span>Tech Stack · {skills.length} Technologies</span>
+                <span>/ tech-stack // 22 tools</span>
               </Badge>
             </div>
             <div className="flex items-center gap-4 sm:gap-6">

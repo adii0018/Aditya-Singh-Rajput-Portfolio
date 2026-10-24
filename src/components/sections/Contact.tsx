@@ -272,7 +272,7 @@ export default function Contact() {
           <div className="w-full flex justify-center mb-6">
             <div className="contact-badge">
               <Badge variant="outline" className="border-white/20 bg-white/5 text-white/90">
-                ✦ Get In Touch
+                / contact // direct line
               </Badge>
             </div>
           </div>

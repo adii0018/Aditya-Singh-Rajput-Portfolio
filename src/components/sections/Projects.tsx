@@ -152,7 +152,7 @@ export default function Projects() {
       <div className="w-full max-w-7xl mx-auto px-6 mb-4 sm:mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <div className="projects-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-3">
-            ✦ Featured Projects
+            / projects // selected systems
           </div>
           <div className="flex items-center gap-4 sm:gap-6">
             <div className="projects-code-loader shrink-0 flex items-center">
