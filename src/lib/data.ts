@@ -7,21 +7,22 @@ import {
   Certification,
   NavLink,
 } from "@/types/portfolio";
+import { NAME, NICKNAME, ROLE, SOCIAL_LINKS } from "@/lib/site";
 
 // Portfolio Data — All content in one place
 
 export const personal: PersonalInfo = {
-  name: "Aditya Singh Rajput",
-  nickname: "Adii",
-  role: "AI/ML Engineer & Full-Stack Developer",
+  name: NAME,
+  nickname: NICKNAME,
+  role: ROLE,
   badge: "AI/ML ENGINEER · FULL-STACK DEVELOPER · INNOVATOR",
   heroLine1: "AI Engineer.",
   heroLine2: "Building systems that see, understand, and decide.",
   subtitle:
     "Specializing in computer vision, NLP, and scalable architectures. 4 shipped products, zero buzzwords.",
   email: "singhrajputaditya982@gmail.com",
-  github: "https://github.com/adii0018",
-  linkedin: "https://www.linkedin.com/in/adii001n/",
+  github: SOCIAL_LINKS.github,
+  linkedin: SOCIAL_LINKS.linkedin,
   githubUsername: "adii0018",
   location: "India",
 };
