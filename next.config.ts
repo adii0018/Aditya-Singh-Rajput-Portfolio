@@ -50,6 +50,34 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      // Force non-www apex domain to canonical www domain (Task 8)
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "adityasinghrajput.me",
+          },
+        ],
+        destination: "https://www.adityasinghrajput.me/:path*",
+        permanent: true,
+      },
+      // Force legacy Vercel preview domain to canonical www domain (Task 8)
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "portfolio-sepia-three-56.vercel.app",
+          },
+        ],
+        destination: "https://www.adityasinghrajput.me/:path*",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
