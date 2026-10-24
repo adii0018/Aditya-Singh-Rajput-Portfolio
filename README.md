@@ -112,5 +112,36 @@ The UI follows **Direction B: "The Operative"**, inspired by the precision desig
 
 ---
 
+## 🔍 SEO & AI Discoverability
+
+The site implements strict Technical SEO and structured data to ensure Google, Bing, and AI search tools (Perplexity, Claude, GPTBot) can crawl, index, and attribute content directly to Aditya Singh Rajput:
+
+- **Central Metadata Source of Truth (`src/lib/site.ts`)**:
+  - Defines canonical domain (`https://www.adityasinghrajput.me`), full name, role, under-160-char meta description, verified social links, and project catalogs.
+  - All metadata, OpenGraph, JSON-LD, and `llms.txt` import from this single file. No duplicate strings.
+- **Updating the Project Catalog**:
+  - To update or add projects for search engines and LLM crawlers, edit `SITE_PROJECTS` in `src/lib/site.ts` and sync `public/llms.txt`.
+- **Google Search Console Verification**:
+  - In `.env.local`, set:
+    ```env
+    NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION="your_google_verification_token_here"
+    ```
+  - `src/app/layout.tsx` injects `<meta name="google-site-verification" ... />` automatically only when the variable is defined.
+- **Structured Data (Schema.org JSON-LD)**:
+  - `src/components/JsonLd.tsx` renders a typed `@graph` containing `Person` and `WebSite` nodes with `knowsAbout`, `sameAs`, and `@id` references.
+  - Email addresses are strictly omitted from JSON-LD to prevent spam scraping.
+- **Automated Social Cards & Sitemaps**:
+  - `src/app/opengraph-image.tsx` & `src/app/twitter-image.tsx`: Dynamic 1200×630 branded image generator using `next/og ImageResponse`.
+  - `src/app/sitemap.ts`: Auto-generated `/sitemap.xml` with priority and change frequency.
+  - `src/app/robots.ts`: Auto-generated `/robots.txt` allowing all search engines and AI crawlers (`GPTBot`, `ClaudeBot`, `PerplexityBot`, etc.).
+  - `public/llms.txt`: Structured Markdown index for LLMs detailing projects, stack, and repositories.
+- **Host Redirects & Canonicalization**:
+  - `next.config.ts` enforces 301/308 permanent redirects from apex `adityasinghrajput.me` and legacy Vercel preview domains to the canonical `https://www.adityasinghrajput.me`.
+- **How to Validate**:
+  - Test structured data with [Google Rich Results Test](https://search.google.com/test/rich-results) and [Schema Markup Validator](https://validator.schema.org/).
+  - Verify endpoints: `/sitemap.xml`, `/robots.txt`, `/llms.txt`, and `/opengraph-image`.
+
+---
+
 ## 📄 License
 Private repository — © Aditya Singh Rajput. All rights reserved.
