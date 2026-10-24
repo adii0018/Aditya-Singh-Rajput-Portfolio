@@ -1,6 +1,16 @@
+import {
+  PersonalInfo,
+  Skill,
+  SkillCategory,
+  Project,
+  ExperienceItem,
+  Certification,
+  NavLink,
+} from "@/types/portfolio";
+
 // Portfolio Data — All content in one place
 
-export const personal = {
+export const personal: PersonalInfo = {
   name: "Aditya Singh Rajput",
   nickname: "Adii",
   role: "AI/ML Engineer & Full-Stack Developer",
@@ -16,7 +26,7 @@ export const personal = {
   location: "India",
 };
 
-export const skills = [
+export const skills: Skill[] = [
   // 1. AI / ML (9 tools)
   { name: "Python", category: "AI / ML", icon: "python", level: "Expert", desc: "Core language for ML & data science" },
   { name: "NumPy", category: "AI / ML", icon: "numpy", level: "Advanced", desc: "Scientific computing & multi-dimensional arrays" },
@@ -48,9 +58,9 @@ export const skills = [
   { name: "Docker", category: "Core & Systems", icon: "docker", level: "Advanced", desc: "Containerization & reproducible environments" },
 ];
 
-export const skillCategories = ["AI / ML", "Web & Backend", "Cloud & DevOps", "Core & Systems"];
+export const skillCategories: SkillCategory[] = ["AI / ML", "Web & Backend", "Cloud & DevOps", "Core & Systems"];
 
-export const projects = [
+export const projects: Project[] = [
   {
     id: 1,
     title: "Alice Exam Proctor",
@@ -110,7 +120,7 @@ export const projects = [
   },
 ];
 
-export const experience = [
+export const experience: ExperienceItem[] = [
   {
     title: "AI/ML Engineer Intern",
     company: "AI Innovations Lab",
@@ -149,7 +159,7 @@ export const experience = [
   },
 ];
 
-export const certifications = [
+export const certifications: Certification[] = [
   {
     name: "Machine Learning Specialization",
     issuer: "Coursera / Stanford",
@@ -184,7 +194,7 @@ export const certifications = [
   },
 ];
 
-export const navLinks = [
+export const navLinks: NavLink[] = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },

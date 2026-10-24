@@ -35,12 +35,14 @@ function CopyEmail({ email }: { email: string }) {
 }
 
 function ContactForm() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", hp: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Honeypot bot protection: if hidden field is filled, silently discard
+    if (formData.hp) { setStatus("success"); return; }
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setErrorMessage("Please fill out all fields before sending.");
       return;
@@ -109,7 +111,7 @@ function ContactForm() {
               <button
                 type="button"
                 onClick={() => {
-                  setFormData({ name: "", email: "", message: "" });
+                  setFormData({ name: "", email: "", message: "", hp: "" });
                   setStatus("idle");
                 }}
                 className="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-all cursor-pointer"
@@ -120,12 +122,24 @@ function ContactForm() {
           </motion.div>
         ) : (
           <form key="form" onSubmit={handleSubmit} className="space-y-4">
+            {/* Honeypot field hidden from users for bot protection [S02] */}
+            <input
+              type="text"
+              name="_gotcha"
+              tabIndex={-1}
+              autoComplete="off"
+              value={formData.hp}
+              onChange={(e) => setFormData({ ...formData, hp: e.target.value })}
+              className="absolute opacity-0 pointer-events-none -z-50 h-0 w-0"
+              aria-hidden="true"
+            />
+
             <div>
               <label htmlFor="contact-name" className="block text-xs font-mono text-white/70 mb-1.5 flex items-center gap-1.5">
                 <User size={12} className="text-[#d9ff5c]" /> YOUR NAME
               </label>
               <input
-                id="contact-name"
+                id="contact-name" maxLength={100}
                 type="text"
                 required
                 value={formData.name}
@@ -140,7 +154,7 @@ function ContactForm() {
                 <Mail size={12} className="text-[#b8deff]" /> EMAIL ADDRESS
               </label>
               <input
-                id="contact-email"
+                id="contact-email" maxLength={120}
                 type="email"
                 required
                 value={formData.email}
@@ -155,7 +169,7 @@ function ContactForm() {
                 <MessageSquare size={12} className="text-[#c0adff]" /> MESSAGE / PROJECT DETAILS
               </label>
               <textarea
-                id="contact-message"
+                id="contact-message" maxLength={2000}
                 required
                 rows={4}
                 value={formData.message}

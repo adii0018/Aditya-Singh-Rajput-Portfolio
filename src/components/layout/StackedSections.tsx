@@ -110,6 +110,13 @@ export default function StackedSections({ children }: StackedSectionsProps) {
           triggers.push(st);
         }
 
+                // Refresh triggers once fonts are fully rendered to avoid CLS
+        if (typeof document !== "undefined" && "fonts" in document) {
+          document.fonts.ready.then(() => {
+            ScrollTrigger.refresh();
+          });
+        }
+
         return () => {
           triggers.forEach((st) => st.kill());
         };

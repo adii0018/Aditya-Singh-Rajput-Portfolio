@@ -147,7 +147,7 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
           src="/astronaut.png"
           width={160}
           height={190}
-          style={{ width: "100%", height: "auto" }}
+          style={{ width: "auto", height: "auto" }}
           unoptimized
           priority
         />

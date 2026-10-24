@@ -33,10 +33,22 @@ const TRACKED_SECTIONS = [
 ];
 
 export default function Navbar() {
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const isClickingRef = useRef(false);
+
+  // Close mobile menu on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
 
   useEffect(() => {
     let ticking = false;
@@ -211,6 +223,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 rounded-xl text-[#242426] border-0 bg-transparent cursor-pointer hover:bg-[#24242210] transition-colors"
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -227,7 +240,7 @@ export default function Navbar() {
             transition={{ duration: 0.25 }}
             className="fixed top-20 left-4 right-4 z-[100] bg-[#ebeff5]/95 backdrop-blur-xl border border-[#24242215] rounded-2xl shadow-xl p-6"
           >
-            <nav className="flex flex-col gap-1">
+            <nav aria-label="Mobile navigation" className="flex flex-col gap-1">
               {navLinks.map((link) => (
                 <button
                   key={link.href}

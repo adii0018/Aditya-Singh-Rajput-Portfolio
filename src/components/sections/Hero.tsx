@@ -92,7 +92,7 @@ export default function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="relative min-h-[680px] lg:min-h-[780px] xl:min-h-screen flex flex-col justify-between overflow-hidden bg-[#ebeff5]"
+      className="relative min-h-[680px] lg:min-h-[780px] xl:min-h-svh flex flex-col justify-between overflow-hidden bg-[#ebeff5]"
     >
 
       {/* Main hero area */}
@@ -225,7 +225,6 @@ export default function Hero() {
               alt="Aditya Singh Rajput"
               priority
               fill
-              unoptimized
               className="object-cover object-top lg:object-[center_top]"
               sizes="(max-width: 1024px) 100vw, 55vw"
             />

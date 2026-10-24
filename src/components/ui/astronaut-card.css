@@ -10,9 +10,9 @@
 }
 
 .astronaut-card .image {
-  width: 100%;
-  max-width: 160px;
+  width: auto;
   height: auto;
+  max-width: 160px;
   margin: 0 auto;
   display: block;
   animation: keyframes-floating-img 6s ease-in-out infinite;
