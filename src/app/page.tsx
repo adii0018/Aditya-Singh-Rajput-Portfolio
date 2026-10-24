@@ -21,10 +21,10 @@ export default function Home() {
       <main>
         <Hero />
         <StackedSections>
-          <About />
           <Playground />
-          <Skills />
+          <About />
           <Projects />
+          <Skills />
           <Experience />
           <BentoFeatures />
           <Certifications />

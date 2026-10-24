@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import "./spotify-card.css";
-import { Play, Pause, ExternalLink } from "lucide-react";
+import { Play, ExternalLink } from "lucide-react";
 
 interface Song {
   id: number;
@@ -164,7 +164,10 @@ export default function SpotifyCard() {
         {defaultSongs.map((song) => {
           const isActive = activeSongId === song.id;
           return (
-            <div
+            <button
+              type="button"
+              aria-pressed={isActive}
+              aria-label={`${isActive && isPlaying ? "Pause" : "Play"} ${song.name} by ${song.artist}`}
               key={song.id}
               onClick={() => handleSelectSong(song.id)}
               className={`spotify-item ${isActive ? "is-active" : ""}`}
@@ -190,12 +193,12 @@ export default function SpotifyCard() {
                     <div className="spotify-bar" />
                   </div>
                 ) : (
-                  <Pause size={14} className="text-[#1db954]" />
+                  <Play size={14} className="text-[#1db954]" />
                 )
               ) : (
                 <Play size={13} className="text-[#a1a1aa]" />
               )}
-            </div>
+            </button>
           );
         })}
       </div>

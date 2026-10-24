@@ -230,11 +230,11 @@ export default function BentoFeatures() {
                 </div>
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2">
-                Live AI Metrics
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2">
+                AI Benchmark Preview
               </h3>
               <p className="text-white/80 text-xs sm:text-sm leading-relaxed">
-                Hardware-accelerated Computer Vision & NLP runtime speeds
+                Illustrative throughput and latency for computer vision and NLP
               </p>
             </div>
 
@@ -284,7 +284,7 @@ export default function BentoFeatures() {
                         48 FPS
                       </div>
                       <div className="text-xs font-semibold text-[#24242680] uppercase tracking-wider">
-                        Real-time Face Mesh
+                        Sample: Face Mesh
                       </div>
                     </motion.div>
                   ) : (
@@ -298,7 +298,7 @@ export default function BentoFeatures() {
                         42 ms
                       </div>
                       <div className="text-xs font-semibold text-[#24242680] uppercase tracking-wider">
-                        LLM Query Latency
+                        Sample: LLM Query Latency
                       </div>
                     </motion.div>
                   )}

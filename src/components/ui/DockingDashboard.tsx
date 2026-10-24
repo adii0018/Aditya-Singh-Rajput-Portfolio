@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useGSAP, gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
+import { useGSAP, gsap, isReducedMotion } from "@/lib/gsap";
 import {
   LayoutGrid,
   BarChart3,
@@ -136,13 +136,7 @@ export default function DockingDashboard() {
       );
     });
 
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 250);
-
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => mm.revert();
   });
 
   const handleShare = async () => {

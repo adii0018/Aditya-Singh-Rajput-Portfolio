@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
+import { gsap, useGSAP, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 import { personal } from "@/lib/data";
 import { Star, GitFork, ExternalLink, Copy, Check, Clock } from "lucide-react";
 import { GithubIcon } from "@/components/ui/GithubIcon";
@@ -115,22 +115,18 @@ export default function GitHubActivity() {
   const [repos, setRepos] = useState<GitHubRepo[]>(defaultRepos);
   const [languages, setLanguages] = useState<LanguageShare[]>(defaultLanguages);
   const [copiedRepo, setCopiedRepo] = useState<string | null>(null);
-  const [latestCommit, setLatestCommit] = useState<LatestCommit | null>({
-    repo: "JanSetu-AI",
-    message: "Conversational AI pipeline & multilingual backend sync",
-    timeAgo: "recently",
-    url: `${personal.github}/JanSetu-AI`,
-  });
+  const [latestCommit, setLatestCommit] = useState<LatestCommit | null>(null);
+  const [reposAnalyzed, setReposAnalyzed] = useState(0);
+  const [contributionsLive, setContributionsLive] = useState(false);
   const [stats, setStats] = useState({
     reposCount: 50,
-    followers: 18,
     starsCount: 42,
     contributionsCount: 1080,
-    isLive: false,
   });
 
   const handleTotalChange = useCallback((total: number) => {
     setStats((prev) => ({ ...prev, contributionsCount: total }));
+    setContributionsLive(true);
   }, []);
 
   useEffect(() => {
@@ -141,20 +137,19 @@ export default function GitHubActivity() {
         if (!userData) return;
         setStats((prev) => ({
           ...prev,
-          reposCount: userData.public_repos || prev.reposCount,
-          followers: userData.followers || prev.followers,
-          isLive: true,
+          reposCount: typeof userData.public_repos === "number" ? userData.public_repos : prev.reposCount,
         }));
       })
       .catch(() => {});
 
     // 2. Fetch public repos & compute language stats
     fetch(
-      `https://api.github.com/users/${personal.githubUsername}/repos?sort=updated&per_page=30`
+      `https://api.github.com/users/${personal.githubUsername}/repos?sort=updated&per_page=100`
     )
       .then((res) => (res.ok ? res.json() : null))
       .then((repoList) => {
         if (!Array.isArray(repoList) || repoList.length === 0) return;
+        setReposAnalyzed(repoList.length);
         const totalStars = repoList.reduce(
           (acc: number, r: { stargazers_count?: number }) =>
             acc + (r.stargazers_count || 0),
@@ -172,8 +167,7 @@ export default function GitHubActivity() {
         setRepos(mappedRepos);
         setStats((prev) => ({
           ...prev,
-          starsCount: totalStars > 0 ? totalStars : prev.starsCount,
-          isLive: true,
+          starsCount: totalStars,
         }));
 
         // Compute language distribution
@@ -190,20 +184,24 @@ export default function GitHubActivity() {
           const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
           const topLangs = sorted.slice(0, 4);
           const remainder = sorted.slice(4).reduce((sum, item) => sum + item[1], 0);
-
-          const breakdown: LanguageShare[] = topLangs.map(([lang, count]) => ({
-            name: lang,
-            percentage: Math.max(1, Math.round((count / total) * 100)),
-            color: langColors[lang] || "#8b949e",
-          }));
-
-          if (remainder > 0) {
-            breakdown.push({
-              name: "Others",
-              percentage: Math.max(1, Math.round((remainder / total) * 100)),
-              color: "#8b949e",
-            });
+          const groups = [
+            ...topLangs.map(([name, count]) => ({ name, count, color: langColors[name] || "#8b949e" })),
+            ...(remainder > 0 ? [{ name: "Others", count: remainder, color: "#8b949e" }] : []),
+          ];
+          const exactPercentages = groups.map((group) => (group.count / total) * 100);
+          const percentages = exactPercentages.map(Math.floor);
+          let remainingPoints = 100 - percentages.reduce((sum, value) => sum + value, 0);
+          const remainderOrder = exactPercentages
+            .map((value, index) => ({ index, remainder: value - Math.floor(value) }))
+            .sort((a, b) => b.remainder - a.remainder);
+          for (let i = 0; i < remainingPoints; i++) {
+            percentages[remainderOrder[i % remainderOrder.length].index] += 1;
           }
+          const breakdown: LanguageShare[] = groups.map((group, index) => ({
+            name: group.name,
+            percentage: percentages[index],
+            color: group.color,
+          }));
           setLanguages(breakdown);
         }
       })
@@ -214,15 +212,14 @@ export default function GitHubActivity() {
       .then((res) => (res.ok ? res.json() : null))
       .then((events) => {
         if (!Array.isArray(events) || events.length === 0) return;
-        const push = events.find((e: { type?: string }) => e.type === "PushEvent") || events[0];
+        const push = events.find((e: { type?: string }) => e.type === "PushEvent");
         if (push) {
-          const repoRaw = push.repo?.name || `${personal.githubUsername}/JanSetu-AI`;
+          const repoRaw = push.repo?.name;
+          if (!repoRaw) return;
           const repoClean = repoRaw.replace(/^[^/]+\//, "");
           const rawMsg =
             push.payload?.commits?.[0]?.message ||
-            (push.type === "PushEvent"
-              ? "Pushed new updates & commits"
-              : "Updated repository activity");
+            "New commits pushed";
           const firstLine = rawMsg.split("\n")[0].trim().slice(0, 60);
 
           setLatestCommit({
@@ -235,6 +232,14 @@ export default function GitHubActivity() {
       })
       .catch(() => {});
   }, []);
+
+  // GitHub content starts with local fallbacks and is replaced by fetched data.
+  // Refresh after React commits those changes so the stacked-section end point
+  // stays aligned with the section's current height.
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => window.cancelAnimationFrame(frame);
+  }, [latestCommit, languages, repos, stats.contributionsCount, stats.reposCount, stats.starsCount]);
 
   useGSAP(
     () => {
@@ -270,11 +275,6 @@ export default function GitHubActivity() {
         opacity: 0,
         duration: 0.6,
       }, "-=0.45")
-      .from(".gh-ticker", {
-        y: 20,
-        opacity: 0,
-        duration: 0.65,
-      }, "-=0.35")
       .from(".gh-chart-card", {
         y: 35,
         opacity: 0,
@@ -368,7 +368,7 @@ export default function GitHubActivity() {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#39d353]"></span>
               </span>
               <span className="font-mono text-[11px] uppercase tracking-wider font-semibold text-[#7d8590] bg-[#161b22] border border-[#30363d] px-2.5 py-0.5 rounded-full shrink-0">
-                Live Activity
+                Latest Push
               </span>
               <span className="text-[#e6edf3] font-medium truncate">
                 Pushed to{" "}
@@ -412,7 +412,7 @@ export default function GitHubActivity() {
                 Language Distribution
               </span>
               <span className="text-xs text-[#7d8590] font-mono">
-                {stats.reposCount} Repositories Analyzed
+                {reposAnalyzed ? `Repo language mix · ${reposAnalyzed} recent repos` : "Cached repo language mix"}
               </span>
             </div>
 
@@ -458,17 +458,19 @@ export default function GitHubActivity() {
           </div>
           <div className="gh-stat-card bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 text-center shadow-lg shadow-black/20">
             <p className="text-3xl font-black text-[#39d353] mb-1">
-              {(stats.contributionsCount || 1080).toLocaleString()}
-              <span className="text-xl">+</span>
+              {stats.contributionsCount.toLocaleString()}
             </p>
-            <p className="text-[#7d8590] text-sm font-mono">Contributions in Last Year</p>
+            <p className="text-[#7d8590] text-sm font-mono">
+              Contributions last year{!contributionsLive && " · cached"}
+            </p>
           </div>
           <div className="gh-stat-card bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 text-center shadow-lg shadow-black/20">
             <p className="text-3xl font-black text-[#39d353] mb-1">
-              {stats.starsCount}
-              <span className="text-xl">+</span>
+              {stats.starsCount.toLocaleString()}
             </p>
-            <p className="text-[#7d8590] text-sm font-mono">Stars & Interactions</p>
+            <p className="text-[#7d8590] text-sm font-mono">
+              {reposAnalyzed ? "Stars across recent repos" : "Stars · cached snapshot"}
+            </p>
           </div>
         </div>
 
@@ -476,26 +478,27 @@ export default function GitHubActivity() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {repos.map((repo) => (
             <div key={repo.name} className="gh-repo-card">
-              <motion.a
-                href={repo.html_url || `${personal.github}/${repo.name}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <motion.div
                 whileHover={{ y: -4 }}
-                className="block bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 hover:border-[#39d35380] hover:shadow-xl hover:shadow-[#39d35315] transition-all group h-full cursor-pointer"
+                className="bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 hover:border-[#39d35380] hover:shadow-xl hover:shadow-[#39d35315] transition-all group h-full"
               >
                 <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2">
+                  <a
+                    href={repo.html_url || `${personal.github}/${repo.name}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 min-w-0"
+                  >
                     <GithubIcon size={15} className="text-[#7d8590]" />
-                    <span className="font-semibold text-[#e6edf3] text-sm group-hover:text-white transition-colors">
+                    <span className="font-semibold text-[#e6edf3] text-sm hover:text-white transition-colors">
                       {repo.name}
                     </span>
-                  </div>
+                    <ExternalLink size={12} className="shrink-0 text-[#7d8590]" />
+                  </a>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
+                      onClick={async () => {
                         const cloneCmd = `git clone ${repo.html_url || `${personal.github}/${repo.name}`}.git`;
                         const ok = await copyToClipboard(cloneCmd);
                         if (ok) {
@@ -518,10 +521,6 @@ export default function GitHubActivity() {
                         </>
                       )}
                     </button>
-                    <ExternalLink
-                      size={13}
-                      className="text-[#7d8590] group-hover:text-white transition-colors"
-                    />
                   </div>
                 </div>
 
@@ -542,7 +541,7 @@ export default function GitHubActivity() {
                     <GitFork size={11} /> {repo.forks}
                   </span>
                 </div>
-              </motion.a>
+              </motion.div>
             </div>
           ))}
         </div>

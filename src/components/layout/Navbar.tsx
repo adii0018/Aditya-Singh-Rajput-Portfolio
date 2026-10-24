@@ -15,8 +15,6 @@ const SECTION_TO_NAV_MAP: Record<string, string> = {
   projects: "projects",
   experience: "experience",
   features: "features",
-  certifications: "features",
-  github: "features",
   contact: "contact",
 };
 
@@ -73,7 +71,8 @@ export default function Navbar() {
         const rect = el.getBoundingClientRect();
         // Active when section top enters upper 45% of viewport and bottom is still visible
         if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= 100) {
-          const targetNav = SECTION_TO_NAV_MAP[id] || id;
+          const targetNav = SECTION_TO_NAV_MAP[id] ||
+            (navLinks.some((link) => link.href === `#${id}`) ? id : "");
           setActiveSection(targetNav);
           return;
         }

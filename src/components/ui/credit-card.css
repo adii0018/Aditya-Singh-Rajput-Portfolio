@@ -6,13 +6,24 @@
 }
 
 .flip-card {
+  display: block;
   background-color: transparent;
   width: 240px;
   height: 154px;
+  padding: 0;
+  border: 0;
   perspective: 1000px;
   color: white;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
   user-select: none;
+}
+
+.flip-card:focus-visible {
+  outline: 3px solid #b7f34a;
+  outline-offset: 5px;
+  border-radius: 1rem;
 }
 
 .flip-card-inner {

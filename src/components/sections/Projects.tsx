@@ -23,8 +23,8 @@ function ProjectVisual({ project }: { project: (typeof projects)[0] }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
         <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-mono text-emerald-400 border border-emerald-500/30">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          LIVE MONITORING
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          PRODUCT PREVIEW
         </div>
         <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono text-white/90 border border-white/10">
           AI VISION // OPENCV
@@ -39,9 +39,9 @@ function ProjectVisual({ project }: { project: (typeof projects)[0] }) {
         <div className="flex items-center justify-between text-[11px] font-mono text-white/70 mb-3 border-b border-white/10 pb-2">
           <span className="flex items-center gap-1.5 text-[#c0adff]">
             <span className="w-2 h-2 rounded-full bg-[#c0adff] animate-pulse" />
-            MANDI TICKER // LIVE
+            MODEL PREVIEW // SAMPLE DATA
           </span>
-          <span>ACCURACY 94.8%</span>
+          <span>ILLUSTRATIVE OUTPUT</span>
         </div>
         <div className="space-y-2 py-1">
           <div className="flex items-center justify-between text-xs font-mono bg-white/5 p-2 rounded-lg">
@@ -54,8 +54,8 @@ function ProjectVisual({ project }: { project: (typeof projects)[0] }) {
           </div>
         </div>
         <div className="text-[10px] font-mono text-emerald-400 pt-2 border-t border-white/10 flex justify-between">
-          <span>LOGISTICS: OPTIMIZED</span>
-          <span>HARVEST: PEAK RATE</span>
+          <span>LOGISTICS: DEMO</span>
+          <span>HARVEST: SAMPLE</span>
         </div>
       </div>
     );
@@ -67,7 +67,7 @@ function ProjectVisual({ project }: { project: (typeof projects)[0] }) {
         <div className="flex items-center justify-between text-[11px] font-mono text-white/70 mb-2 border-b border-white/10 pb-2">
           <span className="flex items-center gap-1.5 text-sky-400">
             <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-            LLM PIPELINE // 180MS
+            LLM DEMO // SAMPLE DATA
           </span>
           <span>LANGCHAIN</span>
         </div>
@@ -76,12 +76,12 @@ function ProjectVisual({ project }: { project: (typeof projects)[0] }) {
             &ldquo;किसान क्रेडिट कार्ड की पात्रता क्या है?&rdquo;
           </p>
           <p className="text-[10px] font-mono text-white/70">
-            ➔ Real-time automated lookup: 450+ schemes indexed.
+            ➔ Illustrative automated lookup response.
           </p>
         </div>
         <div className="flex justify-between text-[10px] font-mono text-white/60 pt-2 border-t border-white/10">
-          <span>SPEECH-TO-TEXT: ACTIVE</span>
-          <span className="text-sky-400">12 DIALECTS</span>
+          <span>SPEECH-TO-TEXT: DEMO</span>
+          <span className="text-sky-400">SAMPLE: 12 DIALECTS</span>
         </div>
       </div>
     );
@@ -92,7 +92,7 @@ function ProjectVisual({ project }: { project: (typeof projects)[0] }) {
       <div className="flex items-center justify-between text-[11px] font-mono text-white/70 mb-3 border-b border-white/10 pb-2">
         <span className="flex items-center gap-1.5 text-[#d9ff5c]">
           <span className="w-2 h-2 rounded-full bg-[#d9ff5c] animate-pulse" />
-          MATCHDAY 28 // LIVE
+          SIMULATED MATCHDAY
         </span>
         <span>AI OPTIMIZED</span>
       </div>
@@ -107,8 +107,8 @@ function ProjectVisual({ project }: { project: (typeof projects)[0] }) {
         </div>
       </div>
       <div className="text-[10px] font-mono text-[#d9ff5c] pt-2 border-t border-white/10 flex justify-between">
-        <span>LIVE SCORING ENGINE</span>
-        <span>1.2K+ USERS</span>
+        <span>SIMULATED SCORING</span>
+        <span>SAMPLE: 1.2K+ USERS</span>
       </div>
     </div>
   );
@@ -118,20 +118,78 @@ export default function Projects() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const activeCardIndexRef = useRef(0);
+
+  const updateActiveCard = (index: number) => {
+    const boundedIndex = Math.max(0, Math.min(index, projects.length - 1));
+    if (activeCardIndexRef.current === boundedIndex) return;
+
+    activeCardIndexRef.current = boundedIndex;
+    setActiveCardIndex(boundedIndex);
+  };
 
   useGSAP(
     () => {
-      if (isReducedMotion()) return;
-
       const track = trackRef.current;
       const section = sectionRef.current;
       if (!track || !section) return;
+
+      if (isReducedMotion()) {
+        const cards = Array.from(track.children) as HTMLElement[];
+        const updateFromNativeScroll = () => {
+          const trackBounds = track.getBoundingClientRect();
+          const trackCenter = trackBounds.left + track.clientWidth / 2;
+          let closestIndex = 0;
+          let closestDistance = Number.POSITIVE_INFINITY;
+
+          cards.forEach((card, index) => {
+            const cardBounds = card.getBoundingClientRect();
+            const cardCenter = cardBounds.left + cardBounds.width / 2;
+            const distance = Math.abs(cardCenter - trackCenter);
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestIndex = index;
+            }
+          });
+
+          updateActiveCard(closestIndex);
+        };
+
+        track.addEventListener("scroll", updateFromNativeScroll, { passive: true });
+        updateFromNativeScroll();
+        return () => track.removeEventListener("scroll", updateFromNativeScroll);
+      }
+
+      const intro = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 78%",
+          once: true,
+        },
+        defaults: { ease: "power3.out" },
+      });
+
+      intro.from(
+        section.querySelectorAll(".projects-badge, .projects-heading"),
+        { y: 16, opacity: 0, duration: 0.45, stagger: 0.08 }
+      ).from(
+        Array.from(track.children),
+        {
+          y: 18,
+          opacity: 0,
+          duration: 0.45,
+          stagger: 0.1,
+          clearProps: "transform,opacity",
+        },
+        "-=0.18"
+      );
 
       const mm = gsap.matchMedia();
 
       // Desktop & Tablet (min-width: 768px): Pinned horizontal scroll matching reference photo
       mm.add("(min-width: 768px)", () => {
-        const getScrollDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+        const getScrollDistance = () =>
+          Math.max(0, track.scrollWidth - (track.parentElement?.clientWidth ?? window.innerWidth));
 
         const tween = gsap.to(track, {
           x: () => -getScrollDistance(),
@@ -139,17 +197,17 @@ export default function Projects() {
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: () => `+=${Math.max(getScrollDistance(), 1800)}`,
+            end: () => `+=${Math.max(getScrollDistance(), 1)}`,
             pin: true,
-            scrub: 1,
+            // Keep the horizontal track locked to the page scroll position.
+            // A timed scrub makes the cards and their active indicator lag
+            // behind the user's scroll, which reads as a jump on fast wheels.
+            scrub: true,
             invalidateOnRefresh: true,
             anticipatePin: 1,
             onUpdate: (self) => {
-              const idx = Math.min(
-                Math.floor(self.progress * projects.length),
-                projects.length - 1
-              );
-              setActiveCardIndex(idx);
+              const idx = Math.floor(self.progress * projects.length);
+              updateActiveCard(idx);
             },
           },
         });
@@ -222,7 +280,7 @@ export default function Projects() {
       <div className="w-full overflow-hidden flex-1 flex items-center">
         <div
           ref={trackRef}
-          className="flex items-center gap-6 sm:gap-8 px-6 sm:px-12 md:px-16 lg:px-20 shrink-0 select-none overflow-x-auto md:overflow-visible no-scrollbar snap-x snap-mandatory md:snap-none"
+          className="projects-track flex items-center gap-6 sm:gap-8 px-6 sm:px-12 md:px-16 lg:px-20 shrink-0 select-none overflow-x-auto md:overflow-visible no-scrollbar snap-x snap-mandatory md:snap-none"
           style={{ willChange: "transform" }}
         >
           {projects.map((project, idx) => {
@@ -297,7 +355,7 @@ export default function Projects() {
                     isDark ? "border-white/10" : "border-[#24242210]"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <div
                       className="w-10 h-10 rounded-full border-2 flex items-center justify-center shrink-0"
                       style={{ borderColor: project.color }}
@@ -319,6 +377,20 @@ export default function Projects() {
                     >
                       <GithubIcon size={14} /> View Code <ArrowUpRight size={14} />
                     </a>
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer border ${
+                          isDark
+                            ? "border-white/20 text-white hover:bg-white/10"
+                            : "border-[#24242620] text-[#242426] hover:bg-black/5"
+                        }`}
+                      >
+                        Live Demo <ArrowUpRight size={14} />
+                      </a>
+                    )}
                   </div>
 
                   <div className="max-w-md text-left sm:text-right">

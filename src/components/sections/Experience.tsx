@@ -37,19 +37,18 @@ export default function Experience() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 85%",
-            toggleActions: "play reverse play reverse",
+            once: true,
           },
         });
 
         tl.fromTo(
           cardRef.current,
           {
-            x: -150,
-            y: 90,
-            rotate: -2.5,
-            scale: 0.97,
-            opacity: 0.15,
-            transformOrigin: "bottom left",
+            x: 0,
+            y: 20,
+            rotate: 0,
+            scale: 1,
+            opacity: 0,
           },
           {
             x: 0,
@@ -57,27 +56,28 @@ export default function Experience() {
             rotate: 0,
             scale: 1,
             opacity: 1,
-            duration: 1.05,
+            duration: 0.5,
             ease: "power3.out",
+            clearProps: "transform,opacity",
           }
         )
         .fromTo(
           ".exp-badge",
-          { x: -35, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
-          "-=0.75"
+          { y: 12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" },
+          "-=0.25"
         )
         .fromTo(
           ".exp-loader",
-          { scale: 0.2, rotate: -180, opacity: 0 },
-          { scale: 1, rotate: 0, opacity: 1, duration: 0.85, ease: "back.out(1.8)" },
-          "-=0.65"
+          { scale: 0.85, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" },
+          "-=0.18"
         )
         .fromTo(
           ".exp-heading",
-          { x: -50, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
-          "-=0.6"
+          { y: 14, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
+          "-=0.18"
         );
       });
 
@@ -87,19 +87,18 @@ export default function Experience() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 88%",
-            toggleActions: "play reverse play reverse",
+            once: true,
           },
         });
 
         tl.fromTo(
           cardRef.current,
           {
-            x: -50,
-            y: 40,
-            rotate: -1,
-            scale: 0.98,
-            opacity: 0.2,
-            transformOrigin: "bottom left",
+            x: 0,
+            y: 18,
+            rotate: 0,
+            scale: 1,
+            opacity: 0,
           },
           {
             x: 0,
@@ -107,27 +106,28 @@ export default function Experience() {
             rotate: 0,
             scale: 1,
             opacity: 1,
-            duration: 0.85,
+            duration: 0.5,
             ease: "power3.out",
+            clearProps: "transform,opacity",
           }
         )
         .fromTo(
           ".exp-badge",
-          { x: -20, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
-          "-=0.65"
+          { y: 12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" },
+          "-=0.25"
         )
         .fromTo(
           ".exp-loader",
-          { scale: 0.3, rotate: -180, opacity: 0 },
-          { scale: 1, rotate: 0, opacity: 1, duration: 0.75, ease: "back.out(1.8)" },
-          "-=0.55"
+          { scale: 0.85, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" },
+          "-=0.18"
         )
         .fromTo(
           ".exp-heading",
-          { x: -30, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
-          "-=0.5"
+          { y: 14, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
+          "-=0.18"
         );
       });
 
@@ -144,7 +144,7 @@ export default function Experience() {
               trigger: ".timeline-container",
               start: "top 75%",
               end: "bottom 80%",
-              scrub: 0.6,
+              scrub: true,
             },
           }
         );
@@ -159,10 +159,11 @@ export default function Experience() {
               start: "top 85%",
               once: true,
             },
-            x: -70,
+            y: 14,
             opacity: 0,
-            duration: 0.85,
+            duration: 0.45,
             ease: "power3.out",
+            clearProps: "transform,opacity",
           });
         });
 
@@ -173,10 +174,11 @@ export default function Experience() {
               start: "top 85%",
               once: true,
             },
-            x: 70,
+            y: 14,
             opacity: 0,
-            duration: 0.85,
+            duration: 0.45,
             ease: "power3.out",
+            clearProps: "transform,opacity",
           });
         });
       });
@@ -189,10 +191,11 @@ export default function Experience() {
               start: "top 85%",
               once: true,
             },
-            x: -35,
+            y: 14,
             opacity: 0,
-            duration: 0.75,
+            duration: 0.45,
             ease: "power3.out",
+            clearProps: "transform,opacity",
           });
         });
 
@@ -203,10 +206,11 @@ export default function Experience() {
               start: "top 85%",
               once: true,
             },
-            x: 35,
+            y: 14,
             opacity: 0,
-            duration: 0.75,
+            duration: 0.45,
             ease: "power3.out",
+            clearProps: "transform,opacity",
           });
         });
       });
@@ -220,8 +224,9 @@ export default function Experience() {
           },
           scale: 0.3,
           opacity: 0,
-          duration: 0.6,
+          duration: 0.4,
           ease: "back.out(2)",
+          clearProps: "transform,opacity",
         });
       });
 
@@ -234,8 +239,9 @@ export default function Experience() {
           },
           scale: 0.2,
           opacity: 0,
-          duration: 0.8,
+          duration: 0.5,
           ease: "back.out(2)",
+          clearProps: "transform,opacity",
         });
       }
     },
@@ -250,7 +256,6 @@ export default function Experience() {
     >
       <div
         ref={cardRef}
-        style={{ willChange: "transform, opacity" }}
         className="w-full bg-[#ebeff5] rounded-t-[36px] sm:rounded-t-[48px] border-t-2 border-l-2 border-white/90 shadow-[-28px_28px_70px_rgba(20,24,35,0.14),0_-20px_45px_rgba(20,24,35,0.06)] section-padding"
       >
         <div className="max-w-6xl mx-auto px-6">

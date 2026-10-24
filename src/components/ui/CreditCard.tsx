@@ -12,7 +12,7 @@ interface CreditCardProps {
 }
 
 export const CreditCard: React.FC<CreditCardProps> = ({
-  name = "DEVLOPER",
+  name = "DEVELOPER",
   number = "9759 2484 5269 xxxx",
   expiry = "0 8 / 2 6",
   cvv = "***",
@@ -22,9 +22,12 @@ export const CreditCard: React.FC<CreditCardProps> = ({
 
   return (
     <div className={`credit-card-container ${className}`}>
-      <div
+      <button
+        type="button"
         className={`flip-card ${isFlipped ? "is-flipped" : ""}`}
         onClick={() => setIsFlipped((prev) => !prev)}
+        aria-label={`Credit card preview, ${isFlipped ? "back" : "front"} side. Activate to flip.`}
+        aria-pressed={isFlipped}
         title="Click or hover to flip"
       >
         <div className="flip-card-inner">
@@ -106,7 +109,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({
             </div>
           </div>
         </div>
-      </div>
+      </button>
     </div>
   );
 };

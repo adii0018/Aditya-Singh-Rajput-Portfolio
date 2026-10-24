@@ -21,56 +21,61 @@ export default function Hero() {
         defaults: { ease: "power3.out" },
       });
 
-      // 1. Badge entrance
-      tl.from(".hero-badge", {
-        y: -18,
-        opacity: 0,
-        duration: 0.7,
+      // 1. Reveal both badge pills together; the availability ping keeps its CSS animation.
+      tl.from(".hero-badges", {
+        y: 14,
+        scale: 0.98,
+        autoAlpha: 0,
+        duration: 0.55,
       })
-      // 2. Heading: Cinematic word mask reveal
-      .from(".hero-title-word", {
-        y: "115%",
-        opacity: 0,
-        duration: 0.95,
-        stagger: 0.05,
-        ease: "power4.out",
-      }, "-=0.35")
+      // 2. Reveal each existing heading line through its clipped wrapper.
+      .from(".hero-title-line > span", {
+        yPercent: 110,
+        autoAlpha: 0,
+        duration: 0.9,
+        stagger: 0.14,
+        ease: "power3.out",
+      }, "-=0.2")
       // 3. Subtitle: smooth rise
       .from(".hero-subtitle", {
-        y: 22,
-        opacity: 0,
-        duration: 0.75,
+        y: 18,
+        autoAlpha: 0,
+        duration: 0.62,
       }, "-=0.55")
       // 4. CTA buttons & avatars row
       .from(".hero-cta-wrap", {
-        y: 20,
-        opacity: 0,
-        duration: 0.7,
+        y: 16,
+        autoAlpha: 0,
+        duration: 0.58,
       }, "-=0.45")
       // 5. Social proof links
       .from(".hero-social-row", {
-        y: 12,
-        opacity: 0,
-        duration: 0.5,
+        y: 10,
+        autoAlpha: 0,
+        duration: 0.48,
       }, "-=0.35")
-      // 6. Right photo entrance: subtle scale from 1.05 to 1 & fade in
+      // 6. Right photo entrance: a clipped reveal with a restrained scale settle.
       .from(imageWrapRef.current, {
-        scale: 1.05,
-        opacity: 0,
-        duration: 1.2,
+        clipPath: "inset(0 0 100% 0)",
+        scale: 1.035,
+        autoAlpha: 0,
+        duration: 1.05,
         ease: "power2.out",
       }, 0.15)
       // 7. Scroll indicator
       .from(".hero-scroll-btn", {
-        opacity: 0,
+        autoAlpha: 0,
         y: 12,
         duration: 0.6,
       }, "-=0.2");
 
-      // Subtle scroll parallax on hero photo
-      if (imageWrapRef.current) {
+      // Keep the hero parallax subtle and desktop-only to avoid extra motion on small screens.
+      const parallaxMedia = gsap.matchMedia();
+      parallaxMedia.add("(min-width: 768px)", () => {
+        if (!imageWrapRef.current) return;
+
         gsap.to(imageWrapRef.current, {
-          yPercent: 6,
+          yPercent: 3.5,
           ease: "none",
           scrollTrigger: {
             trigger: heroRef.current,
@@ -79,7 +84,9 @@ export default function Hero() {
             scrub: true,
           },
         });
-      }
+      });
+
+      return () => parallaxMedia.revert();
     },
     { scope: heroRef }
   );
@@ -102,7 +109,7 @@ export default function Hero() {
         <div className="relative z-10 w-full lg:w-[48%] xl:w-[46%] flex flex-col justify-center px-6 sm:px-12 lg:pl-16 xl:pl-24 lg:pr-6 py-12 lg:py-24">
           
           {/* Badge & Live Availability */}
-          <div className="flex flex-wrap items-center gap-3 self-start mb-6">
+          <div className="hero-badges flex flex-wrap items-center gap-3 self-start mb-6">
             <div className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#24242215] shadow-xs">
               <span className="text-[12px] opacity-70">☷</span>
               <span className="text-[11px] font-mono font-medium text-[#242426] tracking-wider uppercase">
@@ -123,10 +130,10 @@ export default function Hero() {
             className="font-medium tracking-[-0.035em] leading-[1.08] text-[#1f2022] mb-6"
             style={{ fontSize: "clamp(44px, 5.8vw, 80px)" }}
           >
-            <div className="overflow-hidden">
+            <div className="hero-title-line overflow-hidden">
               <AnimatedHeading text={personal.heroLine1} />
             </div>
-            <div className="overflow-hidden">
+            <div className="hero-title-line overflow-hidden">
               <AnimatedHeading text={personal.heroLine2} />
             </div>
           </h1>

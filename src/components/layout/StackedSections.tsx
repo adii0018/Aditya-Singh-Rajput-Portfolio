@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { useGSAP, gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
+import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 
 interface StackedSectionsProps {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ interface CardConfig {
 }
 
 const cardConfigs: CardConfig[] = [
-  // 0: About (About Me) - dark #242426, slides over Hero, overflow-visible for floating DevPassCard
+  // 0: Playground (Beyond The Code / DockingDashboard) - dark #242426
   {
     bgColor: "#242426",
     roundedTop: true,
@@ -24,23 +24,15 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-visible",
   },
-  // 1: Playground (Beyond The Code / DockingDashboard) - dark #242426, overflow-visible
+  // 1: About (About Me) - dark #242426, overflow-visible for floating DevPassCard
   {
     bgColor: "#242426",
-    roundedTop: false,
-    shadowClass: "",
-    borderClass: "border-t border-[#ffffff10]",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.3)]",
+    borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-visible",
   },
-  // 2: Skills (Tech Stack) - light #ebeff5, slides over Playground
-  {
-    bgColor: "#ebeff5",
-    roundedTop: true,
-    shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
-    borderClass: "border-t border-[#24242215]",
-    overflowClass: "overflow-hidden",
-  },
-  // 3: Projects (Featured Projects) - light #f5f7fc, pins itself internally for horizontal scrolling
+  // 2: Projects (Featured Projects) - light #f5f7fc, pins itself internally for horizontal scrolling
   {
     bgColor: "#f5f7fc",
     roundedTop: true,
@@ -48,7 +40,15 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-r border-[#24242215]",
     overflowClass: "overflow-hidden",
   },
-  // 4: Experience (Journey & Achievements) - light #ebeff5, slides over Projects
+  // 3: Skills (Tech Stack) - light #ebeff5
+  {
+    bgColor: "#ebeff5",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
+    borderClass: "border-t border-[#24242215]",
+    overflowClass: "overflow-hidden",
+  },
+  // 4: Experience (Journey & Achievements) - light #ebeff5
   {
     bgColor: "#ebeff5",
     roundedTop: true,
@@ -56,7 +56,7 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#24242215]",
     overflowClass: "overflow-visible",
   },
-  // 5: BentoFeatures (AI Dev Lab) - dark #242426, slides over Experience
+  // 5: BentoFeatures (AI Dev Lab) - dark #242426
   {
     bgColor: "#242426",
     roundedTop: true,
@@ -64,7 +64,7 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#ffffff20]",
     overflowClass: "overflow-hidden",
   },
-  // 6: Certifications (What I've earned) - dark #0d1117 with cash video, slides over BentoFeatures
+  // 6: Certifications (What I've earned) - dark #0d1117 with cash video
   {
     bgColor: "#0d1117",
     roundedTop: true,
@@ -72,9 +72,10 @@ const cardConfigs: CardConfig[] = [
     borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-hidden",
   },
-  // 7: GitHubActivity (Code I've shipped) - light #ebeff5, slides over Certifications with wave curve top
+  // 7: GitHubActivity (Code I've shipped) - light #ebeff5 with wave curve top
   {
-    bgColor: "transparent",
+    // The wave leaves transparent areas above the light content panel.
+    bgColor: "#0d1117",
     roundedTop: false,
     shadowClass: "",
     borderClass: "",
@@ -83,63 +84,77 @@ const cardConfigs: CardConfig[] = [
 ];
 
 export default function StackedSections({ children }: StackedSectionsProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
   const childArray = React.Children.toArray(children);
 
   useGSAP(
     () => {
-      if (isReducedMotion()) return;
+      if (isReducedMotion() || !stackRef.current) return;
 
-      const cards = gsap.utils.toArray<HTMLElement>(".stacked-card-wrapper");
-      if (cards.length < 2) return;
+      const hero = document.getElementById("home");
+      const playground = stackRef.current.querySelector<HTMLElement>(
+        ".stacked-section-panel"
+      );
+      if (!hero || !playground) return;
 
-      const mm = gsap.matchMedia();
+      const media = gsap.matchMedia();
 
-      // Desktop & Tablet (min-width: 768px): enable smooth GSAP ScrollTrigger stacking
-      mm.add("(min-width: 768px)", () => {
-        const triggers: ScrollTrigger[] = [];
-
-        // Pin each section so the next section slides over it
-        for (let i = 0; i < cards.length - 1; i++) {
-          const currentCard = cards[i];
-          const nextCard = cards[i + 1];
-
-          // Skip pinning if current card contains Projects (which pins itself internally for horizontal scrolling)
-          const isProjects = currentCard.querySelector("#projects") !== null;
-          if (isProjects) continue;
-
-          const isTall = (el: HTMLElement) => el.offsetHeight > window.innerHeight;
-
-          // If the next card is Projects, unpin when Projects hits top top so horizontal scroll takes over smoothly
-          const nextIsProjects = nextCard.querySelector("#projects") !== null;
-          const endValue = nextIsProjects ? "top top" : (isTall(nextCard) ? "bottom bottom" : "top top");
-
-          const st = ScrollTrigger.create({
-            trigger: currentCard,
-            start: () => (isTall(currentCard) ? "bottom bottom" : "top top"),
-            endTrigger: nextCard,
-            end: () => endValue,
-            pin: true,
-            pinSpacing: false,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          });
-
-          triggers.push(st);
-        }
-
-        return () => {
-          triggers.forEach((st) => st.kill());
+      // Start with the requested Hero → Dev Playground transition. Later sections keep
+      // their natural flow so their own scroll effects and Projects pin remain untouched.
+      media.add("(min-width: 1024px)", () => {
+        const outgoingSurface = getComputedStyle(hero).backgroundColor;
+        const setOutgoingSurface = () => {
+          if (stackRef.current) {
+            stackRef.current.style.backgroundColor = outgoingSurface;
+          }
         };
+        const clearTransitionSurface = () => {
+          stackRef.current?.style.removeProperty("background-color");
+        };
+        const transition = gsap.timeline({
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: () => `+=${hero.offsetHeight}`,
+            scrub: true,
+            invalidateOnRefresh: true,
+            onEnter: setOutgoingSurface,
+            onEnterBack: setOutgoingSurface,
+            onLeave: clearTransitionSurface,
+            onLeaveBack: clearTransitionSurface,
+            onRefresh: (self) => {
+              if (self.progress > 0 && self.progress < 1) {
+                setOutgoingSurface();
+              } else {
+                clearTransitionSurface();
+              }
+            },
+            onUpdate: (self) => {
+              if (self.progress > 0 && self.progress < 1) {
+                setOutgoingSurface();
+              } else if (self.progress === 1) {
+                clearTransitionSurface();
+              }
+            },
+          },
+        });
+
+        transition.fromTo(
+          playground,
+          { yPercent: 100 },
+          { yPercent: 0, duration: 1, ease: "none" }
+        );
+
+        return clearTransitionSurface;
       });
 
-      return () => mm.revert();
+      return () => media.revert();
     },
-    { scope: containerRef, dependencies: [] }
+    { scope: stackRef }
   );
 
   return (
-    <div ref={containerRef} className="relative w-full overflow-x-clip">
+    <div ref={stackRef} className="w-full overflow-x-clip">
       {childArray.map((child, index) => {
         const config = cardConfigs[index] || {
           bgColor: "#ebeff5",
@@ -149,18 +164,17 @@ export default function StackedSections({ children }: StackedSectionsProps) {
           overflowClass: "overflow-hidden",
         };
 
-        const zIndex = 10 + index * 10;
-
         return (
           <div
             key={index}
-            className={`stacked-card-wrapper relative w-full ${config.overflowClass} ${
+            className={`stacked-section-panel w-full ${config.overflowClass} ${
               config.roundedTop
                 ? `rounded-t-[32px] sm:rounded-t-[44px] ${config.shadowClass} ${config.borderClass}`
                 : ""
             }`}
             style={{
-              zIndex,
+              position: "relative",
+              zIndex: 10 + index,
               backgroundColor: config.bgColor,
             }}
           >

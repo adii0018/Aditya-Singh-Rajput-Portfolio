@@ -15,6 +15,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -23,7 +24,6 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 /* Scrollbar */
@@ -103,5 +103,21 @@ body {
 @media (max-width: 768px) {
   .section-padding {
     padding: 80px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  #projects .projects-track {
+    width: 100%;
+    max-width: 100%;
+    flex-shrink: 1;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
   }
 }

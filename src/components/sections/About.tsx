@@ -56,11 +56,7 @@ function renderWords(
           className={`about-reveal-word inline-block ${isBold ? "font-bold text-white" : ""}`}
           data-target-color={targetColor}
           data-accent={isAccent ? targetColor : undefined}
-          style={{
-            opacity: 0.2,
-            color: "rgba(255, 255, 255, 0.2)",
-            willChange: "opacity, color",
-          }}
+          style={{ color: targetColor }}
         >
           {word}
         </span>
@@ -176,21 +172,21 @@ export default function About() {
             <span
               className="about-reveal-word inline-block"
               data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+              style={{ color: "#ffffff" }}
             >
               I
             </span>{" "}
             <span
               className="about-reveal-word inline-block"
               data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+              style={{ color: "#ffffff" }}
             >
               turn
             </span>{" "}
             <span
               className="about-reveal-word inline-block"
               data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+              style={{ color: "#ffffff" }}
             >
               complex
             </span>
@@ -199,7 +195,7 @@ export default function About() {
               className="about-reveal-word inline-block"
               data-target-color="#d9ff5c"
               data-accent="#d9ff5c"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+              style={{ color: "#d9ff5c" }}
             >
               ideas
             </span>{" "}
@@ -207,7 +203,7 @@ export default function About() {
               className="about-reveal-word inline-block"
               data-target-color="#d9ff5c"
               data-accent="#d9ff5c"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+              style={{ color: "#d9ff5c" }}
             >
               into
             </span>
@@ -215,14 +211,14 @@ export default function About() {
             <span
               className="about-reveal-word inline-block"
               data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+              style={{ color: "#ffffff" }}
             >
               real
             </span>{" "}
             <span
               className="about-reveal-word inline-block"
               data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
+              style={{ color: "#ffffff" }}
             >
               solutions.
             </span>

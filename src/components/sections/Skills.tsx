@@ -93,6 +93,13 @@ export default function Skills() {
         opacity: 0,
         duration: 0.7,
       }, "-=0.3")
+      .from(".skills-domain-card", {
+        y: 14,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.42,
+        clearProps: "transform,opacity",
+      }, "-=0.25")
       .from(".skills-marquee", {
         opacity: 0,
         y: 20,
@@ -129,226 +136,178 @@ export default function Skills() {
             </div>
           </div>
 
-          {/* Clean Category Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-2">
-            {categories.map((cat) => {
-              const count =
-                cat === "All"
-                  ? skills.length
-                  : skills.filter((s) => s.category === cat).length;
-              const isSelected = activeTab === cat;
-
-              return (
-                <motion.button
-                  key={cat}
-                  type="button"
-                  onClick={() => setActiveTab(cat)}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className={`skills-filter-btn px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
-                    isSelected
-                      ? "bg-[#242426] text-white shadow-md shadow-[#242426]/10 border border-transparent font-medium"
-                      : "bg-white/80 hover:bg-white border border-[#24242215] text-[#4d4f57] hover:border-[#24242230]"
-                  }`}
-                >
-                  <span>{cat}</span>
-                  <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                      isSelected
-                        ? "bg-white/20 text-white"
-                        : "bg-[#242426]/5 text-[#4d4f57]/80"
-                    }`}
-                  >
-                    {count}
-                  </span>
-                </motion.button>
-              );
-            })}
-          </div>
         </div>
 
-        {/* ================= LIGHTWEIGHT TECH STACK SHOWCASE ================= */}
-        <div className="skills-grid-wrapper">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className="space-y-8"
-            >
-              {/* If "All" is active, display in clean categorized domain sections */}
-              {activeTab === "All" ? (
-                skillCategories.map((cat) => {
+        <div className="skills-grid-wrapper mt-10">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-5">
+            <div>
+              <p className="text-[10px] sm:text-[11px] font-mono font-semibold tracking-[0.24em] uppercase text-[#69717d]">
+                Capability index <span className="text-[#16a34a]">/ 01</span>
+              </p>
+              <p className="mt-2 text-sm text-[#4d4f57]">
+                A practical toolkit for turning ideas into shipped products.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Filter technologies by category">
+              {categories.map((cat) => {
+                const count = cat === "All" ? skills.length : skills.filter((skill) => skill.category === cat).length;
+                const isSelected = activeTab === cat;
+                const accent = cat === "All" ? "#d9ff5c" : CATEGORY_META[cat]?.accent || "#d9ff5c";
+
+                return (
+                  <motion.button
+                    key={cat}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => setActiveTab(cat)}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className={`skills-filter-btn inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-[11px] sm:text-xs font-mono transition-colors ${
+                      isSelected
+                        ? "border-[#242426] bg-[#242426] text-white shadow-md shadow-[#242426]/10"
+                        : "border-[#24242618] bg-white/80 text-[#4d4f57] hover:border-[#24242640] hover:bg-white"
+                    }`}
+                  >
+                    {cat !== "All" && <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: accent }} />}
+                    <span>{cat}</span>
+                    <span className={`rounded-full px-1.5 py-0.5 text-[9px] ${isSelected ? "bg-white/15 text-white/80" : "bg-[#24242608] text-[#4d4f57]/70"}`}>
+                      {String(count).padStart(2, "0")}
+                    </span>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden rounded-[28px] sm:rounded-[34px] border border-[#ffffff12] bg-[#17181b] p-4 sm:p-6 lg:p-8 text-white shadow-[0_28px_70px_rgba(20,22,28,0.18)]">
+            <div className="pointer-events-none absolute -right-20 -top-28 h-72 w-72 rounded-full bg-[#d9ff5c]/[0.07] blur-3xl" />
+            <div className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:34px_34px]" />
+
+            <div className="relative z-10 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-white/10 pb-5">
+              <div>
+                <div className="flex items-center gap-2 text-[10px] font-mono tracking-[0.2em] uppercase text-white/45">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d9ff5c] opacity-40" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d9ff5c]" />
+                  </span>
+                  Stack telemetry
+                </div>
+                <h3 className="mt-2 text-lg sm:text-xl font-semibold tracking-tight text-white">
+                  {activeTab === "All" ? "Systems I build with" : CATEGORY_META[activeTab]?.title || activeTab}
+                </h3>
+                <p className="mt-1 text-xs sm:text-sm text-white/45">
+                  {activeTab === "All"
+                    ? "Four specialties. One end-to-end workflow."
+                    : CATEGORY_META[activeTab]?.subtitle || "Specialized tools and technologies"}
+                </p>
+              </div>
+              <div className="flex items-center gap-3 self-start sm:self-auto rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                <span className="text-2xl sm:text-3xl font-black tracking-tight text-[#d9ff5c]">
+                  {String(activeTab === "All" ? skills.length : skills.filter((skill) => skill.category === activeTab).length).padStart(2, "0")}
+                </span>
+                <span className="text-[9px] font-mono leading-relaxed tracking-[0.15em] uppercase text-white/45">
+                  tools<br />mapped
+                </span>
+              </div>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+                className={`relative z-10 grid grid-cols-1 ${activeTab === "All" ? "lg:grid-cols-2" : "lg:grid-cols-1"} gap-4`}
+              >
+                {(activeTab === "All" ? skillCategories : [activeTab]).map((cat) => {
                   const meta = CATEGORY_META[cat] || {
                     title: cat,
-                    subtitle: "Technologies & tools",
+                    subtitle: "Technologies and tools",
                     icon: Terminal,
-                    accent: "#242426",
+                    accent: "#d9ff5c",
                     badgeBg: "bg-gray-100 text-gray-700 border-gray-200",
                   };
-                  const CatIcon = meta.icon;
-                  const catSkills = skills.filter((s) => s.category === cat);
+                  const CategoryIcon = meta.icon;
+                  const categorySkills = skills.filter((skill) => skill.category === cat);
 
                   return (
-                    <div key={cat} className="space-y-3.5">
-                      {/* Domain Section Header */}
-                      <div className="flex items-center justify-between pb-1 border-b border-[#24242210]">
-                        <div className="flex items-center gap-2.5">
-                          <div
-                            className="w-7 h-7 rounded-lg flex items-center justify-center text-white"
-                            style={{ backgroundColor: meta.accent }}
-                          >
-                            <CatIcon size={15} />
+                    <section
+                      key={cat}
+                      className="skills-domain-card group/domain relative overflow-hidden rounded-2xl border border-white/[0.09] bg-[#202125]/90 p-4 sm:p-5"
+                    >
+                      <div className="absolute left-0 top-0 h-px w-24 opacity-80" style={{ background: `linear-gradient(90deg, ${meta.accent}, transparent)` }} />
+                      <div className="mb-4 flex items-center justify-between gap-3 border-b border-white/[0.08] pb-4">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06]" style={{ color: meta.accent }}>
+                            <CategoryIcon size={18} strokeWidth={1.8} />
                           </div>
-                          <div>
-                            <h3 className="font-bold text-sm sm:text-base text-[#242426] tracking-tight">
-                              {meta.title}
-                            </h3>
-                            <p className="text-[11px] text-[#4d4f57]/80 font-mono hidden sm:block">
-                              {meta.subtitle}
-                            </p>
+                          <div className="min-w-0">
+                            <h4 className="truncate text-sm sm:text-base font-semibold tracking-tight text-white">{meta.title}</h4>
+                            <p className="mt-0.5 truncate text-[10px] sm:text-[11px] font-mono text-white/40">{meta.subtitle}</p>
                           </div>
                         </div>
-
-                        <span
-                          className={`text-[11px] font-mono font-medium px-2.5 py-0.5 rounded-full border ${meta.badgeBg}`}
-                        >
-                          {catSkills.length} tools
+                        <span className="shrink-0 rounded-full border border-white/10 px-2.5 py-1 text-[9px] font-mono tracking-wider text-white/45">
+                          {String(categorySkills.length).padStart(2, "0")} MODS
                         </span>
                       </div>
 
-                      {/* Tool Cards Grid */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        {catSkills.map((skill, idx) => (
-                          <motion.div
-                            key={skill.name}
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.25, delay: idx * 0.025 }}
-                            whileHover={{ y: -3, scale: 1.015 }}
-                            className="group flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#24242212] hover:border-[#24242630] hover:shadow-md hover:shadow-[#242426]/5 transition-all cursor-default"
-                          >
-                            <div className="flex items-center gap-3 min-w-0">
-                              {/* Real Brand Icon */}
-                              <div className="w-11 h-11 shrink-0 rounded-xl bg-[#f4f6fa] border border-[#24242208] flex items-center justify-center p-2 group-hover:scale-110 group-hover:bg-white group-hover:shadow-sm transition-all">
-                                <TechIcon name={skill.name} size={28} />
-                              </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {categorySkills.map((skill, index) => {
+                          const score = skill.level === "Expert" ? 4 : skill.level === "Advanced" ? 3 : skill.level === "Intermediate" ? 2 : 1;
 
-                              {/* Tool Info */}
-                              <div className="min-w-0">
-                                <h4 className="font-bold text-sm text-[#242426] group-hover:text-black tracking-tight truncate">
-                                  {skill.name}
-                                </h4>
-                                <p className="text-[11px] text-[#4d4f57]/80 font-mono truncate">
-                                  {skill.desc || skill.category}
-                                </p>
-                              </div>
-                            </div>
-
-                            {/* Level Pill */}
-                            <span className="shrink-0 text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#242426]/5 text-[#4d4f57] border border-[#24242210] group-hover:border-[#242426]/20 transition-colors">
-                              {skill.level}
-                            </span>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                /* Filtered view for a single domain */
-                <div className="space-y-4">
-                  {(() => {
-                    const meta = CATEGORY_META[activeTab] || {
-                      title: activeTab,
-                      subtitle: "Specialized tools",
-                      icon: Terminal,
-                      accent: "#242426",
-                      badgeBg: "bg-gray-100 text-gray-700 border-gray-200",
-                    };
-                    const CatIcon = meta.icon;
-                    const catSkills = skills.filter((s) => s.category === activeTab);
-
-                    return (
-                      <>
-                        <div className="flex items-center gap-2.5 pb-2 border-b border-[#24242210]">
-                          <div
-                            className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
-                            style={{ backgroundColor: meta.accent }}
-                          >
-                            <CatIcon size={16} />
-                          </div>
-                          <div>
-                            <h3 className="font-bold text-base text-[#242426]">
-                              {meta.title}
-                            </h3>
-                            <p className="text-xs text-[#4d4f57]/80 font-mono">
-                              {meta.subtitle}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                          {catSkills.map((skill, idx) => (
-                            <motion.div
+                          return (
+                            <motion.article
                               key={skill.name}
-                              initial={{ opacity: 0, scale: 0.96 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ duration: 0.2, delay: idx * 0.03 }}
-                              whileHover={{ y: -3, scale: 1.015 }}
-                              className="group flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#24242212] hover:border-[#24242630] hover:shadow-md hover:shadow-[#242426]/5 transition-all cursor-default"
+                              initial={{ opacity: 0, y: 8 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.22, delay: Math.min(index * 0.025, 0.18) }}
+                              whileHover={{ y: -2 }}
+                              className="group/skill flex min-w-0 items-center gap-3 rounded-xl border border-white/[0.07] bg-[#141518]/80 p-3 transition-colors hover:border-white/20 hover:bg-[#292a2e]"
                             >
-                              <div className="flex items-center gap-3 min-w-0">
-                                <div className="w-11 h-11 shrink-0 rounded-xl bg-[#f4f6fa] border border-[#24242208] flex items-center justify-center p-2 group-hover:scale-110 group-hover:bg-white group-hover:shadow-sm transition-all">
-                                  <TechIcon name={skill.name} size={28} />
+                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.055] p-2 transition-transform group-hover/skill:scale-105">
+                                <TechIcon name={skill.name} size={25} />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center justify-between gap-2">
+                                  <h5 className="truncate text-xs sm:text-[13px] font-semibold text-white/90">{skill.name}</h5>
+                                  <span className="shrink-0 text-[8px] font-mono uppercase tracking-wider text-white/35">{skill.level}</span>
                                 </div>
-                                <div className="min-w-0">
-                                  <h4 className="font-bold text-sm text-[#242426] group-hover:text-black tracking-tight truncate">
-                                    {skill.name}
-                                  </h4>
-                                  <p className="text-[11px] text-[#4d4f57]/80 font-mono truncate">
-                                    {skill.desc || skill.category}
-                                  </p>
+                                <p className="mt-1 truncate text-[10px] font-mono text-white/40">{skill.desc || skill.category}</p>
+                                <div className="mt-2 flex gap-1" aria-label={`${skill.level} proficiency`}>
+                                  {Array.from({ length: 4 }, (_, dot) => (
+                                    <span key={dot} className="h-0.5 flex-1 rounded-full" style={{ backgroundColor: dot < score ? meta.accent : "rgba(255,255,255,0.12)" }} />
+                                  ))}
                                 </div>
                               </div>
+                            </motion.article>
+                          );
+                        })}
+                      </div>
+                    </section>
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
 
-                              <span className="shrink-0 text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#242426]/5 text-[#4d4f57] border border-[#24242210]">
-                                {skill.level}
-                              </span>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </>
-                    );
-                  })()}
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            <div className="relative z-10 mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-4 text-[9px] font-mono tracking-[0.14em] uppercase text-white/35">
+              <span>Aditya Singh Rajput <span className="text-white/20">/</span> engineering toolkit</span>
+              <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#d9ff5c]" /> all systems operational</span>
+            </div>
+          </div>
 
-        {/* Marquee strip */}
-        <div className="skills-marquee mt-14 overflow-hidden relative">
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#ebeff5] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#ebeff5] to-transparent z-10 pointer-events-none" />
-          <motion.div
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
-            className="flex gap-3.5 w-max"
-          >
-            {[...skills, ...skills].map((skill, i) => (
-              <span
-                key={i}
-                className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-[#24242210] text-[#4d4f57] text-xs font-medium whitespace-nowrap shadow-sm hover:border-[#24242630] transition-colors"
-              >
-                <TechIcon name={skill.name} size={18} />
-                <span className="font-mono text-xs text-[#242426] font-semibold">{skill.name}</span>
-                <span className="text-[10px] text-[#8b949e] font-mono">· {skill.category}</span>
-              </span>
-            ))}
-          </motion.div>
+          <div className="skills-marquee mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#24242612] bg-white/75 px-4 py-3">
+            <span className="text-[9px] font-mono font-semibold tracking-[0.18em] uppercase text-[#7b818a]">Stack signal</span>
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              {skills.slice(0, 5).map((skill) => (
+                <span key={skill.name} className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#4d4f57]">
+                  <TechIcon name={skill.name} size={15} /> {skill.name}
+                </span>
+              ))}
+              <span className="text-[10px] font-mono font-semibold text-[#16a34a]">+ {skills.length - 5} more</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
