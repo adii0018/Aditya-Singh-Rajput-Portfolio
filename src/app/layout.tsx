@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import DynamicFavicon from "@/components/ui/DynamicFavicon";
 import CommandPalette from "@/components/ui/CommandPalette";
+import { SITE_URL, NAME, ROLE, DESCRIPTION, SOCIAL_LINKS } from "@/lib/site";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -24,11 +25,15 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://adii.dev"), // TODO: replace with your real domain
-  title: "Aditya Singh Rajput — AI/ML Engineer & Full-Stack Developer",
-  description:
-    "AI/ML engineer and full-stack developer building computer vision, NLP, and scalable AI systems. Based in India, open to roles worldwide.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${NAME} | ${ROLE}`,
+    template: `%s | ${NAME}`,
+  },
+  description: DESCRIPTION,
   alternates: {
     canonical: "/",
   },
@@ -41,7 +46,9 @@ export const metadata: Metadata = {
     apple: "/favicons/favicon-32x32.png",
   },
   keywords: [
-    "AI Engineer",
+    "Aditya Singh Rajput",
+    "Adii",
+    "AI/ML Engineer",
     "Machine Learning",
     "Computer Vision",
     "NLP",
@@ -49,28 +56,41 @@ export const metadata: Metadata = {
     "Next.js",
     "Python",
     "FastAPI",
-    "Aditya Singh Rajput",
-    "Adii Portfolio",
+    "Portfolio",
   ],
-  authors: [{ name: "Aditya Singh Rajput", url: "https://github.com/adii0018" }],
-  creator: "Aditya Singh Rajput",
+  authors: [{ name: NAME, url: SOCIAL_LINKS.github }],
+  creator: NAME,
   openGraph: {
-    title: "Aditya Singh Rajput — AI/ML Engineer & Full-Stack Developer",
-    description:
-      "AI/ML engineer and full-stack developer. Computer Vision, NLP, scalable AI systems.",
     type: "website",
-    locale: "en_US",
-    siteName: "Aditya Singh Rajput",
-    // TODO: add og:image — place a 1200×630 PNG at /public/og-image.png and uncomment:
-    // images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Aditya Singh Rajput" }],
+    url: SITE_URL,
+    siteName: NAME,
+    title: `${NAME} | ${ROLE}`,
+    description: DESCRIPTION,
+    locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aditya Singh Rajput — AI/ML Engineer & Full-Stack Developer",
-    description:
-      "AI/ML engineer building computer vision, NLP, and full-stack AI systems.",
-    // TODO: add twitter:image — same as og:image
+    title: `${NAME} | ${ROLE}`,
+    description: DESCRIPTION,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  ...(googleVerification
+    ? {
+        verification: {
+          google: googleVerification,
+        },
+      }
+    : {}),
 };
 
 export default function RootLayout({
