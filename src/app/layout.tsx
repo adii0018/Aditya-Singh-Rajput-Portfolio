@@ -26,7 +26,13 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const rawGoogleVerification =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  "8ErObVQ509QnnduIF3GExso8Dns7FTYI42bAZISKF7o";
+
+const googleVerification = rawGoogleVerification
+  ? rawGoogleVerification.replace(/^google-site-verification=/, "").trim()
+  : undefined;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
