@@ -16,52 +16,36 @@ interface CardConfig {
 }
 
 const cardConfigs: CardConfig[] = [
-  // 0: About (About Me) - dark #242426, slides over Hero, overflow-visible for floating DevPassCard
+  // 0: BeyondTheCode (Tech Dashboard Hub) - dark #202022 (Frequency Pulse Line)
   {
-    bgColor: "#242426",
+    bgColor: "#202022",
     roundedTop: true,
-    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.4)]",
+    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.5)]",
     borderClass: "border-t border-[#ffffff15]",
     overflowClass: "overflow-visible",
   },
-  // 1: Skills (Tech Stack) - light #ebeff5, slides over About
+  // 1: About (Cosmic Guns.lol) - dark #0a0a0c, slides over BeyondTheCode
+  {
+    bgColor: "#0a0a0c",
+    roundedTop: true,
+    shadowClass: "shadow-[0_-30px_70px_rgba(0,0,0,0.8)]",
+    borderClass: "border-t border-[#ffffff20]",
+    overflowClass: "overflow-visible",
+  },
+  // 2: Skills (Tech Stack) - light #ebeff5, slides over About
   {
     bgColor: "#ebeff5",
     roundedTop: true,
-    shadowClass: "shadow-[0_-20px_50px_rgba(0,0,0,0.12)]",
+    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.18)]",
     borderClass: "border-t border-[#24242215]",
     overflowClass: "overflow-hidden",
   },
-  // 2: BentoFeatures (Smart Engine) - dark #242426, slides over Skills
+  // 3: Projects (Featured Projects) - luxury dark #07080a, slides over Skills
   {
-    bgColor: "#242426",
+    bgColor: "#07080a",
     roundedTop: true,
-    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.5)]",
-    borderClass: "border-t border-[#ffffff20]",
-    overflowClass: "overflow-hidden",
-  },
-  // 3: Projects (Featured Projects) - light #f5f7fc, slides in from the left over Smart Engine
-  {
-    bgColor: "#f5f7fc",
-    roundedTop: true,
-    shadowClass: "shadow-[25px_0_60px_rgba(0,0,0,0.18),0_-15px_40px_rgba(0,0,0,0.08)]",
-    borderClass: "border-t border-r border-[#24242215]",
-    overflowClass: "overflow-hidden",
-  },
-  // 4: Certifications (What I've earned) - dark #0d1117 with cash video, slides over Projects
-  {
-    bgColor: "#0d1117",
-    roundedTop: true,
-    shadowClass: "shadow-[0_-25px_60px_rgba(0,0,0,0.4)]",
+    shadowClass: "shadow-[0_-30px_80px_rgba(0,0,0,0.8)]",
     borderClass: "border-t border-[#ffffff15]",
-    overflowClass: "overflow-hidden",
-  },
-  // 5: GitHubActivity (Code I've shipped) - light #ebeff5, slides over Certifications with wave curve top
-  {
-    bgColor: "transparent",
-    roundedTop: false,
-    shadowClass: "",
-    borderClass: "",
     overflowClass: "overflow-visible",
   },
 ];
@@ -86,7 +70,7 @@ export default function StackedSections({ children }: StackedSectionsProps) {
         // Pin each section so the next section slides over it
         for (let i = 0; i < cards.length - 1; i++) {
           // Card 3 (Projects) pins itself internally for horizontal scrolling
-          if (i === 3) continue;
+          if (i === cards.length - 1) continue;
 
           const currentCard = cards[i];
           const nextCard = cards[i + 1];
@@ -94,7 +78,7 @@ export default function StackedSections({ children }: StackedSectionsProps) {
           const isTall = (el: HTMLElement) => el.offsetHeight > window.innerHeight;
 
           // BentoFeatures (i === 2) unpins when Projects hits top top
-          const endValue = i === 2 ? "top top" : (isTall(nextCard) ? "bottom bottom" : "top top");
+          const endValue = i === cards.length - 2 ? "top top" : (isTall(nextCard) ? "bottom bottom" : "top top");
 
           const st = ScrollTrigger.create({
             trigger: currentCard,
@@ -110,12 +94,76 @@ export default function StackedSections({ children }: StackedSectionsProps) {
           triggers.push(st);
         }
 
-                // Refresh triggers once fonts are fully rendered to avoid CLS
+        // Smart Video Lifecycle: plays ONLY when visible, pauses immediately when covered by next card
+        cards.forEach((card, idx) => {
+          const video = card.querySelector<HTMLVideoElement>("video");
+          if (!video) return;
+
+          video.pause();
+
+          const nextCard = cards[idx + 1];
+
+          const vTrigger = ScrollTrigger.create({
+            trigger: card,
+            start: "top 95%",
+            endTrigger: nextCard || card,
+            end: nextCard ? "top 5%" : "bottom 5%",
+            onEnter: () => {
+              video.play().catch(() => {});
+            },
+            onLeave: () => {
+              video.pause();
+            },
+            onEnterBack: () => {
+              video.play().catch(() => {});
+            },
+            onLeaveBack: () => {
+              video.pause();
+            },
+          });
+          triggers.push(vTrigger);
+        });
+
+        // Refresh triggers once fonts are fully rendered to avoid CLS
         if (typeof document !== "undefined" && "fonts" in document) {
           document.fonts.ready.then(() => {
             ScrollTrigger.refresh();
           });
         }
+
+        return () => {
+          triggers.forEach((st) => st.kill());
+        };
+      });
+
+      // Mobile: Pause offscreen videos during normal vertical scrolling
+      mm.add("(max-width: 767px)", () => {
+        const triggers: ScrollTrigger[] = [];
+        cards.forEach((card) => {
+          const video = card.querySelector<HTMLVideoElement>("video");
+          if (!video) return;
+
+          video.pause();
+
+          const st = ScrollTrigger.create({
+            trigger: card,
+            start: "top bottom",
+            end: "bottom top",
+            onEnter: () => {
+              video.play().catch(() => {});
+            },
+            onLeave: () => {
+              video.pause();
+            },
+            onEnterBack: () => {
+              video.play().catch(() => {});
+            },
+            onLeaveBack: () => {
+              video.pause();
+            },
+          });
+          triggers.push(st);
+        });
 
         return () => {
           triggers.forEach((st) => st.kill());

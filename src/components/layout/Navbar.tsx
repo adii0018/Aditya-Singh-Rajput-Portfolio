@@ -9,12 +9,12 @@ import { Menu, X, FileDown } from "lucide-react";
 // Mapping of all page sections to their corresponding visible navbar item
 const SECTION_TO_NAV_MAP: Record<string, string> = {
   home: "home",
+  "beyond-the-code": "about",
   about: "about",
   skills: "skills",
   features: "skills",
   projects: "projects",
   experience: "experience",
-  certifications: "experience",
   github: "experience",
   contact: "contact",
 };
@@ -24,11 +24,11 @@ const TRACKED_SECTIONS = [
   "contact",
   "experience",
   "github",
-  "certifications",
   "projects",
   "features",
   "skills",
   "about",
+  "beyond-the-code",
   "home",
 ];
 

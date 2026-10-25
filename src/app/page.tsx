@@ -2,12 +2,11 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Preloader from "@/components/ui/Preloader";
 import Hero from "@/components/sections/Hero";
+import BeyondTheCode from "@/components/sections/BeyondTheCode";
 import About from "@/components/sections/About";
-import BentoFeatures from "@/components/sections/BentoFeatures";
 import Skills from "@/components/sections/Skills";
 import Projects from "@/components/sections/Projects";
 import Experience from "@/components/sections/Experience";
-import Certifications from "@/components/sections/Certifications";
 import GitHubActivity from "@/components/sections/GitHub";
 import Contact from "@/components/sections/Contact";
 import StackedSections from "@/components/layout/StackedSections";
@@ -20,13 +19,12 @@ export default function Home() {
       <main>
         <Hero />
         <StackedSections>
+          <BeyondTheCode />
           <About />
           <Skills />
-          <BentoFeatures />
           <Projects />
-          <Certifications />
-          <GitHubActivity />
         </StackedSections>
+        <GitHubActivity />
         <Experience />
         <Contact />
       </main>

@@ -295,52 +295,88 @@ export default function GitHubActivity() {
   );
 
   return (
-    <section id="github" ref={sectionRef} className="relative w-full">
-      {/* Wave Curve Top Transition - directly cuts into video, zero gray part */}
-      <div className="w-full overflow-hidden leading-none block -mt-10 sm:-mt-16 md:-mt-24 -mb-[1px] relative z-20 pointer-events-none">
+    <section
+      id="github"
+      ref={sectionRef}
+      style={{ zIndex: 45 }}
+      className="relative w-full -mt-16 sm:-mt-24 md:-mt-32 text-[#1F3B2E]"
+    >
+      {/* Luxury Parabolic Curved Horizon Arch (Apple & Porsche Luxury Scoop) */}
+      <div className="w-full overflow-hidden leading-none pointer-events-none">
         <svg
           viewBox="0 0 1440 120"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
-          className="w-full h-12 sm:h-20 md:h-28 block pointer-events-none drop-shadow-[0_-6px_14px_rgba(0,0,0,0.35)]"
+          className="w-full h-16 sm:h-24 md:h-32 block drop-shadow-[0_-25px_40px_rgba(0,0,0,0.85)]"
         >
-          {/* Flowing Wave Curve filled with GitHub background (#ebeff5) */}
+          <defs>
+            <linearGradient id="horizonGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#C8B3E8" stopOpacity="0.1" />
+              <stop offset="25%" stopColor="#C8B3E8" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="75%" stopColor="#C8B3E8" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#C8B3E8" stopOpacity="0.1" />
+            </linearGradient>
+            <filter id="neonBlur" x="-20%" y="-50%" width="140%" height="200%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {/* Oatmeal Body Fill forming the curved arch */}
           <path
-            d="M0,45 C320,110 500,10 740,55 C980,100 1180,15 1440,60 L1440,120 L0,120 Z"
-            fill="#ebeff5"
+            d="M0,120 L0,70 Q720,0 1440,70 L1440,120 Z"
+            fill="#E8DCC6"
           />
 
-          {/* Crisp, elegant wave stroke border */}
+          {/* Glowing Illuminated Laser Rim along the curve */}
           <path
-            d="M0,45 C320,110 500,10 740,55 C980,100 1180,15 1440,60"
-            stroke="rgba(255, 255, 255, 0.25)"
-            strokeWidth="1.5"
+            d="M0,70 Q720,0 1440,70"
+            stroke="url(#horizonGlow)"
+            strokeWidth="3.5"
+            filter="url(#neonBlur)"
             fill="none"
           />
         </svg>
+
+        {/* Apex Telemetry Emblem / Horizon Coordinate Pill at the crest */}
+        <div className="relative -mt-8 sm:-mt-12 md:-mt-16 flex justify-center z-30">
+          <div className="flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#1F3B2E] border-2 border-[#C8B3E8] text-[#E8DCC6] text-[10px] sm:text-[11px] font-mono tracking-widest uppercase shadow-[0_0_25px_rgba(200,179,232,0.6)] backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-[#C8B3E8] animate-ping" />
+            <span className="font-bold">✦ CONTINUOUS CADENCE // 37.77° N</span>
+          </div>
+        </div>
       </div>
 
-      {/* Main GitHub Content with #ebeff5 background */}
-      <div className="w-full bg-[#ebeff5] -mt-[1px]">
-        <div className="max-w-6xl mx-auto px-6 pt-6 sm:pt-10 pb-28 md:pb-36">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+      {/* Main Oatmeal Section Body (Seamlessly connects to the bottom of the SVG) */}
+      <div className="relative w-full bg-[#E8DCC6] pt-4 sm:pt-8 pb-28 md:pb-36 -mt-1 overflow-hidden">
+        {/* Ambient Botanical Luxury Glows (Pine Green + Soft Lilac Lotus Aura) */}
+        <div className="absolute top-0 right-10 w-[550px] h-[550px] bg-[#C8B3E8]/35 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-10 left-10 w-[600px] h-[600px] bg-[#1F3B2E]/10 rounded-full blur-[160px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto px-6">
+        {/* Header (Lotus / Pine Green & Soft Lilac Editorial Theme) */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
-            <div className="gh-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#24242220] text-[#4d4f57] text-xs font-mono tracking-wider uppercase mb-4">
-              ✦ GitHub Activity
+            <div className="gh-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1F3B2E]/10 border border-[#1F3B2E]/20 text-[#1F3B2E] text-xs font-mono tracking-wider uppercase mb-4 font-semibold shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#C8B3E8]" />
+              ✦ GitHub Activity // Continuous Delivery
             </div>
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="gh-loader shrink-0 flex items-center justify-center">
                 <WavingOctocat size={64} />
               </div>
               <h2
-                className="gh-heading font-black text-[#242426] leading-tight tracking-tight"
-                style={{ fontSize: "clamp(32px, 5vw, 54px)" }}
+                className="gh-heading font-black text-[#1F3B2E] leading-tight tracking-tight"
+                style={{ fontSize: "clamp(34px, 5.5vw, 62px)" }}
               >
                 Code I&apos;ve
                 <br />
-                <span className="italic text-[#4d4f57]">shipped</span>
+                <span className="italic text-[#1F3B2E]/75 font-serif font-normal">shipped</span>
+                <span className="text-[#C8B3E8]">.</span>
               </h2>
             </div>
           </div>
@@ -350,45 +386,45 @@ export default function GitHubActivity() {
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.04, y: -2 }}
-            className="gh-profile-btn flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#242426] text-white text-sm font-semibold hover:bg-[#3a3a3c] transition-all cursor-pointer self-start md:self-auto"
+            className="gh-profile-btn flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#1F3B2E] text-[#E8DCC6] text-sm font-semibold hover:bg-[#15271F] transition-all cursor-pointer shadow-lg shadow-[#1F3B2E]/20 self-start md:self-auto border border-[#1F3B2E]"
           >
-            <GithubIcon size={15} /> @{personal.githubUsername}
-            <ExternalLink size={12} />
+            <GithubIcon size={16} /> @{personal.githubUsername}
+            <ExternalLink size={13} className="text-[#C8B3E8]" />
           </motion.a>
         </div>
 
         {/* Latest Commit Live Ticker */}
         {latestCommit && (
-          <div className="gh-ticker mb-8 p-3.5 sm:p-4 rounded-2xl bg-[#0d1117] border border-[#30363d] flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm shadow-xl shadow-black/20">
+          <div className="gh-ticker mb-8 p-3.5 sm:p-4 rounded-2xl bg-[#15271F] border border-[#1F3B2E] flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm shadow-xl shadow-[#1F3B2E]/15">
             <div className="flex items-center gap-2.5 min-w-0">
               <span className="relative flex h-2.5 w-2.5 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#39d353] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#39d353]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C8B3E8] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#C8B3E8]"></span>
               </span>
-              <span className="font-mono text-[11px] uppercase tracking-wider font-semibold text-[#7d8590] bg-[#161b22] border border-[#30363d] px-2.5 py-0.5 rounded-full shrink-0">
+              <span className="font-mono text-[11px] uppercase tracking-wider font-semibold text-[#C8B3E8] bg-[#1F3B2E] border border-[#C8B3E8]/30 px-2.5 py-0.5 rounded-full shrink-0">
                 Live Activity
               </span>
-              <span className="text-[#e6edf3] font-medium truncate">
+              <span className="text-[#E8DCC6] font-medium truncate">
                 Pushed to{" "}
-                <span className="font-semibold text-white underline decoration-[#39d353] underline-offset-2">
+                <span className="font-semibold text-white underline decoration-[#C8B3E8] underline-offset-2">
                   {latestCommit.repo}
                 </span>
                 {latestCommit.message ? (
-                  <span className="text-[#7d8590] hidden sm:inline">
+                  <span className="text-[#E8DCC6]/60 hidden sm:inline">
                     {" "}— &ldquo;{latestCommit.message}&rdquo;
                   </span>
                 ) : null}
               </span>
             </div>
-            <div className="flex items-center gap-3 shrink-0 text-[#7d8590] text-xs font-mono ml-auto sm:ml-0">
+            <div className="flex items-center gap-3 shrink-0 text-[#E8DCC6]/70 text-xs font-mono ml-auto sm:ml-0">
               <span className="flex items-center gap-1">
-                <Clock size={12} /> {latestCommit.timeAgo}
+                <Clock size={12} className="text-[#C8B3E8]" /> {latestCommit.timeAgo}
               </span>
               <a
                 href={latestCommit.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-sans text-xs text-[#e6edf3] font-semibold hover:text-[#39d353] transition-colors"
+                className="inline-flex items-center gap-1 font-sans text-xs text-[#C8B3E8] font-semibold hover:text-white transition-colors"
               >
                 View <ExternalLink size={11} />
               </a>
@@ -397,25 +433,25 @@ export default function GitHubActivity() {
         )}
 
         {/* GitHub Contribution Graph & Language Breakdown */}
-        <div className="gh-chart-card bg-[#0d1117] rounded-3xl border border-[#30363d] p-6 md:p-8 mb-8 overflow-hidden shadow-2xl shadow-black/30">
+        <div className="gh-chart-card bg-[#15271F] rounded-3xl border border-[#1F3B2E] p-6 md:p-8 mb-8 overflow-hidden shadow-2xl shadow-[#1F3B2E]/20 text-white">
           <GitHubContributionCalendar
             username={personal.githubUsername}
             onTotalChange={handleTotalChange}
           />
 
           {/* Languages Segmented Progress Bar */}
-          <div className="mt-8 pt-6 border-t border-[#30363d]">
+          <div className="mt-8 pt-6 border-t border-white/10">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-mono uppercase tracking-wider text-[#7d8590] font-semibold">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#C8B3E8] font-semibold">
                 Language Distribution
               </span>
-              <span className="text-xs text-[#7d8590] font-mono">
+              <span className="text-xs text-[#E8DCC6]/60 font-mono">
                 {stats.reposCount} Repositories Analyzed
               </span>
             </div>
 
             {/* Segmented bar */}
-            <div className="h-3 w-full rounded-full overflow-hidden flex bg-[#161b22] border border-[#30363d]/60 gap-0.5 p-0.5">
+            <div className="h-3 w-full rounded-full overflow-hidden flex bg-[#0e1b15] border border-white/10 gap-0.5 p-0.5">
               {languages.map((lang) => (
                 <div
                   key={lang.name}
@@ -432,13 +468,13 @@ export default function GitHubActivity() {
             {/* Language badges */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3.5">
               {languages.map((lang) => (
-                <div key={lang.name} className="flex items-center gap-1.5 text-xs text-[#e6edf3]">
+                <div key={lang.name} className="flex items-center gap-1.5 text-xs text-[#E8DCC6]">
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0"
                     style={{ backgroundColor: lang.color }}
                   />
                   <span className="font-medium">{lang.name}</span>
-                  <span className="text-[#7d8590] font-mono text-[11px]">{lang.percentage}%</span>
+                  <span className="text-[#C8B3E8]/80 font-mono text-[11px]">{lang.percentage}%</span>
                 </div>
               ))}
             </div>
@@ -447,26 +483,26 @@ export default function GitHubActivity() {
 
         {/* GitHub Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="gh-stat-card bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 text-center shadow-lg shadow-black/20">
-            <p className="text-3xl font-black text-[#39d353] mb-1">
+          <div className="gh-stat-card bg-[#15271F] rounded-2xl border border-[#1F3B2E] p-6 text-center shadow-lg shadow-[#1F3B2E]/15">
+            <p className="text-3xl font-black text-[#C8B3E8] mb-1">
               {stats.reposCount}
-              <span className="text-xl">+</span>
+              <span className="text-xl text-[#E8DCC6]">+</span>
             </p>
-            <p className="text-[#7d8590] text-sm font-mono">Public Repositories</p>
+            <p className="text-[#E8DCC6]/70 text-sm font-mono">Public Repositories</p>
           </div>
-          <div className="gh-stat-card bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 text-center shadow-lg shadow-black/20">
-            <p className="text-3xl font-black text-[#39d353] mb-1">
+          <div className="gh-stat-card bg-[#15271F] rounded-2xl border border-[#1F3B2E] p-6 text-center shadow-lg shadow-[#1F3B2E]/15">
+            <p className="text-3xl font-black text-[#C8B3E8] mb-1">
               {(stats.contributionsCount || 1080).toLocaleString()}
-              <span className="text-xl">+</span>
+              <span className="text-xl text-[#E8DCC6]">+</span>
             </p>
-            <p className="text-[#7d8590] text-sm font-mono">Contributions in Last Year</p>
+            <p className="text-[#E8DCC6]/70 text-sm font-mono">Contributions in Last Year</p>
           </div>
-          <div className="gh-stat-card bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 text-center shadow-lg shadow-black/20">
-            <p className="text-3xl font-black text-[#39d353] mb-1">
+          <div className="gh-stat-card bg-[#15271F] rounded-2xl border border-[#1F3B2E] p-6 text-center shadow-lg shadow-[#1F3B2E]/15">
+            <p className="text-3xl font-black text-[#C8B3E8] mb-1">
               {stats.starsCount}
-              <span className="text-xl">+</span>
+              <span className="text-xl text-[#E8DCC6]">+</span>
             </p>
-            <p className="text-[#7d8590] text-sm font-mono">Stars & Interactions</p>
+            <p className="text-[#E8DCC6]/70 text-sm font-mono">Stars & Interactions</p>
           </div>
         </div>
 
@@ -479,12 +515,12 @@ export default function GitHubActivity() {
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -4 }}
-                className="block bg-[#0d1117] rounded-2xl border border-[#30363d] p-6 hover:border-[#39d35380] hover:shadow-xl hover:shadow-[#39d35315] transition-all group h-full cursor-pointer"
+                className="block bg-[#15271F] rounded-2xl border border-[#1F3B2E] p-6 hover:border-[#C8B3E8]/60 hover:shadow-xl hover:shadow-[#1F3B2E]/30 transition-all group h-full cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <GithubIcon size={15} className="text-[#7d8590]" />
-                    <span className="font-semibold text-[#e6edf3] text-sm group-hover:text-white transition-colors">
+                    <GithubIcon size={15} className="text-[#C8B3E8]" />
+                    <span className="font-semibold text-white text-sm group-hover:text-[#C8B3E8] transition-colors">
                       {repo.name}
                     </span>
                   </div>
@@ -500,12 +536,12 @@ export default function GitHubActivity() {
                         setTimeout(() => setCopiedRepo(null), 2000);
                       }}
                       title="Copy git clone command"
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#161b22] border border-[#30363d] hover:bg-[#21262d] text-[#7d8590] hover:text-[#e6edf3] transition-all cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#1F3B2E] border border-white/10 hover:bg-[#1F3B2E]/80 text-[#E8DCC6]/70 hover:text-white transition-all cursor-pointer"
                     >
                       {copiedRepo === repo.name ? (
                         <>
-                          <Check size={11} className="text-[#39d353]" />
-                          <span className="text-[#39d353] font-semibold">Copied!</span>
+                          <Check size={11} className="text-[#C8B3E8]" />
+                          <span className="text-[#C8B3E8] font-semibold">Copied!</span>
                         </>
                       ) : (
                         <>
@@ -516,34 +552,36 @@ export default function GitHubActivity() {
                     </button>
                     <ExternalLink
                       size={13}
-                      className="text-[#7d8590] group-hover:text-white transition-colors"
+                      className="text-[#E8DCC6]/40 group-hover:text-white transition-colors"
                     />
                   </div>
                 </div>
 
-                <p className="text-[#7d8590] text-xs leading-relaxed mb-4">{repo.description}</p>
+                <p className="text-[#E8DCC6]/70 text-xs leading-relaxed mb-4 font-sans">{repo.description}</p>
 
-                <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1 text-xs text-[#7d8590]">
+                <div className="flex items-center justify-between text-xs text-[#E8DCC6]/60 font-mono pt-3 border-t border-white/5">
+                  <div className="flex items-center gap-2">
                     <span
                       className="w-2.5 h-2.5 rounded-full"
-                      style={{ background: repo.color || langColors[repo.language] || "#888" }}
+                      style={{ background: repo.color || langColors[repo.language] || "#C8B3E8" }}
                     />
-                    {repo.language}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs text-[#7d8590]">
-                    <Star size={11} /> {repo.stars}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs text-[#7d8590]">
-                    <GitFork size={11} /> {repo.forks}
-                  </span>
+                    <span className="text-[#E8DCC6] font-medium">{repo.language}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center gap-1 hover:text-white transition-colors">
+                      <Star size={11} className="text-[#C8B3E8]" /> {repo.stars}
+                    </span>
+                    <span className="flex items-center gap-1 hover:text-white transition-colors">
+                      <GitFork size={11} className="text-[#E8DCC6]/60" /> {repo.forks}
+                    </span>
+                  </div>
                 </div>
               </motion.a>
             </div>
           ))}
         </div>
       </div>
-      </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }

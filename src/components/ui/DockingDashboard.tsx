@@ -155,11 +155,10 @@ export default function DockingDashboard() {
           <video
             ref={videoRef}
             src="/about-bg.mp4"
-            autoPlay
             loop
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             controls={false}
             disablePictureInPicture
             controlsList="nodownload nofullscreen noremoteplayback"

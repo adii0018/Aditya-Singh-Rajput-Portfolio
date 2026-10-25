@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
+import { gsap, useGSAP, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 import { certifications } from "@/lib/data";
 import { Award, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
@@ -51,9 +51,33 @@ function CertIcon({ icon }: { icon: string }) {
 
 export default function Certifications() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useGSAP(
     () => {
+      // 1. Video Play/Pause Lifecycle via ScrollTrigger (Guaranteed 0 background GPU drain)
+      if (videoRef.current) {
+        videoRef.current.pause();
+
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top 95%",
+          end: "bottom 5%",
+          onEnter: () => {
+            videoRef.current?.play().catch(() => {});
+          },
+          onLeave: () => {
+            videoRef.current?.pause();
+          },
+          onEnterBack: () => {
+            videoRef.current?.play().catch(() => {});
+          },
+          onLeaveBack: () => {
+            videoRef.current?.pause();
+          },
+        });
+      }
+
       if (isReducedMotion()) return;
 
       const tl = gsap.timeline({
@@ -86,15 +110,15 @@ export default function Certifications() {
   );
 
   return (
-    <section id="certifications" ref={sectionRef} className="relative pt-20 sm:pt-28 pb-16 sm:pb-24 bg-[#0d1117] overflow-hidden">
-      {/* Background Video - 100% Crystal Clear & Sharp */}
+    <section id="certifications" ref={sectionRef} className="relative pt-20 sm:pt-28 pb-16 sm:pb-24 bg-[#0d1117] overflow-hidden rounded-t-[32px] sm:rounded-t-[44px] shadow-[0_-25px_60px_rgba(0,0,0,0.4)] border-t border-[#ffffff15] z-10 -mt-8 sm:-mt-12">
+      {/* Background Video - Plays only when in view via ScrollTrigger */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         <video
-          autoPlay
+          ref={videoRef}
           loop
           muted
           playsInline
-          preload="none"
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover opacity-100"
         >
           <source src="/cash.mp4" type="video/mp4" />

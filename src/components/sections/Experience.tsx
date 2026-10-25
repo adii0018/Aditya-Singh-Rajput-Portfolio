@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
 import { experience } from "@/lib/data";
 import { Briefcase, Trophy, GraduationCap } from "lucide-react";
-import SharinganLoader from "@/components/ui/SharinganLoader";
+import CodeLoader from "@/components/ui/CodeLoader";
 import PokeballLoader from "@/components/ui/PokeballLoader";
 
 const typeIcon = {
@@ -246,7 +246,8 @@ export default function Experience() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative w-full overflow-x-clip bg-gradient-to-b from-[#dde4ee] via-[#e6ebf3] to-[#ebeff5] z-20 -mt-12 sm:-mt-16 pt-3"
+      style={{ zIndex: 50 }}
+      className="relative w-full overflow-x-clip bg-gradient-to-b from-[#dde4ee] via-[#e6ebf3] to-[#ebeff5] -mt-12 sm:-mt-16 pt-3"
     >
       <div
         ref={cardRef}
@@ -261,7 +262,7 @@ export default function Experience() {
             </div>
             <div className="flex items-center gap-5 sm:gap-7">
               <div className="exp-loader shrink-0 flex items-center justify-center">
-                <SharinganLoader />
+                <CodeLoader />
               </div>
               <h2
                 className="exp-heading font-black text-[#242426] leading-tight tracking-tight"

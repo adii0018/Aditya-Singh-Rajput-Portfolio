@@ -74,7 +74,6 @@ const SECTION_METAS: Record<string, SectionMeta> = {
 const SECTION_IDS = [
   "contact",
   "github",
-  "certifications",
   "experience",
   "projects",
   "features",

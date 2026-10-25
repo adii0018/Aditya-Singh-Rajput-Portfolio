@@ -1,95 +1,43 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
-import { Code2, Brain, Rocket, MapPin } from "lucide-react";
-import DockingDashboard from "@/components/ui/DockingDashboard";
+import { MapPin, Disc3, Sparkles } from "lucide-react";
 
-const highlights = [
-  {
-    icon: <Brain size={16} />,
-    label: "AI/ML Focus",
-    desc: "Computer Vision, NLP & LLMs",
-    color: "#d9ff5c",
-  },
-  {
-    icon: <Code2 size={16} />,
-    label: "Full-Stack",
-    desc: "React, Next.js, Django, FastAPI",
-    color: "#c0adff",
-  },
-  {
-    icon: <Rocket size={16} />,
-    label: "Builder",
-    desc: "4+ AI-powered products shipped",
-    color: "#b8deff",
-  },
-  {
-    icon: <MapPin size={16} />,
-    label: "Based in India",
-    desc: "Open to remote opportunities",
-    color: "#d9ff5c",
-  },
-];
+const darkTextHaloStyle = {
+  textShadow: "0 0 16px rgba(255,255,255,0.95), 0 0 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.8)",
+};
 
-function renderWords(
-  text: string,
-  options?: {
-    boldWords?: string[];
-    accentWords?: string[];
-    accentColor?: string;
-    targetColor?: string;
-  }
-) {
-  const words = text.split(" ");
-  return words.map((word, i) => {
-    const clean = word.replace(/[^a-zA-Z0-9/—'-]/g, "");
-    const isBold = options?.boldWords?.includes(clean);
-    const isAccent = options?.accentWords?.includes(clean);
-    const targetColor = isAccent
-      ? options?.accentColor || "#d9ff5c"
-      : options?.targetColor || "#ffffff";
-
-    return (
-      <span key={`${word}-${i}`}>
-        <span
-          className={`about-reveal-word inline-block ${isBold ? "font-bold text-white" : ""}`}
-          data-target-color={targetColor}
-          data-accent={isAccent ? targetColor : undefined}
-          style={{
-            opacity: 0.2,
-            color: "rgba(255, 255, 255, 0.2)",
-            willChange: "opacity, color",
-          }}
-        >
-          {word}
-        </span>
-        {i < words.length - 1 ? " " : ""}
-      </span>
-    );
-  });
-}
+const darkTitleHaloStyle = {
+  textShadow: "0 0 20px rgba(255,255,255,0.95), 0 0 8px rgba(255,255,255,0.9), 0 2px 4px rgba(255,255,255,0.8)",
+};
 
 export default function About() {
   const aboutRef = useRef<HTMLDivElement>(null);
-  const textWrapRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Toggle background Lofi track
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
+    }
+  };
 
   useGSAP(
     () => {
-      if (isReducedMotion()) {
-        const words = textWrapRef.current?.querySelectorAll(".about-reveal-word");
-        if (words) {
-          gsap.set(words, {
-            opacity: 1,
-            color: (index, target) =>
-              (target as HTMLElement).dataset.targetColor || "#ffffff",
-          });
-        }
-        return;
-      }
+      if (isReducedMotion()) return;
 
-      // Static elements entrance (badge, tags, cards, stats)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: aboutRef.current,
@@ -99,54 +47,23 @@ export default function About() {
         defaults: { ease: "power3.out" },
       });
 
-      tl.from(".about-badge", {
+      tl.from(".about-corner-badge", {
         y: -15,
         opacity: 0,
         duration: 0.6,
       })
-      .from(".about-tag", {
-        scale: 0.9,
+      .from(".about-music-btn", {
+        scale: 0.8,
         opacity: 0,
-        stagger: 0.06,
-        duration: 0.5,
-      }, "-=0.2")
-      .from(".about-highlight-card", {
-        y: 30,
+        duration: 0.6,
+      }, "-=0.4")
+      .from(cardRef.current, {
+        y: 40,
+        scale: 0.96,
         opacity: 0,
-        stagger: 0.08,
-        duration: 0.7,
-      }, "-=0.2")
-      .from(".about-stat-item", {
-        y: 25,
-        opacity: 0,
-        stagger: 0.08,
-        duration: 0.7,
+        duration: 0.85,
+        ease: "back.out(1.2)",
       }, "-=0.3");
-
-      // Premium scroll-linked word-by-word reveal (scrub synced with scroll)
-      const words = textWrapRef.current?.querySelectorAll(".about-reveal-word");
-      if (words && words.length > 0) {
-        gsap.fromTo(
-          words,
-          {
-            opacity: 0.2,
-            color: "rgba(255, 255, 255, 0.2)",
-          },
-          {
-            opacity: 1,
-            color: (index, target) =>
-              (target as HTMLElement).dataset.targetColor || "#ffffff",
-            stagger: 0.03,
-            ease: "none",
-            scrollTrigger: {
-              trigger: textWrapRef.current,
-              start: "top 80%",
-              end: "bottom 48%",
-              scrub: 0.8,
-            },
-          }
-        );
-      }
     },
     { scope: aboutRef }
   );
@@ -155,157 +72,151 @@ export default function About() {
     <section
       id="about"
       ref={aboutRef}
-      className="relative z-20 section-padding overflow-visible rounded-t-[32px] sm:rounded-t-[44px]"
-      style={{ background: "#242426" }}
+      className="relative z-20 min-h-screen flex flex-col justify-center items-center py-20 px-6 overflow-visible rounded-t-[32px] sm:rounded-t-[44px]"
+      style={{
+        background: "#0a0a0c",
+        cursor: "url('/custom-cursor.png') 16 16, auto",
+      }}
     >
-      {/* Background accent lines */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent pointer-events-none" />
+      {/* Hidden Audio Element */}
+      <audio
+        ref={audioRef}
+        src="/lofi-track.mp3"
+        loop
+        preload="metadata"
+      />
 
-      <div className="max-w-6xl mx-auto px-6 overflow-visible">
-        
-        {/* Top Header Section with Scroll-Linked Word Reveal */}
-        <div ref={textWrapRef} className="text-center max-w-3xl mx-auto mb-6">
-          <div className="about-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff60] text-xs font-mono tracking-wider uppercase mb-6">
-            / about
+      {/* 🎬 Cosmic Anime Video Background (Guns.lol style) - 100% Pure Edge-to-Edge Video */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden rounded-t-[32px] sm:rounded-t-[44px] pointer-events-none z-0">
+        <video
+          ref={videoRef}
+          src="/cosmic-vortex.mp4"
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover scale-105 opacity-100 pointer-events-none"
+        />
+      </div>
+
+      {/* Subtle top & bottom divider lines */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#ffffff20] to-transparent pointer-events-none z-10" />
+
+      {/* Top Left: Subtle Badge */}
+      <div className="absolute top-6 left-6 z-20 pointer-events-auto">
+        <div className="about-corner-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/15 bg-white/70 hover:bg-white/90 backdrop-blur-md text-black/85 text-xs font-mono tracking-wider uppercase shadow-md transition-all">
+          <Sparkles size={12} className="text-black" />
+          / about
+        </div>
+      </div>
+
+      {/* Top Right: Guns.lol Lofi Soundtrack Toggle */}
+      <div className="absolute top-6 right-6 z-20 pointer-events-auto">
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className="about-music-btn inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-black/15 bg-white/70 hover:bg-white/95 backdrop-blur-md text-black text-xs font-mono transition-all duration-200 shadow-md group cursor-pointer"
+          title={isPlaying ? "Pause background track" : "Play lofi soundtrack"}
+        >
+          <Disc3
+            size={14}
+            className={`text-black ${isPlaying ? "animate-spin" : "opacity-75"}`}
+            style={{ animationDuration: "3s" }}
+          />
+          <span className="font-semibold text-black">
+            {isPlaying ? "PAUSE LOFI" : "PLAY LOFI"}
+          </span>
+
+          {/* Equalizer animation bars */}
+          <div className="flex items-end gap-0.5 h-3 ml-1">
+            <span
+              className={`w-0.5 bg-black rounded-full transition-all ${
+                isPlaying ? "h-3 animate-pulse" : "h-1 opacity-40"
+              }`}
+            />
+            <span
+              className={`w-0.5 bg-black rounded-full transition-all ${
+                isPlaying ? "h-2 animate-bounce" : "h-1 opacity-40"
+              }`}
+              style={{ animationDelay: "0.2s" }}
+            />
+            <span
+              className={`w-0.5 bg-black rounded-full transition-all ${
+                isPlaying ? "h-3 animate-pulse" : "h-1 opacity-40"
+              }`}
+              style={{ animationDelay: "0.4s" }}
+            />
+          </div>
+        </button>
+      </div>
+
+      {/* 🪪 Guns.lol Center Identity & Bio (1:1 with Reference Screenshot) */}
+      <div className="relative z-10 w-full max-w-2xl mx-auto text-center px-4 overflow-visible">
+        {/* Soft, luminous white ambient aura behind text so white clouds provide maximum contrast */}
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.45)_0%,rgba(255,255,255,0.18)_45%,transparent_75%)] blur-2xl pointer-events-none" />
+
+        <motion.div
+          ref={cardRef}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.3 }}
+          className="relative w-full mx-auto flex flex-col items-center text-center"
+        >
+          {/* Mirror Selfie Avatar (User's Photo Preserved) */}
+          <div className="relative mb-3 group">
+            <img
+              src="/avatar.jpg"
+              alt="Aditya Singh Rajput Avatar"
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-white shadow-2xl transition-transform duration-300 group-hover:scale-105"
+            />
           </div>
 
-          <h2
-            className="about-heading font-black text-white leading-tight tracking-tight mb-6"
-            style={{ fontSize: "clamp(36px, 5.5vw, 68px)" }}
+          {/* Stylized Name in Crisp Black */}
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-[0.22em] mb-2 font-mono"
+            style={darkTitleHaloStyle}
           >
-            <span
-              className="about-reveal-word inline-block"
-              data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
-            >
-              I
-            </span>{" "}
-            <span
-              className="about-reveal-word inline-block"
-              data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
-            >
-              turn
-            </span>{" "}
-            <span
-              className="about-reveal-word inline-block"
-              data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
-            >
-              complex
-            </span>
-            <br />
-            <span
-              className="about-reveal-word inline-block"
-              data-target-color="#d9ff5c"
-              data-accent="#d9ff5c"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
-            >
-              ideas
-            </span>{" "}
-            <span
-              className="about-reveal-word inline-block"
-              data-target-color="#d9ff5c"
-              data-accent="#d9ff5c"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
-            >
-              into
-            </span>
-            <br />
-            <span
-              className="about-reveal-word inline-block"
-              data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
-            >
-              real
-            </span>{" "}
-            <span
-              className="about-reveal-word inline-block"
-              data-target-color="#ffffff"
-              style={{ opacity: 0.2, color: "rgba(255, 255, 255, 0.2)", willChange: "opacity, color" }}
-            >
-              solutions.
-            </span>
-          </h2>
+            Λ Ꭰ I I ㅤ么
+          </h1>
 
-          <p className="about-paragraph text-[#ffffff85] text-base sm:text-lg leading-relaxed mb-4">
-            {renderWords(
-              "I'm Aditya Singh Rajput — an AI engineer and full-stack developer based in India. I build real-time computer vision systems and language model applications that solve concrete problems, from automated online exam proctoring to multilingual governance assistants.",
-              { boldWords: ["Aditya", "Singh", "Rajput"], targetColor: "#ffffff" }
-            )}
+          {/* Bio Tagline */}
+          <p
+            className="text-xs sm:text-sm font-mono text-zinc-900 tracking-wide mb-3 font-semibold max-w-md mx-auto"
+            style={darkTextHaloStyle}
+          >
+            么 Turning caffeine into AI models, bugs into features.
           </p>
 
-          <p className="about-paragraph text-[#ffffff60] text-sm sm:text-base leading-relaxed mb-6">
-            {renderWords(
-              "My focus is taking machine learning models out of notebooks and into production: optimizing inference latency, building responsive user interfaces, and ensuring reliable data pipelines.",
-              { targetColor: "rgba(255, 255, 255, 0.85)" }
-            )}
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-2">
-            {["4 AI Products Shipped", "Computer Vision & LLMs", "Production Model Deployments", "National Hackathon Winner"].map(
-              (tag) => (
-                <span
-                  key={tag}
-                  className="about-tag px-3 py-1.5 rounded-full border border-[#ffffff20] text-[#ffffff80] text-xs font-medium"
-                >
-                  {tag}
-                </span>
-              )
-            )}
+          {/* Location Badge (Original Style with Rose MapPin) */}
+          <div className="mb-6 flex justify-center">
+            <span
+              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-[#38bdf8]/40 bg-black/60 backdrop-blur-sm text-white/95 text-xs font-mono font-medium tracking-wider shadow-lg shadow-black/20"
+              style={{
+                textShadow: "0 0 10px rgba(0,0,0,0.9), 0 1px 2px #000",
+              }}
+            >
+              <MapPin size={12} className="text-rose-400" />
+              INDIA
+            </span>
           </div>
-        </div>
 
-        {/* Centerpiece: The Makro Scroll-Docking Dashboard Component */}
-        <DockingDashboard />
-
-        {/* 4 Highlight Capability Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 mb-16">
-          {highlights.map((item) => (
-            <div key={item.label} className="about-highlight-card">
-              <motion.div
-                whileHover={{ scale: 1.03, y: -4 }}
-                className="p-5 rounded-2xl border border-[#ffffff15] bg-[#ffffff08] backdrop-blur-sm cursor-default group h-full"
-              >
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center mb-3 transition-transform group-hover:scale-110"
-                  style={{ background: item.color + "20", color: item.color }}
-                >
-                  {item.icon}
-                </div>
-                <p className="text-white font-semibold text-sm mb-1">{item.label}</p>
-                <p className="text-[#ffffff50] text-xs leading-relaxed">{item.desc}</p>
-              </motion.div>
-            </div>
-          ))}
-        </div>
-
-        {/* Stats row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#ffffff15] rounded-2xl overflow-hidden">
-          {[
-            { num: "4+", label: "AI Projects" },
-            { num: "10+", label: "Technologies" },
-            { num: "3+", label: "Hackathons" },
-            { num: "∞", label: "Ideas to Build" },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="about-stat-item bg-[#242426] px-8 py-6 text-center group hover:bg-[#2e2e30] transition-colors"
+          {/* Bio Paragraphs (Replacing the Project / Social Badges in the Photo) */}
+          <div className="space-y-4 max-w-xl sm:max-w-2xl mx-auto text-center px-2">
+            <p
+              className="text-zinc-950 text-sm sm:text-base md:text-lg leading-relaxed font-sans font-medium"
+              style={darkTextHaloStyle}
             >
-              <p
-                className="font-black text-[#d9ff5c] mb-1"
-                style={{ fontSize: "clamp(28px, 4vw, 42px)" }}
-              >
-                {stat.num}
-              </p>
-              <p className="text-[#ffffff50] text-xs font-mono uppercase tracking-wider">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
+              I&apos;m <span className="text-black font-bold underline decoration-black/60 decoration-1 underline-offset-4">Aditya Singh Rajput</span> — an AI engineer and full-stack developer based in India. I build real-time computer vision systems and language model applications that solve concrete problems, from automated online exam proctoring to multilingual governance assistants.
+            </p>
 
+            <p
+              className="text-zinc-900 text-xs sm:text-sm md:text-base leading-relaxed font-sans font-normal"
+              style={darkTextHaloStyle}
+            >
+              My focus is taking machine learning models out of notebooks and into production: optimizing inference latency, building responsive user interfaces, and ensuring reliable data pipelines.
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

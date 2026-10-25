@@ -21,7 +21,6 @@ export default function Footer() {
     ],
     Work: [
       { label: "Experience", href: "#experience" },
-      { label: "Certifications", href: "#certifications" },
       { label: "Contact", href: "#contact" },
     ],
   };

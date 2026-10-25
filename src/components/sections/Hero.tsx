@@ -100,7 +100,7 @@ export default function Hero() {
   );
 
   const scrollToAbout = () => {
-    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+    (document.getElementById("beyond-the-code") || document.getElementById("about"))?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
