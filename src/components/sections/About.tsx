@@ -1,9 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
+import { gsap, useGSAP, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 import { MapPin, Disc3, Sparkles } from "lucide-react";
+import { usePauseOffscreenAnimation } from "@/lib/usePauseOffscreenAnimation";
 
 const darkTextHaloStyle = {
   textShadow: "0 0 16px rgba(255,255,255,0.95), 0 0 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.8)",
@@ -19,6 +21,48 @@ export default function About() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  usePauseOffscreenAnimation(aboutRef);
+
+  // Keep the background video active only while About is the current scroll section.
+  useGSAP(() => {
+    const section = aboutRef.current;
+    const video = videoRef.current;
+    if (!section || !video) return;
+
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let isSectionActive = false;
+
+    const syncPlayback = () => {
+      if (motionPreference.matches || !isSectionActive) {
+        video.pause();
+        return;
+      }
+      if (video.paused) video.play().catch(() => {});
+    };
+
+    const activeTrigger = ScrollTrigger.create({
+      trigger: section,
+      start: "top 85%",
+      end: "bottom 85%",
+      onToggle: (self) => {
+        isSectionActive = self.isActive;
+        syncPlayback();
+      },
+      onRefresh: (self) => {
+        isSectionActive = self.isActive;
+        syncPlayback();
+      },
+    });
+
+    isSectionActive = activeTrigger.isActive;
+    syncPlayback();
+    motionPreference.addEventListener("change", syncPlayback);
+    return () => {
+      activeTrigger.kill();
+      motionPreference.removeEventListener("change", syncPlayback);
+      video.pause();
+    };
+  }, { scope: aboutRef });
 
   // Toggle background Lofi track
   const toggleAudio = () => {
@@ -41,7 +85,7 @@ export default function About() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: aboutRef.current,
-          start: "top 78%",
+          start: "top 82%",
           once: true,
         },
         defaults: { ease: "power3.out" },
@@ -50,20 +94,94 @@ export default function About() {
       tl.from(".about-corner-badge", {
         y: -15,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.25,
       })
       .from(".about-music-btn", {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.6,
-      }, "-=0.4")
-      .from(cardRef.current, {
-        y: 40,
-        scale: 0.96,
-        opacity: 0,
-        duration: 0.85,
-        ease: "back.out(1.2)",
-      }, "-=0.3");
+        y: 20,
+        scale: 0.92,
+        autoAlpha: 0,
+        duration: 0.55,
+      }, "-=0.32");
+
+      // Reveal the centered profile when the actual content enters the viewport,
+      // instead of completing the motion while only the section edge is visible.
+      gsap.from(cardRef.current, {
+        y: 52,
+        scale: 0.985,
+        autoAlpha: 0,
+        duration: 0.82,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: cardRef.current,
+          start: "top 82%",
+          once: true,
+        },
+      });
+    },
+    { scope: aboutRef }
+  );
+
+  // Hold Beyond in place briefly while About rises over it on larger screens.
+  // The next section stays in normal flow, so the overlap follows the user's scroll
+  // without adding a long spacer or locking the page on touch devices.
+  useGSAP(
+    () => {
+      const aboutWrapper = aboutRef.current?.parentElement;
+      const beyondWrapper = aboutWrapper?.previousElementSibling;
+      if (!aboutWrapper || !beyondWrapper?.querySelector("#beyond-the-code")) return;
+
+      const media = gsap.matchMedia();
+      const revealQuery = "(min-width: 1024px) and (prefers-reduced-motion: no-preference)";
+      const revealPreference = window.matchMedia(revealQuery);
+      let cleanupFrame = 0;
+      const clearInactiveTransform = () => {
+        cancelAnimationFrame(cleanupFrame);
+        if (revealPreference.matches) return;
+
+        // Run after GSAP handles the media-query/resize event so its revert cannot
+        // leave the desktop starting transform behind on tablet or mobile.
+        cleanupFrame = requestAnimationFrame(() => {
+          if (!revealPreference.matches) aboutWrapper.style.removeProperty("transform");
+        });
+      };
+
+      window.addEventListener("resize", clearInactiveTransform, { passive: true });
+      revealPreference.addEventListener("change", clearInactiveTransform);
+      media.add(
+        revealQuery,
+        () => {
+          gsap.fromTo(
+            aboutWrapper,
+            { y: () => Math.min(96, window.innerHeight * 0.12) },
+            {
+              y: 0,
+              immediateRender: false,
+              ease: "none",
+              scrollTrigger: {
+                id: "about-rise-over-beyond",
+                trigger: beyondWrapper,
+                start: "bottom bottom",
+                end: () => `+=${Math.round(window.innerHeight * 0.65)}`,
+                scrub: 0.3,
+                pin: beyondWrapper,
+                pinSpacing: false,
+                anticipatePin: 1,
+                fastScrollEnd: true,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+
+        }
+      );
+
+      return () => {
+        media.revert();
+        window.removeEventListener("resize", clearInactiveTransform);
+        revealPreference.removeEventListener("change", clearInactiveTransform);
+        cancelAnimationFrame(cleanupFrame);
+        aboutWrapper.style.removeProperty("transform");
+      };
     },
     { scope: aboutRef }
   );
@@ -72,10 +190,9 @@ export default function About() {
     <section
       id="about"
       ref={aboutRef}
-      className="relative z-20 min-h-screen flex flex-col justify-center items-center py-20 px-6 overflow-visible rounded-t-[32px] sm:rounded-t-[44px]"
+      className="relative min-h-screen flex flex-col justify-center items-center py-20 px-6 overflow-hidden rounded-t-[32px] sm:rounded-t-[44px]"
       style={{
         background: "#0a0a0c",
-        cursor: "url('/custom-cursor.png') 16 16, auto",
       }}
     >
       {/* Hidden Audio Element */}
@@ -83,7 +200,7 @@ export default function About() {
         ref={audioRef}
         src="/lofi-track.mp3"
         loop
-        preload="metadata"
+        preload="none"
       />
 
       {/* 🎬 Cosmic Anime Video Background (Guns.lol style) - 100% Pure Edge-to-Edge Video */}
@@ -94,7 +211,7 @@ export default function About() {
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover scale-105 opacity-100 pointer-events-none"
         />
       </div>
@@ -152,21 +269,26 @@ export default function About() {
       </div>
 
       {/* 🪪 Guns.lol Center Identity & Bio (1:1 with Reference Screenshot) */}
-      <div className="relative z-10 w-full max-w-2xl mx-auto text-center px-4 overflow-visible">
+      <div
+        ref={cardRef}
+        className="relative z-10 w-full max-w-2xl mx-auto text-center px-4 overflow-visible"
+      >
         {/* Soft, luminous white ambient aura behind text so white clouds provide maximum contrast */}
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.45)_0%,rgba(255,255,255,0.18)_45%,transparent_75%)] blur-2xl pointer-events-none" />
 
         <motion.div
-          ref={cardRef}
           whileHover={{ y: -2 }}
           transition={{ duration: 0.3 }}
           className="relative w-full mx-auto flex flex-col items-center text-center"
         >
           {/* Mirror Selfie Avatar (User's Photo Preserved) */}
           <div className="relative mb-3 group">
-            <img
+            <Image
               src="/avatar.jpg"
               alt="Aditya Singh Rajput Avatar"
+              width={112}
+              height={112}
+              sizes="112px"
               className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-white shadow-2xl transition-transform duration-300 group-hover:scale-105"
             />
           </div>

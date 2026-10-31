@@ -3,7 +3,9 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
+import { usePauseOffscreenAnimation } from "@/lib/usePauseOffscreenAnimation";
 import { personal } from "@/lib/data";
+import RevealWords from "@/components/ui/RevealWords";
 import { Star, GitFork, ExternalLink, Copy, Check, Clock } from "lucide-react";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 import WavingOctocat from "@/components/ui/WavingOctocat";
@@ -110,6 +112,7 @@ function getRelativeTime(dateString: string): string {
 
 export default function GitHubActivity() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  usePauseOffscreenAnimation(sectionRef);
   const [repos, setRepos] = useState<GitHubRepo[]>(defaultRepos);
   const [languages, setLanguages] = useState<LanguageShare[]>(defaultLanguages);
   const [copiedRepo, setCopiedRepo] = useState<string | null>(null);
@@ -241,7 +244,7 @@ export default function GitHubActivity() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%",
+          start: "top 95%",
           once: true,
         },
         defaults: { ease: "power3.out" },
@@ -250,45 +253,47 @@ export default function GitHubActivity() {
       tl.from(".gh-badge", {
         y: -15,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.22,
       })
       .from(".gh-loader", {
         scale: 0.8,
         opacity: 0,
-        duration: 0.7,
+        duration: 0.25,
         ease: "back.out(1.7)",
       }, "-=0.35")
-      .from(".gh-heading", {
-        y: 30,
-        opacity: 0,
-        duration: 0.75,
+      .from(".gsap-word-reveal", {
+        yPercent: 110,
+        autoAlpha: 0,
+        stagger: 0.06,
+        duration: 0.58,
+        ease: "power4.out",
       }, "-=0.5")
       .from(".gh-profile-btn", {
         y: 15,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.22,
       }, "-=0.45")
       .from(".gh-ticker", {
         y: 20,
         opacity: 0,
-        duration: 0.65,
+        duration: 0.25,
       }, "-=0.35")
       .from(".gh-chart-card", {
-        y: 35,
+        y: 10,
         opacity: 0,
-        duration: 0.8,
+        duration: 0.3,
       }, "-=0.3")
       .from(".gh-stat-card", {
-        y: 25,
+        y: 8,
         opacity: 0,
-        stagger: 0.08,
-        duration: 0.65,
+        stagger: 0.055,
+        duration: 0.25,
       }, "-=0.4")
       .from(".gh-repo-card", {
         y: 30,
         opacity: 0,
-        stagger: 0.1,
-        duration: 0.75,
+        stagger: 0.06,
+        duration: 0.28,
       }, "-=0.3");
     },
     { scope: sectionRef }
@@ -370,13 +375,14 @@ export default function GitHubActivity() {
                 <WavingOctocat size={64} />
               </div>
               <h2
+                aria-label="Code I've shipped."
                 className="gh-heading font-black text-[#1F3B2E] leading-tight tracking-tight"
                 style={{ fontSize: "clamp(34px, 5.5vw, 62px)" }}
               >
-                Code I&apos;ve
+                <RevealWords text="Code I've" />
                 <br />
-                <span className="italic text-[#1F3B2E]/75 font-serif font-normal">shipped</span>
-                <span className="text-[#C8B3E8]">.</span>
+                <RevealWords text="shipped" className="italic text-[#1F3B2E]/75 font-serif font-normal" />
+                <RevealWords text="." className="text-[#C8B3E8]" />
               </h2>
             </div>
           </div>

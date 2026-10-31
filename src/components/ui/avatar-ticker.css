@@ -1,0 +1,29 @@
+@keyframes avatarTickerScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.avatar-ticker-track {
+  display: flex !important;
+  width: max-content !important;
+  animation: avatarTickerScroll 8s linear infinite !important;
+  will-change: transform;
+}
+
+[data-motion-paused="true"] .avatar-ticker-track {
+  animation-play-state: running !important;
+}
+
+.avatar-ticker-wrap:hover .avatar-ticker-track {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-ticker-track {
+    animation: none !important;
+  }
+}

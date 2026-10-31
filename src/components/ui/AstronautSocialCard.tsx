@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
+import { usePauseOffscreenAnimation } from "@/lib/usePauseOffscreenAnimation";
 import { useGSAP, gsap, ScrollTrigger, isReducedMotion } from "@/lib/gsap";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
 import { SOCIAL_LINKS } from "@/lib/site";
@@ -29,6 +30,7 @@ function InstagramIcon({ size = 18 }: { size?: number }) {
 
 export default function AstronautSocialCard({ className = "" }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  usePauseOffscreenAnimation(containerRef);
   const babyTravelRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -144,14 +146,13 @@ export default function AstronautSocialCard({ className = "" }: { className?: st
         {/* Inner element: keeps ambient continuous floating bob/tilt animation */}
         <Image
           className="image"
-          alt="Decorative floating 3D astronaut mascot"
+          alt=""
           aria-hidden="true"
           src="/astronaut.png"
           width={160}
           height={190}
           style={{ width: "auto", height: "auto" }}
           unoptimized
-          priority
         />
       </div>
 

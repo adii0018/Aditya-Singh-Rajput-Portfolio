@@ -3,7 +3,9 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP, isReducedMotion } from "@/lib/gsap";
+import { usePauseOffscreenAnimation } from "@/lib/usePauseOffscreenAnimation";
 import { personal } from "@/lib/data";
+import RevealWords from "@/components/ui/RevealWords";
 import { validateContactForm, sanitizeInput } from "@/lib/validation";
 import { Mail, Send, ArrowUpRight, Copy, Check, User, MessageSquare, Sparkles, Loader2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/GithubIcon";
@@ -70,12 +72,12 @@ function ContactForm() {
       if (response.ok) {
         setStatus("success");
       } else {
-        // Fallback gracefully
-        setStatus("success");
+        setStatus("error");
+        setErrorMessage("Your message could not be sent. Please try again or email me directly.");
       }
     } catch {
-      // In case of adblock or offline, trigger success with mailto backup
-      setStatus("success");
+      setStatus("error");
+      setErrorMessage("Connection failed, so your message was not sent. Please try again or email me directly.");
     }
   };
 
@@ -147,7 +149,11 @@ function ContactForm() {
                 type="text"
                 required
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, name: e.target.value });
+                  if (status === "error") setStatus("idle");
+                  setErrorMessage("");
+                }}
                 placeholder="e.g. Alex Rivera"
                 className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 text-white text-sm placeholder-white/30 focus:outline-none focus:border-[#d9ff5c] focus:ring-1 focus:ring-[#d9ff5c] transition-all font-sans"
               />
@@ -162,7 +168,11 @@ function ContactForm() {
                 type="email"
                 required
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                  if (status === "error") setStatus("idle");
+                  setErrorMessage("");
+                }}
                 placeholder="name@company.com"
                 className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 text-white text-sm placeholder-white/30 focus:outline-none focus:border-[#b8deff] focus:ring-1 focus:ring-[#b8deff] transition-all font-sans"
               />
@@ -177,14 +187,18 @@ function ContactForm() {
                 required
                 rows={4}
                 value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, message: e.target.value });
+                  if (status === "error") setStatus("idle");
+                  setErrorMessage("");
+                }}
                 placeholder="Hi Aditya, we are building an AI project and would love to collaborate..."
                 className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 text-white text-sm placeholder-white/30 focus:outline-none focus:border-[#c0adff] focus:ring-1 focus:ring-[#c0adff] transition-all font-sans resize-none"
               />
             </div>
 
             {errorMessage && (
-              <p className="text-rose-400 text-xs font-mono">{errorMessage}</p>
+              <p role="alert" className="text-rose-400 text-xs font-mono">{errorMessage}</p>
             )}
 
             <button
@@ -214,6 +228,7 @@ function ContactForm() {
 
 export default function Contact() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  usePauseOffscreenAnimation(sectionRef);
 
   useGSAP(
     () => {
@@ -233,10 +248,12 @@ export default function Contact() {
         opacity: 0,
         duration: 0.6,
       })
-      .from(".contact-title", {
-        y: 40,
-        opacity: 0,
-        duration: 0.85,
+      .from(".gsap-word-reveal", {
+        yPercent: 110,
+        autoAlpha: 0,
+        stagger: 0.055,
+        duration: 0.62,
+        ease: "power4.out",
       }, "-=0.35")
       .from(".contact-sub", {
         y: 20,
@@ -289,12 +306,13 @@ export default function Contact() {
             />
 
             <h2
+              aria-label="Ready to build something great?"
               className="contact-title font-black text-white leading-tight tracking-tight mb-6"
               style={{ fontSize: "clamp(40px, 7vw, 80px)" }}
             >
-              Ready to build
+              <RevealWords text="Ready to build" />
               <br />
-              <span className="text-[#d9ff5c]">something great?</span>
+              <RevealWords text="something great?" className="text-[#d9ff5c]" />
             </h2>
           </div>
 

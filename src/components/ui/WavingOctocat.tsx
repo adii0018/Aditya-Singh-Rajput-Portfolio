@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { usePauseOffscreenAnimation } from "@/lib/usePauseOffscreenAnimation";
 
 interface WavingOctocatProps {
   size?: number;
@@ -9,9 +10,13 @@ interface WavingOctocatProps {
 
 export default function WavingOctocat({ size = 72, className = "" }: WavingOctocatProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const loaderRef = useRef<HTMLDivElement>(null);
+  usePauseOffscreenAnimation(loaderRef);
 
   return (
     <div
+      ref={loaderRef}
+      data-motion-paused="true"
       className={`relative inline-flex items-center justify-center group cursor-pointer select-none ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

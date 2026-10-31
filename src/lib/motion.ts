@@ -2,11 +2,7 @@
 // No magic numbers in components
 
 export const DURATION = {
-  instant: 0.15,
-  fast: 0.3,
-  base: 0.6,
-  slow: 0.95,
-  cinematic: 1.2,
+  instant: 0.1, fast: 0.18, base: 0.28, slow: 0.38, cinematic: 0.45,
 } as const;
 
 export const EASE = {
@@ -31,3 +27,17 @@ export const SCROLL_TRIGGER = {
   anticipatePin: 1,
   invalidateOnRefresh: true,
 } as const;
+
+/** Scroll to a page target while honoring the visitor's motion preference. */
+export function scrollToTarget(target: string | HTMLElement | null | undefined) {
+  if (typeof window === "undefined" || !target) return;
+
+  const element = typeof target === "string" ? document.getElementById(target) : target;
+  if (!element) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  element.scrollIntoView({
+    behavior: prefersReducedMotion ? "auto" : "smooth",
+    block: "start",
+  });
+}

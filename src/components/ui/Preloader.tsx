@@ -10,20 +10,34 @@ export default function Preloader() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // If user has already visited in this session, skip preloader immediately for instant component loading
+    if (prefersReducedMotion || sessionStorage.getItem("portfolio-preloader-done")) {
+      const skipFrame = window.requestAnimationFrame(() => {
+        setIsDone(true);
+        setIsRemoved(true);
+      });
+      return () => window.cancelAnimationFrame(skipFrame);
+    }
+
     // Lock scroll on mount
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const HOLD = 300; // Hold time after name finishes (ms)
+    const HOLD = 120; // Swift hold time after name finishes (ms)
 
     const finishPreloader = () => {
       if (timerRef.current) return;
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("portfolio-preloader-done", "true");
+      }
       timerRef.current = setTimeout(() => {
         setIsDone(true);
         document.body.style.overflow = originalOverflow;
         setTimeout(() => {
           setIsRemoved(true);
-        }, 1000);
+        }, 500);
       }, HOLD);
     };
 
@@ -33,10 +47,10 @@ export default function Preloader() {
       nameEl.addEventListener("animationend", finishPreloader);
     }
 
-    // Safety fallback timer (max 3.2s) in case animationend doesn't fire
+    // Fast safety fallback timer (max 1.1s) so components load without any delay
     const fallback = setTimeout(() => {
       finishPreloader();
-    }, 3200);
+    }, 1100);
 
     return () => {
       if (nameEl) {
@@ -52,9 +66,12 @@ export default function Preloader() {
     if (!isDone) {
       setIsDone(true);
       document.body.style.overflow = "";
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("portfolio-preloader-done", "true");
+      }
       setTimeout(() => {
         setIsRemoved(true);
-      }, 1000);
+      }, 300);
     }
   };
 
@@ -64,7 +81,7 @@ export default function Preloader() {
     <>
       <style>{`
         :root {
-          --pl-bg: #111111;
+          --pl-bg: #0d1117;
           --pl-ink: #ffffff;
         }
 
@@ -73,6 +90,7 @@ export default function Preloader() {
           inset: 0;
           z-index: 99999;
           user-select: none;
+          cursor: pointer;
         }
 
         #preloader .half {
@@ -81,7 +99,7 @@ export default function Preloader() {
           width: 100%;
           height: 50%;
           background: var(--pl-bg);
-          transition: transform .9s cubic-bezier(.77,0,.18,1);
+          transition: transform .5s cubic-bezier(.77,0,.18,1);
           will-change: transform;
         }
 
@@ -110,7 +128,7 @@ export default function Preloader() {
           align-items: center;
           justify-content: center;
           gap: clamp(14px, 2.5vw, 24px);
-          transition: opacity .4s ease, transform .6s ease;
+          transition: opacity .3s ease, transform .4s ease;
           pointer-events: none;
         }
 
@@ -134,17 +152,17 @@ export default function Preloader() {
           stroke-linejoin: round;
           stroke-dasharray: 1 2;
           stroke-dashoffset: 1.02;
-          animation: pl-draw .9s cubic-bezier(.65,0,.35,1) .1s forwards;
+          animation: pl-draw .38s cubic-bezier(.65,0,.35,1) .05s forwards;
         }
 
         #preloader .l2 {
-          animation-duration: .8s;
-          animation-delay: .75s;
+          animation-duration: .32s;
+          animation-delay: .2s;
         }
 
         #preloader .l3 {
-          animation-duration: .85s;
-          animation-delay: 1.4s;
+          animation-duration: .32s;
+          animation-delay: .38s;
         }
 
         #preloader .name {
@@ -155,8 +173,8 @@ export default function Preloader() {
           text-indent: .32em;
           text-transform: uppercase;
           opacity: 0;
-          transform: translateY(12px);
-          animation: pl-name .6s ease 2.0s forwards;
+          transform: translateY(10px);
+          animation: pl-name .35s ease 0.6s forwards;
           text-align: center;
         }
 
@@ -190,6 +208,7 @@ export default function Preloader() {
         className={isDone ? "done" : ""}
         aria-label="Loading"
         onClick={handleClickSkip}
+        title="Click to enter immediately"
       >
         <div className="half top" />
         <div className="half bottom" />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import DynamicFavicon from "@/components/ui/DynamicFavicon";
 import CommandPalette from "@/components/ui/CommandPalette";
@@ -46,16 +47,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/favicon.svg?v=8", type: "image/svg+xml" },
     ],
-    shortcut: "/favicon.ico",
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    shortcut: "/favicon.svg?v=8",
+    apple: "/favicon.svg?v=8",
   },
   keywords: [
     "Aditya Singh Rajput",
@@ -113,10 +108,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable}`}>
       <body className={`${geist.className} noise-bg`}>
-        <JsonLd />
-        <DynamicFavicon />
-        <CommandPalette />
-        {children}
+        <MotionConfig reducedMotion="user">
+            <JsonLd />
+            <DynamicFavicon />
+            <CommandPalette />
+            {children}
+        </MotionConfig>
       </body>
     </html>
   );

@@ -9,21 +9,21 @@ import Projects from "@/components/sections/Projects";
 import Experience from "@/components/sections/Experience";
 import GitHubActivity from "@/components/sections/GitHub";
 import Contact from "@/components/sections/Contact";
-import StackedSections from "@/components/layout/StackedSections";
 
 export default function Home() {
   return (
     <>
       <Preloader />
       <Navbar />
-      <main>
-        <Hero />
-        <StackedSections>
+      <main className="bg-[#ebeff5]">
+        {/* Continuous Canvas: Hero + Beyond The Code + About + Skills + Projects */}
+        <div className="relative w-full overflow-visible">
+          <Hero />
           <BeyondTheCode />
           <About />
           <Skills />
           <Projects />
-        </StackedSections>
+        </div>
         <GitHubActivity />
         <Experience />
         <Contact />

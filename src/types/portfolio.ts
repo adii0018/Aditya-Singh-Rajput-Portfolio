@@ -6,6 +6,10 @@ export interface PersonalInfo {
   heroLine1: string;
   heroLine2: string;
   subtitle: string;
+  ctaExplore?: {
+    label: string;
+    targetId: string;
+  };
   email: string;
   github: string;
   linkedin: string;

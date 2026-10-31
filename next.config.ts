@@ -32,7 +32,7 @@ const SECURITY_HEADERS = [
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https://avatars.githubusercontent.com https://ghchart.rshah.org https://github-readme-stats.vercel.app",
       "media-src 'self'",
-      "connect-src 'self' https://formspree.io https://api.github.com",
+      "connect-src 'self' https://formspree.io https://api.github.com https://github-contributions-api.jogruber.de",
       "frame-ancestors 'none'",
     ].join("; "),
   },

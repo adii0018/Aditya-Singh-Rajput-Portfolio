@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import AstronautSocialCard from "@/components/ui/AstronautSocialCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { personal } from "@/lib/data";
+import { scrollToTarget } from "@/lib/motion";
 
 export default function Footer() {
   const footerLinks = {
@@ -27,7 +28,7 @@ export default function Footer() {
 
   const scrollTo = (href: string) => {
     const id = href.replace("#", "");
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    scrollToTarget(id);
   };
 
   return (
@@ -39,8 +40,26 @@ export default function Footer() {
           {/* Brand & Social Card */}
           <div className="col-span-2 md:col-span-1 overflow-visible">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-white">
-                <span className="font-mono font-black text-xs text-[#d9ff5c]">ASR</span>
+              <div className="w-7 h-7 flex items-center justify-center shrink-0">
+                <svg viewBox="0 0 32 32" className="w-7 h-7 drop-shadow-[0_1px_4px_rgba(0,174,187,0.3)]">
+                  <defs>
+                    <radialGradient id="footerEyeGrad" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#00AEBB" />
+                      <stop offset="70%" stopColor="#00838D" />
+                      <stop offset="100%" stopColor="#031211" />
+                    </radialGradient>
+                    <clipPath id="footerEyeClip">
+                      <path d="M 2 16 Q 16 6 30 16 Q 16 26 2 16 Z" />
+                    </clipPath>
+                  </defs>
+                  <path d="M 2 16 Q 16 6 30 16 Q 16 26 2 16 Z" fill="#031211" stroke="#00AEBB" strokeWidth="1.6" />
+                  <g clipPath="url(#footerEyeClip)">
+                    <rect x="0" y="0" width="32" height="32" fill="#E8E4D3" />
+                    <circle cx="16" cy="16" r="8" fill="url(#footerEyeGrad)" />
+                    <circle cx="16" cy="16" r="3.8" fill="#031211" />
+                    <circle cx="14.2" cy="14.2" r="1.3" fill="#FFFFFF" />
+                  </g>
+                </svg>
               </div>
               <span className="font-bold text-lg text-white">Aditya Singh Rajput</span>
             </div>
